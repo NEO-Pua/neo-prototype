@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>株式会社ネオシステムズ｜クラウド・DX支援・システム開発（東京・日本橋）</title>
+<meta name="description" content="株式会社ネオシステムズ（東京・日本橋）の公式サイトです。プログラマ・システムエンジニアを募集しています。年齢・学歴・経験不問、ITの知識があれば実務未経験OK。企業の方へは、クラウドソリューション、DX支援、ITコンサルティング、SES、受託開発をご提供しています。">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<!-- ============ icon sprite (24px grid / 1.8 stroke / round caps & joins) ============ -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></symbol>
+<symbol id="i-arrow-ur" viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19.5v-15M6 10.5l6-6 6 6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-tel" viewBox="0 0 24 24"><path d="M6 3.8h2.8a1 1 0 0 1 .93.63l1.4 3.5a1 1 0 0 1-.4 1.22L8.9 10.4a11 11 0 0 0 4.7 4.7l1.25-1.83a1 1 0 0 1 1.22-.4l3.5 1.4a1 1 0 0 1 .63.93V18a2.2 2.2 0 0 1-2.2 2.2A15.4 15.4 0 0 1 3.8 6 2.2 2.2 0 0 1 6 3.8z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 4.5h14a2 2 0 0 1 2 2V15a2 2 0 0 1-2 2h-8.5L6 20.5V17H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2z"/><path d="M8 9.3h8M8 12.5h5"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M20.5 3.5 3.6 10.2l6.9 2.8 2.8 6.9z"/><path d="m20.5 3.5-10 9.5"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6M12 3.2c2.4 2.4 3.6 5.3 3.6 8.8s-1.2 6.4-3.6 8.8c-2.4-2.4-3.6-5.3-3.6-8.8s1.2-6.4 3.6-8.8z"/></symbol>
+<symbol id="i-yen" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><path d="m8.6 7.2 3.4 4.8 3.4-4.8M12 12v5.3M9 12.4h6M9 14.9h6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 9.8h17M8 3v4M16 3v4M8.8 15l2.2 2.2 4.2-4.2"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3.4 11.4 12 4.2l8.6 7.2"/><path d="M5.8 9.6v9.4a1.5 1.5 0 0 0 1.5 1.5h9.4a1.5 1.5 0 0 0 1.5-1.5V9.6"/><rect x="8.7" y="11.8" width="6.6" height="4.4" rx="1"/><path d="M7.9 18.3h8.2"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8V5M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5l1.6 1.6M16.9 16.9l1.6 1.6M5.5 18.5l1.6-1.6M16.9 7.1l1.6-1.6"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><rect x="3.8" y="4.5" width="16.4" height="11.5" rx="2"/><path d="M2 19.5h20M10 8.1 7.8 10.25 10 12.4M14 8.1l2.2 2.15L14 12.4"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M13.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4.2"/><path d="M13.5 3 19 8.5v2.3M13.5 3v5.5H19"/><path d="M8.5 12.5h4.3M8.5 16h2.2"/><circle cx="16.4" cy="16.4" r="3.1"/><path d="m18.7 18.7 2.1 2.1"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V3.8"/><path d="M5.5 4.6h12.2l-2.4 4 2.4 4H5.5"/></symbol>
+<symbol id="i-stroller" viewBox="0 0 24 24"><path d="M12.6 3.6a7.4 7.4 0 0 1 7.4 7.4h-7.4z"/><path d="M2.8 6.2h2.4L7.4 11H20a6.2 6.2 0 0 1-6.2 6.2h-3.4a4.8 4.8 0 0 1-4.4-2.9"/><circle cx="8.6" cy="20.2" r="1.5"/><circle cx="16.2" cy="20.2" r="1.5"/></symbol>
+<symbol id="i-clock-heart" viewBox="0 0 24 24"><path d="M20.5 11.3a8.5 8.5 0 1 0-9.2 9.2"/><path d="M12 7.4V12l2.6 1.6"/><path d="M17.6 21.2s-3.4-2-3.4-4.4a1.8 1.8 0 0 1 3.4-.85 1.8 1.8 0 0 1 3.4.85c0 2.4-3.4 4.4-3.4 4.4z"/></symbol>
+<symbol id="i-train" viewBox="0 0 24 24"><rect x="5.5" y="3" width="13" height="14" rx="3.5"/><path d="M5.5 10.2h13M9 13.6h.01M15 13.6h.01M8.2 21l2-4M15.8 21l-2-4M10 6.6h4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19.2 6v5.6c0 4.5-3 7.9-7.2 9.2-4.2-1.3-7.2-4.7-7.2-9.2V6z"/><path d="m8.9 12 2.2 2.2 4.1-4.4"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M19.9 13.2c.4-.9.6-1.9.6-2.9A4.6 4.6 0 0 0 12 7.6a4.6 4.6 0 0 0-8.5 2.7c0 1 .2 2 .6 2.9"/><path d="M5.7 15.8c2.4 2.8 6.3 4.9 6.3 4.9s3.9-2.1 6.3-4.9"/><path d="M2.6 13.2h4.6l1.6-2.6 2.4 4.6 1.8-2.6h8.4"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="m3.5 17 6-6 4 4 7-7.5"/><path d="M15 7.5h5.5V13"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="4.4" rx="1.2"/><path d="M5 12.4V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6.6M12 8v12.5"/><path d="M12 8c-1-3.6-5.4-4.4-5.4-1.6C6.6 8 9.4 8 12 8zM12 8c1-3.6 5.4-4.4 5.4-1.6C17.4 8 14.6 8 12 8z"/></symbol>
+<symbol id="i-flex" viewBox="0 0 24 24"><path d="M20.2 12a8.2 8.2 0 1 1-2.4-5.8"/><path d="M20.2 4.2v4.2H16"/><path d="M12 7.6V12l3 1.8"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.2 18.5a4.3 4.3 0 0 1-.5-8.6 5.8 5.8 0 0 1 11.1-1.4 4.6 4.6 0 0 1-.3 10z"/><path d="M12 15.8v-5M9.8 13 12 10.8l2.2 2.2"/></symbol>
+<symbol id="i-dx" viewBox="0 0 24 24"><path d="M4.4 11a7.6 7.6 0 0 1 13-4.6l2.2 2.2"/><path d="M19.6 4v4.6H15"/><path d="M19.6 13a7.6 7.6 0 0 1-13 4.6l-2.2-2.2"/><path d="M4.4 20v-4.6H9"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.2 17.6h5.6M10.2 21h3.6"/><path d="M12 3a6.2 6.2 0 0 0-3.7 11.2c.6.5.9 1.1.9 1.9v1.5h5.6v-1.5c0-.8.3-1.4.9-1.9A6.2 6.2 0 0 0 12 3z"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.2" r="3.4"/><path d="M2.8 19.8c.4-3.4 3-5.6 6.2-5.6s5.8 2.2 6.2 5.6"/><circle cx="17" cy="9.2" r="2.6"/><path d="M16.3 14.3c2.6-.3 4.6 1.5 4.9 4.3"/></symbol>
+<symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 8.6h18M6.3 6.3h.01M8.7 6.3h.01M10.4 12 8 14.4l2.4 2.4M13.6 12l2.4 2.4-2.4 2.4"/></symbol>
+<symbol id="i-apps" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M17 13.8v6.4M13.8 17h6.4"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.5 5.2 5.7.8-4.1 4 1 5.7L12 16.6l-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></symbol>
+<symbol id="i-clip" viewBox="0 0 24 24"><path d="M8.5 5H7a2 2 0 0 0-2 2v12.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1.5"/><rect x="8.5" y="3" width="7" height="4" rx="1.4"/><path d="m8.9 13.6 2.2 2.2 4-4.2"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.6-5.6-6.6-11.1a6.6 6.6 0 0 1 13.2 0C18.6 15.4 12 21 12 21z"/><circle cx="12" cy="9.9" r="2.4"/></symbol>
+<symbol id="i-bldg" viewBox="0 0 24 24"><path d="M4.5 20.5V6.2l8-2.7v17M12.5 20.5h7V10l-7-2"/><path d="M7.6 8.6h1.8M7.6 12.2h1.8M7.6 15.8h1.8M15.4 13H17M15.4 16.4H17M3 20.5h18"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2s-7.8-4.6-7.8-10.2A4.5 4.5 0 0 1 12 7.2 4.5 4.5 0 0 1 19.8 10c0 5.6-7.8 10.2-7.8 10.2z"/></symbol>
+<symbol id="i-telework" viewBox="0 0 24 24"><rect x="4.5" y="10.6" width="15" height="8.4" rx="1.6"/><path d="M2.8 21.5h18.4M8.3 7.1a5.3 5.3 0 0 1 7.4 0M10.4 9.1a2.3 2.3 0 0 1 3.2 0"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.4" r="3.9"/><path d="M4.6 20.2c.9-3.9 3.9-6.1 7.4-6.1s6.5 2.2 7.4 6.1"/></symbol>
+<symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V4.6A1.6 1.6 0 0 1 7.6 3h8.8A1.6 1.6 0 0 1 18 4.6V21"/><path d="M3.5 21h17M14.2 12.2v.01"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M11 3.5c.7 4.6 2.5 6.4 7 7.1-4.5.7-6.3 2.5-7 7.1-.7-4.6-2.5-6.4-7-7.1 4.5-.7 6.3-2.5 7-7.1z"/><path d="M19 16.5v4M17 18.5h4"/></symbol>
+<pattern id="pt-dots-navy" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="2.2" fill="#22348c"/></pattern>
+<pattern id="pt-dots-white" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="2.2" fill="#ffffff"/></pattern>
+</defs></svg>
+
+<a class="skip" href="#main">本文へスキップ</a>
+
+<!-- ============ header : floating island ============ -->
+<header class="hdr" id="hdr">
+  <div class="hdr__bar">
+    <a class="hdr__logo" href="index.html"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/%E9%80%8F%E6%98%8E2-1.png" alt="NEO SYSTEMS 株式会社ネオシステムズ" width="150" height="30"></a>
+
+    <div class="aud" role="group" aria-label="ご覧になる方を選択">
+      <span class="aud__thumb" aria-hidden="true"></span>
+      <a class="aud__btn is-on" href="#recruit" data-door="recruit">はたらきたい方</a>
+      <a class="aud__btn" href="#business" data-door="business">企業の方</a>
+    </div>
+
+    <nav class="gnav" aria-label="グローバルナビゲーション">
+      <ul>
+        <li><a href="#recruit">採用情報</a></li>
+        <li><a href="#environment">はたらく環境</a></li>
+        <li><a href="#business">事業内容</a></li>
+        <li><a href="#company">会社情報</a></li>
+        <li><a href="#news">ニュース</a></li>
+      </ul>
+    </nav>
+
+    <div class="lang">
+      <button class="lang__btn" type="button" aria-expanded="false" aria-controls="lang-menu"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span class="lang__cur">日本語</span><svg class="ic lang__chev" aria-hidden="true"><use href="#i-chev"/></svg><span class="vh">言語を選択（Language）</span></button>
+      <ul class="lang__menu" id="lang-menu">
+        <li><a href="index.html" lang="ja" aria-current="true">日本語<svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></a></li>
+        <li><a href="../en/index.html" lang="en" data-soon="English版は、デザインの方向性が決まり次第作成します。">English<small>準備中</small></a></li>
+        <li><a href="../zh/index.html" lang="zh" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文<small>準備中</small></a></li>
+      </ul>
+    </div>
+
+    <div class="hdr__cta">
+      <a class="btn btn--yellow btn--s" href="recruit.html#entry">エントリー</a>
+      <a class="btn btn--line btn--s" href="contact.html">お問い合わせ</a>
+    </div>
+
+    <button class="hdr__menu" type="button" aria-expanded="false" aria-controls="drawer" aria-label="メニューを開く"><span class="hdr__menu-ic" aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+
+<!-- ============ drawer (below 1020px) ============ -->
+<div class="drw" id="drawer" role="dialog" aria-modal="true" aria-label="メニュー" aria-hidden="true">
+  <div class="drw__in">
+    <div class="drw__doors">
+      <a class="drw__door drw__door--y" href="#recruit"><small>FOR ENGINEERS</small><b>はたらきたい方</b><span>採用情報・<wbr>はたらく環境</span></a>
+      <a class="drw__door drw__door--c" href="#business"><small>FOR BUSINESS</small><b>企業の方</b><span>事業内容・<wbr>サービス</span></a>
+    </div>
+    <nav aria-label="メニュー">
+      <ul class="drw__nav">
+        <li><a href="#recruit">採用情報<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#environment">はたらく環境<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#business">事業内容<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#company">会社情報<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#news">ニュース<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </nav>
+    <div class="drw__cta">
+      <a class="btn btn--yellow" href="recruit.html#entry">エントリー</a>
+      <a class="btn btn--line" href="contact.html">お問い合わせ</a>
+    </div>
+    <a class="drw__tel" href="tel:0356455678"><span class="drw__tel-ic"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span><b>03-5645-5678</b><small>受付時間 平日 9:00〜18:00（土日祝除く）</small></span></a>
+    <div class="drw__lang" aria-label="Language">
+      <a class="is-on" href="index.html" lang="ja" aria-current="true">日本語</a>
+      <a href="../en/index.html" lang="en" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a>
+      <a href="../zh/index.html" lang="zh" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero" id="top" aria-labelledby="hero-ttl">
+  <div class="hero__bg" aria-hidden="true"><span class="hero__b1"></span><span class="hero__b2 dots"></span><span class="hero__b3"></span></div>
+  <div class="wrap hero__in">
+    <div class="hero__txt">
+      <p class="hero__eyebrow rv"><span class="tag tag--coral">未経験OK</span><span>エンジニア<span class="nw">（PG・SE）を</span><wbr>募集しています</span></p>
+      <h1 class="hero__ttl rv" id="hero-ttl">ここから、<br><mark class="mk">エンジニア</mark>に<br>なろう。</h1>
+      <p class="hero__lead rv">年齢・学歴・経験は<wbr>問いません。<wbr>ITの知識があれば、<wbr>実務未経験でもOK。<wbr>まずはプログラマとして<wbr>経験を積み、<wbr>システムエンジニアを<wbr>目指せます。</p>
+      <ul class="perks rv" aria-label="主な待遇">
+        <li><span class="perks__ic"><svg class="ic" aria-hidden="true"><use href="#i-yen"/></svg></span>月給25万円以上</li>
+        <li><span class="perks__ic"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span>年間休日 約120日</li>
+        <li><span class="perks__ic"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg></span>在宅勤務制度</li>
+        <li><span class="perks__ic"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></span>完全週休2日（土日）</li>
+      </ul>
+      <div class="hero__btns rv">
+        <a class="btn btn--yellow btn--l" href="#jobs">募集要項を見る<span class="btn__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+        <a class="btn btn--navy btn--l" href="recruit.html#entry">エントリー<span class="btn__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      </div>
+      <div class="hero__biz rv">
+        <a class="hero__bizlink" href="#business"><svg class="ic" aria-hidden="true"><use href="#i-bldg"/></svg>企業の方はこちら<svg class="ic hero__bizar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="hero__tel" href="tel:0356455678"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg><b>03-5645-5678</b><small>平日 9:00〜18:00</small></a>
+      </div>
+    </div>
+
+    <div class="hero__vis">
+      <div class="col">
+        <span class="shp shp--circle fl" aria-hidden="true"></span>
+        <span class="shp shp--dots dots fl fl--2" aria-hidden="true"></span>
+        <span class="shp shp--half fl fl--3" aria-hidden="true"></span>
+        <span class="shp shp--ring fl fl--2" aria-hidden="true"></span>
+        <span class="shp shp--pip fl" aria-hidden="true"></span>
+        <figure class="blob blob--1"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2021/11/cropped-Rectangle-602-1.jpg" alt="ノートパソコンを囲んで作業するチーム（イメージ）" width="811" height="546" fetchpriority="high"></figure>
+        <figure class="blob blob--2"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/B004.jpg" alt="ヘッドセットを着けてモニターに向かうスタッフ（イメージ）" width="1205" height="803"></figure>
+        <figure class="blob blob--3"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/10/cropped-cropped-pixta_69012043_M-1200x675-1.jpg" alt="ノートパソコンを操作する手元（イメージ）" width="943" height="634"></figure>
+        <div class="badge" aria-hidden="true">
+          <svg class="badge__ring" viewBox="0 0 160 160"><defs><path id="badge-path" d="M80 80m-61 0a61 61 0 1 1 122 0a61 61 0 1 1-122 0"/></defs><text><textPath href="#badge-path" textLength="380" lengthAdjust="spacing">JOIN NEO SYSTEMS ✦ 未経験OK ✦ </textPath></text></svg>
+          <span class="badge__core"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span>
+        </div>
+      </div>
+      <p class="hero__cap">※ 写真はイメージです</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. TWO DOORS ============ -->
+<section class="doors" id="doors" aria-labelledby="doors-ttl">
+  <div class="wrap">
+    <div class="sh sh--c rv">
+      <p class="sh__en">TWO DOORS</p>
+      <h2 class="sh__ttl" id="doors-ttl"><span class="sq">2つの入口<svg class="sq__svg" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 8C8 2.4 16 2.2 22 7.6S36 13.6 42 8.2 56 2.2 62 7.8 76 13.8 82 8.2 96 2.4 102 7.8 114 13 118 8.4"/></svg></span>から、<wbr>お選びください。</h2>
+    </div>
+    <div class="doors__grid" data-stagger>
+      <a class="door door--y rv" href="#recruit">
+        <svg class="door__art" viewBox="0 0 300 300" aria-hidden="true">
+          <circle cx="170" cy="170" r="118" fill="#ffd23f"/>
+          <rect x="40" y="168" width="98" height="98" fill="url(#pt-dots-navy)" opacity=".28"/>
+          <rect x="104" y="108" width="132" height="90" rx="16" fill="#fff" stroke="#22348c" stroke-width="5"/>
+          <path d="M84 222h172" fill="none" stroke="#22348c" stroke-width="5" stroke-linecap="round"/>
+          <path d="M146 136l-17 16 17 16M194 136l17 16-17 16M178 130l-14 44" fill="none" stroke="#00a0e0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M70 58c2.6 17 9 23.4 26 26-17 2.6-23.4 9-26 26-2.6-17-9-23.4-26-26 17-2.6 23.4-9 26-26z" fill="#fff" stroke="#22348c" stroke-width="4.5" stroke-linejoin="round"/>
+        </svg>
+        <span class="door__en">FOR ENGINEERS</span>
+        <h3 class="door__ttl">はたらきたい方へ</h3>
+        <p class="door__sub">採用情報・<wbr>はたらく環境</p>
+        <p class="door__txt">年齢・学歴・経験は不問。<wbr>プログラマから<wbr>はじめて、<wbr>システムエンジニアへ。<wbr>キャリアステップや<wbr>福利厚生、<wbr>募集職種を<wbr>ご紹介します。</p>
+        <span class="door__go">採用情報を見る<span class="door__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
+      </a>
+      <a class="door door--c rv" href="#business">
+        <svg class="door__art" viewBox="0 0 300 300" aria-hidden="true">
+          <circle cx="170" cy="170" r="118" fill="#00a0e0"/>
+          <rect x="40" y="168" width="98" height="98" fill="url(#pt-dots-navy)" opacity=".28"/>
+          <path d="M126 210a32 32 0 0 1-3.6-63.8A44 44 0 0 1 207 133a34 34 0 0 1 3 77z" fill="#fff" stroke="#22348c" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M146 190v-14M168 190v-30M190 190v-21" fill="none" stroke="#00a0e0" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="76" cy="84" r="20" fill="#ffd23f" stroke="#22348c" stroke-width="4.5"/>
+          <path d="M70 84.5l4.5 4.5 8-8.5" fill="none" stroke="#22348c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="door__en">FOR BUSINESS</span>
+        <h3 class="door__ttl">ご依頼をお考えの<wbr>企業の方へ</h3>
+        <p class="door__sub">事業内容・<wbr>サービス</p>
+        <p class="door__txt">クラウド、<wbr>DX支援、<wbr>ITコンサルティング、<wbr>SES、受託開発。<wbr>計画から<wbr><span class="nw">運用・保守</span>まで、<wbr>一貫して<wbr>サポートします。</p>
+        <span class="door__go">事業内容を見る<span class="door__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. NUMBERS (recruit chapter starts) ============ -->
+<section class="sec sec--tint numbers" id="recruit" aria-labelledby="num-ttl">
+  <div class="wrap">
+    <div class="sh rv">
+      <p class="chapter chapter--y"><svg class="ic" aria-hidden="true"><use href="#i-door"/></svg>はたらきたい方へ</p>
+      <p class="sh__en">NUMBERS</p>
+      <h2 class="sh__ttl" id="num-ttl">数字で見る<wbr>ネオシステムズ</h2>
+      <p class="sh__lead">2023年設立、<wbr>社員30名の<wbr>IT企業です。<wbr>はたらく環境を、<wbr>数字でご紹介します。</p>
+    </div>
+    <ul class="bento" data-stagger>
+      <li class="tile t-emp rv">
+        <p class="tile__lbl">社員数</p>
+        <div class="avs" aria-hidden="true"><span class="avs__i avs__i--y"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><span class="avs__i avs__i--w"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><span class="avs__i avs__i--n"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><span class="avs__more">+27</span></div>
+        <p class="tile__num"><span class="n" data-count="30">30</span><span class="u">名</span></p>
+        <p class="tile__pill">契約社員・業務委託を含む</p>
+        <span class="tile__ring" aria-hidden="true"></span>
+      </li>
+      <li class="tile t-est rv">
+        <p class="tile__lbl">設立</p>
+        <span class="tile__ic tile__ic--c" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span>
+        <p class="tile__num"><span class="n">2023</span><span class="u">年</span></p>
+        <p class="tile__note">4月に設立</p>
+      </li>
+      <li class="tile t-hol rv">
+        <p class="tile__lbl">年間休日</p>
+        <span class="tile__ic tile__ic--w" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span>
+        <ul class="week" aria-hidden="true"><li>月</li><li>火</li><li>水</li><li>木</li><li>金</li><li class="off">土</li><li class="off">日</li></ul>
+        <p class="tile__num"><span class="pre">約</span><span class="n" data-count="120">120</span><span class="u">日</span></p>
+        <p class="tile__note">完全週休2日制（土日）・<wbr>祝日・<wbr>年末年始</p>
+      </li>
+      <li class="tile t-pay rv">
+        <p class="tile__lbl">月給</p>
+        <span class="tile__ic tile__ic--y" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-yen"/></svg></span>
+        <p class="tile__num"><span class="n" data-count="25">25</span><span class="u">万円以上</span></p>
+        <p class="tile__note">年齢・経験・<wbr>スキルを考慮</p>
+      </li>
+      <li class="tile t-area rv">
+        <p class="tile__lbl">対応エリア</p>
+        <span class="tile__ic tile__ic--c" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span>
+        <div class="tile__row">
+          <p class="tile__word">一都三県</p>
+          <ul class="prefs"><li>東京</li><li>千葉</li><li>埼玉</li><li>神奈川</li></ul>
+        </div>
+      </li>
+      <li class="tile t-isms rv">
+        <p class="tile__lbl">ISMS認証</p>
+        <p class="tile__num tile__num--isms"><span class="pre">ISO</span><span class="n">27001</span></p>
+        <p class="tile__pill">2025年4月 取得</p>
+      </li>
+      <li class="tile t-rem rv">
+        <p class="tile__lbl">在宅勤務</p>
+        <span class="tile__ic tile__ic--y" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg></span>
+        <p class="tile__num"><span class="pre">制度</span><span class="w">あり</span></p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 4. CAREER ============ -->
+<section class="sec career" id="career" aria-labelledby="career-ttl">
+  <div class="wrap">
+    <div class="sh rv">
+      <p class="sh__en">CAREER STEP</p>
+      <h2 class="sh__ttl" id="career-ttl">まずは<wbr>プログラマから。<br><span class="sq">一歩ずつ<svg class="sq__svg" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M2 8C8 2.4 16 2.2 22 7.6S36 13.6 42 8.2 56 2.2 62 7.8 76 13.8 82 8.2 96 2.4 102 7.8 114 13 118 8.4"/></svg></span>、<wbr>システム<wbr>エンジニアへ。</h2>
+      <p class="sh__lead">将来<wbr>システムエンジニアに<wbr>なり得る方を、<wbr>プログラマとして<wbr>採用しています。<wbr>設計書に沿った<wbr>プログラム作成で<wbr>実務経験を積み、<wbr>業務の<span class="nw">調査・分析</span>や<wbr>仕様設計へと<wbr>ステップアップしていきます。</p>
+    </div>
+    <ol class="stairs" data-stagger>
+      <li class="stair stair--0 rv">
+        <div class="stair__top"><span class="stair__no">START</span><span class="stair__ic"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg></span></div>
+        <h3 class="stair__ttl">ITの知識があれば<wbr>未経験OK</h3>
+        <p class="stair__txt">年齢・学歴・経験は<wbr>問いません。<wbr>ここから<wbr>スタートできます。</p>
+        <span class="stair__arrow" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+      <li class="stair stair--1 rv">
+        <div class="stair__top"><span class="stair__no">STEP<b>01</b></span><span class="stair__ic"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg></span></div>
+        <h3 class="stair__ttl">プログラマ<small>PG</small></h3>
+        <p class="stair__txt">設計書に沿って、<wbr>プログラムを<wbr>作成します。</p>
+        <span class="stair__arrow" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+      <li class="stair stair--2 rv">
+        <div class="stair__top"><span class="stair__no">STEP<b>02</b></span><span class="stair__ic"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></span></div>
+        <h3 class="stair__ttl">システム<wbr>エンジニア<small>SE</small></h3>
+        <p class="stair__txt">業務のシステム化に向けた<wbr><span class="nw">調査・分析</span>を行い、<wbr>仕様を<wbr>設計書に<wbr>まとめます。</p>
+      </li>
+    </ol>
+    <div class="skills rv">
+      <p class="skills__ttl"><span class="skills__ic"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></span><span>歓迎スキル<small>必須ではありません</small></span></p>
+      <ul class="chips">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>システム開発</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>インフラ<span class="nw">設計・構築</span>・<wbr><span class="nw">運用・監視</span></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span><span class="nw">DB設計・構築</span></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>BIツール<span class="nw">導入・開発</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. VOICE (placeholder) ============ -->
+<section class="sec sec--tint voice" id="voice" aria-labelledby="voice-ttl">
+  <div class="wrap">
+    <div class="sh sh--c rv">
+      <p class="sh__en">VOICE</p>
+      <h2 class="sh__ttl" id="voice-ttl">社員の声</h2>
+      <p class="voice__note"><span class="tbd">掲載イメージ</span>※ 掲載イメージ。<wbr>実際の社員インタビューに<wbr>差し替え予定</p>
+    </div>
+    <ul class="voices" data-stagger>
+      <li class="vc rv">
+        <div class="vc__hd"><span class="av av--y" aria-hidden="true">A</span><div><p class="vc__name">社員A</p><p class="vc__role">プログラマ</p></div></div>
+        <p class="vc__catch">（インタビューの<wbr>見出しが<wbr>入ります）</p>
+        <p class="vc__txt">（社員インタビュー<wbr>本文が<wbr>入ります）</p>
+        <span class="skel" aria-hidden="true"><i></i><i></i><i></i></span>
+        <a class="vc__more" href="recruit.html#voice">インタビューを読む<span class="vc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      </li>
+      <li class="vc rv">
+        <div class="vc__hd"><span class="av av--c" aria-hidden="true">B</span><div><p class="vc__name">社員B</p><p class="vc__role">システムエンジニア</p></div></div>
+        <p class="vc__catch">（インタビューの<wbr>見出しが<wbr>入ります）</p>
+        <p class="vc__txt">（社員インタビュー<wbr>本文が<wbr>入ります）</p>
+        <span class="skel" aria-hidden="true"><i></i><i></i><i></i></span>
+        <a class="vc__more" href="recruit.html#voice">インタビューを読む<span class="vc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      </li>
+      <li class="vc rv">
+        <div class="vc__hd"><span class="av av--w" aria-hidden="true">C</span><div><p class="vc__name">社員C</p><p class="vc__role">プログラマ</p></div></div>
+        <p class="vc__catch">（インタビューの<wbr>見出しが<wbr>入ります）</p>
+        <p class="vc__txt">（社員インタビュー<wbr>本文が<wbr>入ります）</p>
+        <span class="skel" aria-hidden="true"><i></i><i></i><i></i></span>
+        <a class="vc__more" href="recruit.html#voice">インタビューを読む<span class="vc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 6. BENEFITS ============ -->
+<section class="sec benefits" id="environment" aria-labelledby="bn-ttl">
+  <div class="wrap">
+    <div class="sh rv">
+      <p class="sh__en">BENEFITS</p>
+      <h2 class="sh__ttl" id="bn-ttl"><mark class="mk">はたらきやすさ</mark>も、<wbr>大切に。</h2>
+      <p class="sh__lead">在宅勤務制度や、<wbr>育児と仕事の<wbr>両立を支える制度、<wbr>年1回の昇給など。<wbr>安心して<wbr>はたらける環境を<wbr>整えています。</p>
+    </div>
+    <ul class="bn" data-stagger>
+      <li class="rv"><span class="bn__ic bn__ic--y"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg></span><b>在宅勤務制度</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--c"><svg class="ic" aria-hidden="true"><use href="#i-stroller"/></svg></span><b>育児休暇制度</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--y"><svg class="ic" aria-hidden="true"><use href="#i-clock-heart"/></svg></span><b>育児短時間<wbr>勤務制度</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--c"><svg class="ic" aria-hidden="true"><use href="#i-train"/></svg></span><b>交通費全額支給</b><small>（上限あり）</small></li>
+      <li class="rv"><span class="bn__ic bn__ic--y"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><b>社会保険完備</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--c"><svg class="ic" aria-hidden="true"><use href="#i-pulse"/></svg></span><b>年1回の<wbr>健康診断</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--y"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg></span><b>昇給年1回</b></li>
+      <li class="rv"><span class="bn__ic bn__ic--c"><svg class="ic" aria-hidden="true"><use href="#i-gift"/></svg></span><b>決算賞与</b><small>（評価による）</small></li>
+      <li class="rv"><span class="bn__ic bn__ic--y"><svg class="ic" aria-hidden="true"><use href="#i-flex"/></svg></span><b>フレックスタイム</b><small>（応相談）</small></li>
+      <li class="rv"><span class="bn__ic bn__ic--c"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span><b>完全週休2日<wbr>（土日）</b><small>祝日・年末年始も休日</small></li>
+    </ul>
+    <div class="proof rv">
+      <p class="proof__lbl"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>はたらき方の<wbr>取り組み</p>
+      <ul class="proof__list">
+        <li><span class="proof__ic"><svg class="ic" aria-hidden="true"><use href="#i-telework"/></svg></span><span><b>「テレワーク東京ルール」<wbr>実践企業</b><small>東京都より認定<wbr>（2024年11月）</small></span></li>
+        <li><span class="proof__ic"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></span><span><b>「トモニン」登録</b><small>仕事と介護の両立支援<wbr>（2026年6月）</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. JOBS ============ -->
+<section class="sec sec--tint jobs" id="jobs" aria-labelledby="jobs-ttl">
+  <div class="wrap">
+    <div class="sh sh--c rv">
+      <p class="sh__en">JOBS</p>
+      <h2 class="sh__ttl" id="jobs-ttl">募集職種</h2>
+      <p class="sh__lead">年齢・学歴・経験は不問です。<wbr>ITの知識があれば、<wbr>実務未経験でも<wbr>応募いただけます。</p>
+    </div>
+    <div class="jobs__grid" data-stagger>
+      <article class="job rv">
+        <div class="job__hd">
+          <span class="job__ic job__ic--y" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg></span>
+          <div><p class="job__en">PROGRAMMER</p><h3 class="job__ttl">プログラマ<small>（PG）</small></h3></div>
+        </div>
+        <ul class="job__tags"><li class="tag tag--coral">未経験OK</li><li class="tag">正社員／契約社員</li></ul>
+        <p class="job__desc">設計書に従い、<wbr>プログラムを<wbr>作成します。<wbr>将来システムエンジニアを<wbr>目指す方の<wbr>スタート職種です。</p>
+        <dl class="job__dl">
+          <div><dt>雇用形態</dt><dd>正社員／契約社員<small>試用期間3カ月（最長6カ月）</small></dd></div>
+          <div><dt>給与</dt><dd>月給25万円以上<small>年齢・経験・スキルを考慮</small></dd></div>
+          <div><dt>勤務地</dt><dd>本社または顧客先<small>東京・千葉・埼玉・神奈川</small></dd></div>
+          <div><dt>勤務時間</dt><dd>9:00〜18:00<small>フレックス応相談</small></dd></div>
+        </dl>
+        <a class="btn btn--line job__more" href="recruit.html#pg">詳しく見る<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="job rv">
+        <div class="job__hd">
+          <span class="job__ic job__ic--c" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></span>
+          <div><p class="job__en">SYSTEMS ENGINEER</p><h3 class="job__ttl">システム<wbr>エンジニア<small>（SE）</small></h3></div>
+        </div>
+        <ul class="job__tags"><li class="tag tag--cyan">上流工程</li><li class="tag">正社員／契約社員</li></ul>
+        <p class="job__desc">業務のシステム化に向けた<wbr><span class="nw">調査・分析</span>を行い、<wbr>仕様を<wbr>設計書に<wbr>まとめます。</p>
+        <dl class="job__dl">
+          <div><dt>雇用形態</dt><dd>正社員／契約社員<small>試用期間3カ月（最長6カ月）</small></dd></div>
+          <div><dt>給与</dt><dd>月給25万円以上<small>年齢・経験・スキルを考慮</small></dd></div>
+          <div><dt>勤務地</dt><dd>本社または顧客先<small>東京・千葉・埼玉・神奈川</small></dd></div>
+          <div><dt>勤務時間</dt><dd>9:00〜18:00<small>フレックス応相談</small></dd></div>
+        </dl>
+        <a class="btn btn--line job__more" href="recruit.html#se">詳しく見る<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+    </div>
+    <div class="jobs__entry rv">
+      <a class="btn btn--yellow btn--xl" href="recruit.html#entry"><svg class="ic btn__lead" aria-hidden="true"><use href="#i-send"/></svg>エントリーする<span class="btn__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <p>応募資格：年齢・学歴・経験不問<wbr>／ITの知識があれば<wbr>実務未経験OK</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. FOR BUSINESS ============ -->
+<section class="sec biz" id="business" aria-labelledby="biz-ttl">
+  <div class="wrap">
+    <div class="biz__hd">
+      <div class="sh rv">
+        <p class="chapter chapter--c"><svg class="ic" aria-hidden="true"><use href="#i-door"/></svg>企業の方へ</p>
+        <p class="sh__en">FOR BUSINESS</p>
+        <h2 class="sh__ttl" id="biz-ttl">迅速なサポートで、<br>デジタルビジョンを<wbr>かたちに。</h2>
+        <p class="sh__lead">クラウドソリューション、<wbr>DX支援、<wbr>ITコンサルティング、<wbr>システムエンジニアリング<wbr>サービス、<wbr>受託開発。<wbr>お客様の立場に立って<wbr>課題を伺い、<wbr>計画から<wbr><span class="nw">運用・保守</span>まで<wbr>一貫してサポートします。</p>
+      </div>
+      <div class="biz__vis rv" aria-hidden="true">
+        <span class="shp shp--bdots dots fl fl--2"></span>
+        <span class="shp shp--byel fl"></span>
+        <figure class="blob blob--b1"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/advantages-and-disadvantages-of-cloud-service.jpg" alt="" width="1000" height="667" loading="lazy"></figure>
+        <figure class="blob blob--b2"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/06/cropped-dx-3.jpg" alt="" width="777" height="514" loading="lazy"></figure>
+      </div>
+    </div>
+
+    <ul class="svc" data-stagger>
+      <li class="rv"><a href="business.html#cloud"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-cloud"/></svg></span><span class="svc__no">01</span></span><h3>クラウド<wbr>ソリューション</h3><p>クラウド移行支援から<wbr>インフラ構築、<wbr>アプリケーション開発、<wbr>セキュリティと監視、<wbr>運用サポートまで。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li class="rv"><a href="business.html#dx"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-dx"/></svg></span><span class="svc__no">02</span></span><h3>DX支援</h3><p>ビジネスニーズに合わせた<wbr>戦略的なアプローチと<wbr>最新のテクノロジーで、<wbr>業務プロセスを<wbr><span class="nw">最適化・効率化</span>します。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li class="rv"><a href="business.html#consulting"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg></span><span class="svc__no">03</span></span><h3>ITコンサルティング</h3><p>お客様の立場に立って<wbr>ニーズと現状を分析。<wbr>計画・設計・開発・<wbr><span class="nw">テスト・導入</span>まで<wbr>一貫して支援します。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li class="rv"><a href="business.html#ses"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><span class="svc__no">04</span></span><h3>システム<wbr>エンジニアリング<wbr>サービス<small>SES</small></h3><p>システム開発、<wbr>インフラの<span class="nw">設計・構築</span>・<wbr><span class="nw">運用・監視</span>、<wbr><span class="nw">DB設計・構築</span>、<wbr>BIツール<span class="nw">導入・開発</span>。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li class="rv"><a href="business.html#development"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-window"/></svg></span><span class="svc__no">05</span></span><h3>受託開発</h3><p>課題を伺い、<wbr>最適なシステムを<wbr>オーダーメイドで。<wbr>要件定義から<wbr>テスト、<wbr><span class="nw">運用・保守</span>まで。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li class="rv"><a class="svc--prod" href="products.html"><span class="svc__top"><span class="svc__ic"><svg class="ic" aria-hidden="true"><use href="#i-apps"/></svg></span><span class="svc__no">PRODUCT</span></span><h3>製品サービス</h3><p>中小企業向けの<wbr>業務管理システムで、<wbr>勤怠管理や<wbr><span class="nw">契約・仕入・請求管理</span>を<wbr>ペーパーレスに。</p><span class="svc__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+    </ul>
+
+    <div class="prod__hd rv">
+      <p class="sh__en">OUR SERVICE &amp; PRODUCT</p>
+      <h3 class="prod__ttl">自社サービス・製品</h3>
+    </div>
+    <div class="prod" data-stagger>
+      <article class="pc pc--koko rv">
+        <figure class="pc__img"><img src="https://img.kokomart.jp/product/2026/10/a011db4e6d8479c08c74b8c6e0899f0d.png" alt="KokoMart 9月26日 正式オープン・尾久店 同時開業のお知らせバナー" width="820" height="460" loading="lazy"></figure>
+        <div class="pc__body">
+          <p class="pc__tags"><span class="tag tag--y">自社サービス</span><span class="tag tag--w">オンラインストア・実店舗</span></p>
+          <h4 class="pc__ttl">KokoMart<small>（ココマート）</small></h4>
+          <p class="pc__slogan">「いいもの、ここに。」</p>
+          <p class="pc__txt"><span class="nw">中華食材・アジア食品</span>の<wbr>オンラインストア。<wbr>2026年9月26日に<wbr>正式オープンし、<wbr>実店舗「尾久店」<wbr><span class="nw">（荒川区西尾久）も</span><wbr>同時に開業しました。</p>
+          <ul class="chips chips--s"><li>4,980円以上 送料無料</li><li>3営業日以内に発送</li><li>正規品保証</li></ul>
+          <a class="btn btn--line btn--s pc__btn" href="https://kokomart.jp/ja" target="_blank" rel="noopener">KokoMartを見る<svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg><span class="vh">（新しいタブで開きます）</span></a>
+        </div>
+      </article>
+      <article class="pc pc--sys rv">
+        <figure class="pc__img pc__img--sys"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/10/cropped-Mac-1.png" alt="業務管理システムの画面を表示したノートパソコン" width="1204" height="802" loading="lazy"></figure>
+        <div class="pc__body">
+          <p class="pc__tags"><span class="tag tag--c">自社製品</span><span class="tag tag--w">中小企業・SES企業向け</span></p>
+          <h4 class="pc__ttl">業務管理システム <span class="tbd">製品名 要確認</span></h4>
+          <p class="pc__txt">勤怠管理と、<wbr>SESに特化した<wbr><span class="nw">契約・仕入・請求管理</span>を<wbr>ひとつに。<wbr>社内管理の<wbr>ペーパーレス化を<wbr>実現します。</p>
+          <ul class="chips chips--s"><li>勤怠管理</li><li>契約管理</li><li>仕入・請求管理</li></ul>
+          <a class="btn btn--line btn--s pc__btn" href="products.html">詳しく見る<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+    <ul class="trust rv" aria-label="品質・セキュリティへの取り組み">
+      <li><a href="security.html"><span class="trust__ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><span><b>ISMS（ISO/IEC 27001）</b><small>認証取得<wbr>（<span class="nw">JIS Q 27001:2025</span>）</small></span><svg class="ic trust__ar" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a href="security.html#security-action"><span class="trust__ic"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg></span><span><b>SECURITY ACTION</b><small>「二つ星」自己宣言</small></span><svg class="ic trust__ar" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a href="company.html#quality"><span class="trust__ic"><svg class="ic" aria-hidden="true"><use href="#i-clip"/></svg></span><span><b>品質方針</b><small>2025年4月1日 制定</small></span><svg class="ic trust__ar" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+    </ul>
+
+    <div class="biz__cta rv">
+      <p class="biz__cta-txt"><b>システム開発・ITに関する<wbr>ご相談、<wbr>お見積りのご依頼は<wbr>お気軽に。</b></p>
+      <a class="btn btn--navy btn--l" href="contact.html">お仕事のご相談はこちら<span class="btn__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="biz__tel" href="tel:0356455678"><span class="biz__tel-ic"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span><b>03-5645-5678</b><small>平日 9:00〜18:00（土日祝除く）</small></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. NEWS ============ -->
+<section class="sec sec--tint news" id="news" aria-labelledby="news-ttl">
+  <div class="wrap news__in">
+    <div class="sh news__hd rv">
+      <p class="sh__en">NEWS</p>
+      <h2 class="sh__ttl" id="news-ttl">ニュース</h2>
+      <a class="btn btn--line btn--s" href="news.html">ニュース一覧へ<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="news__body rv">
+      <ul class="nl">
+        <li><a href="news.html"><time datetime="2026-10-01">2026.10.01</time><span class="cat cat--rec">採用</span><span class="nl__t">2027年度 エンジニア<span class="nw">（PG・SE）</span>採用の<wbr>エントリー受付を<wbr>開始しました<span class="tbd">仮テキスト</span></span><span class="nl__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="news.html"><time datetime="2026-09-26">2026.09.26</time><span class="cat cat--svc">サービス</span><span class="nl__t"><span class="nw">中華食材・アジア食品</span>の<wbr>オンラインストア<wbr><span class="nw">「KokoMart」を</span><wbr>正式オープン、<wbr>尾久店も<wbr>同時開業しました<span class="tbd">仮テキスト</span></span><span class="nl__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="news.html"><time datetime="2026-06-17">2026.06.17</time><span class="cat cat--cert">取り組み</span><span class="nl__t">仕事と介護の<wbr>両立を支援する<wbr><span class="nw">「トモニン」に</span><wbr>登録しました</span><span class="nl__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="news.html"><time datetime="2025-04-14">2025.04.14</time><span class="cat cat--cert">取り組み</span><span class="nl__t">情報セキュリティ<wbr>マネジメントシステム<wbr><span class="nw">（ISO 27001）の</span><wbr>認証を取得しました</span><span class="nl__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="news.html"><time datetime="2024-11-01">2024.11.01</time><span class="cat cat--info">お知らせ</span><span class="nl__t">「テレワーク東京ルール」<wbr>実践企業として<wbr>東京都より<wbr>認定されました</span><span class="nl__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      </ul>
+      <p class="news__note">※「仮テキスト」の2件は、<wbr>モックアップ用の仮テキストです。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. COMPANY ============ -->
+<section class="sec company" id="company" aria-labelledby="co-ttl">
+  <div class="wrap">
+    <div class="sh rv">
+      <p class="sh__en">COMPANY</p>
+      <h2 class="sh__ttl" id="co-ttl">会社情報</h2>
+    </div>
+    <div class="co rv">
+      <div class="co__info">
+        <p class="co__phil"><small>企業理念</small>革新的な<wbr>テックソリューションと<wbr>迅速なサポートで、<wbr>あなたの<wbr>デジタルビジョンを<wbr>実現する</p>
+        <dl class="co__dl">
+          <div><dt>会社名</dt><dd>株式会社<wbr>ネオシステムズ<small>Neo Systems Co., Ltd.</small></dd></div>
+          <div><dt>設立</dt><dd>2023年4月</dd></div>
+          <div><dt>資本金</dt><dd>1,000万円</dd></div>
+          <div><dt>代表者</dt><dd>代表取締役社長　藍 志根</dd></div>
+          <div><dt>従業員数</dt><dd>30名<small>（契約社員・業務委託含む）</small></dd></div>
+          <div><dt>所在地</dt><dd>〒103-0023<br>東京都中央区<wbr>日本橋本町4-9-2<wbr> 本栄ビル6階</dd></div>
+          <div><dt>TEL / FAX</dt><dd><a class="co__tel nw" href="tel:0356455678">03-5645-5678</a> <span class="nw">／ 03-5645-5677</span></dd></div>
+        </dl>
+        <ul class="co__links">
+          <li><a class="btn btn--line btn--s" href="company.html">会社概要<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a class="btn btn--line btn--s" href="company.html#message">代表メッセージ<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a class="btn btn--line btn--s" href="company.html#philosophy">企業理念<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="co__access">
+        <div class="map"><iframe src="https://maps.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E4%B8%AD%E5%A4%AE%E5%8C%BA%E6%97%A5%E6%9C%AC%E6%A9%8B%E6%9C%AC%E7%94%BA4-9-2&amp;z=16&amp;output=embed" title="株式会社ネオシステムズ所在地（東京都中央区日本橋本町4-9-2）の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+        <p class="access__ttl"><svg class="ic" aria-hidden="true"><use href="#i-train"/></svg>アクセス</p>
+        <ul class="access">
+          <li><span class="access__st"><small>JR総武本線</small><b>「新日本橋」駅</b><span>8番出口</span></span><span class="walk">徒歩約3分</span></li>
+          <li><span class="access__st"><small>東京メトロ日比谷線</small><b>「小伝馬町」駅</b><span>3番出口</span></span><span class="walk">徒歩約3分</span></li>
+          <li><span class="access__st"><small>東京メトロ銀座線</small><b>「三越前」駅</b><span>A10出口</span></span><span class="walk">徒歩約6分</span></li>
+          <li><span class="access__st"><small>JR山手線・京浜東北線・中央線</small><b>「神田」駅</b><span>東口</span></span><span class="walk">徒歩7分</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. CTA ============ -->
+<section class="cta" id="contact-cta" aria-labelledby="cta-ttl">
+  <div class="wrap">
+    <div class="cta__box rv">
+      <span class="cta__dots dots" aria-hidden="true"></span>
+      <span class="cta__ring fl fl--2" aria-hidden="true"></span>
+      <span class="cta__pip fl" aria-hidden="true"></span>
+      <div class="cta__main">
+        <p class="sh__en">ENTRY &amp; CONTACT</p>
+        <h2 class="cta__ttl" id="cta-ttl">エンジニアへの<wbr>一歩を、<br>ここから。</h2>
+        <p class="cta__lead">年齢・学歴・経験は<wbr>不問。<wbr>ITの知識があれば、<wbr>実務未経験でも<wbr>応募いただけます。</p>
+        <div class="cta__btns">
+          <a class="btn btn--navy btn--xl" href="recruit.html#entry"><svg class="ic btn__lead" aria-hidden="true"><use href="#i-send"/></svg>エントリーはこちら<span class="btn__ar"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="btn btn--white btn--l" href="contact.html"><svg class="ic btn__lead" aria-hidden="true"><use href="#i-chat"/></svg>企業の方のお問い合わせ</a>
+        </div>
+      </div>
+      <div class="cta__tel">
+        <span class="cta__tel-ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span>
+        <p class="cta__tel-lbl">お電話でのお問い合わせ</p>
+        <a class="cta__num" href="tel:0356455678">03-5645-5678</a>
+        <p class="cta__hours">受付時間 平日 9:00〜18:00<br>（土日祝除く）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ footer ============ -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a class="ftr__logo" href="index.html"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/%E6%B7%B1%E8%89%B2%E8%83%8C%E6%99%AF%E7%94%A8%E9%80%8F%E6%98%8E2-2.png" alt="NEO SYSTEMS 株式会社ネオシステムズ" width="170" height="34" loading="lazy"></a>
+        <p class="ftr__tagline">INNOVATIVE TECH SOLUTIONS<br>AGILE SUPPORT &amp; EXPERT CONSULTING</p>
+        <address class="ftr__addr">〒103-0023<br>東京都中央区<wbr>日本橋本町4-9-2<wbr> 本栄ビル6階<br>TEL <a href="tel:0356455678">03-5645-5678</a>／FAX 03-5645-5677<br>受付時間 平日 9:00〜18:00<wbr>（土日祝除く）</address>
+        <div class="ftr__btns">
+          <a class="btn btn--yellow btn--s" href="recruit.html#entry">エントリー</a>
+          <a class="btn btn--ghost btn--s" href="contact.html">お問い合わせ</a>
+        </div>
+      </div>
+      <nav class="ftr__nav" aria-label="サイトマップ">
+        <div><p>採用情報</p><ul><li><a href="recruit.html#jobs">募集職種</a></li><li><a href="recruit.html#career">キャリアステップ</a></li><li><a href="recruit.html#environment">はたらく環境</a></li><li><a href="recruit.html#voice">社員の声</a></li><li><a href="recruit.html#entry">エントリー</a></li></ul></div>
+        <div><p>事業内容</p><ul><li><a href="business.html#cloud">クラウド<wbr>ソリューション</a></li><li><a href="business.html#dx">DX支援</a></li><li><a href="business.html#consulting">ITコンサルティング</a></li><li><a href="business.html#ses">SES</a></li><li><a href="business.html#development">受託開発</a></li><li><a href="products.html">製品サービス</a></li></ul></div>
+        <div><p>会社情報</p><ul><li><a href="company.html">会社概要</a></li><li><a href="company.html#message">代表メッセージ</a></li><li><a href="company.html#philosophy">企業理念</a></li><li><a href="company.html#quality">品質方針</a></li><li><a href="security.html">情報セキュリティ</a></li><li><a href="company.html#access">アクセス</a></li></ul></div>
+        <div><p>その他</p><ul><li><a href="news.html">ニュース</a></li><li><a href="https://kokomart.jp/ja" target="_blank" rel="noopener">KokoMart<svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg><span class="vh">（新しいタブで開きます）</span></a></li><li><a href="contact.html">お問い合わせ</a></li><li><a href="privacy.html">プライバシー<wbr>ポリシー</a></li><li><a href="sitemap.html">サイトマップ</a></li></ul></div>
+      </nav>
+    </div>
+    <ul class="ftr__certs" aria-label="認証・登録">
+      <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>ISMS（ISO/IEC 27001）認証取得</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>SECURITY ACTION 二つ星</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-telework"/></svg>テレワーク東京ルール 実践企業</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>トモニン 登録</li>
+      <li>東京商工会議所 会員</li>
+      <li>公益社団法人日本橋法人会 会員</li>
+      <li>適格請求書発行事業者</li>
+    </ul>
+    <div class="ftr__btm">
+      <div class="ftr__lang" aria-label="Language"><a class="is-on" href="index.html" lang="ja" aria-current="true">日本語</a><a href="../en/index.html" lang="en" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a><a href="../zh/index.html" lang="zh" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a></div>
+      <p class="ftr__copy">© 2026 Neo Systems Co., Ltd.</p>
+      <button class="totop" type="button" aria-label="ページの先頭へ戻る"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ mobile bottom bar ============ -->
+<nav class="mbar" aria-label="エントリー・お問い合わせ">
+  <a class="mbar__tel" href="tel:0356455678"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg><span>電話</span><span class="vh">03-5645-5678</span></a>
+  <a class="mbar__btn mbar__btn--line" href="contact.html">お問い合わせ</a>
+  <a class="mbar__btn mbar__btn--y" href="recruit.html#entry">エントリー</a>
+</nav>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
