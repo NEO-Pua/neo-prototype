@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Style frame A — White model｜NEO LINE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#22348c;--cyan:#00a0e0;--cyan-d:#0077b6;--ink:#111827;--ink-2:#4b5563;--ink-3:#8a93a3;--line:#e3e7ee;--gut:clamp(20px,3.6vw,56px);--jp:'Noto Sans JP',sans-serif;--en:'Inter','Noto Sans JP',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--jp);color:var(--ink);background:linear-gradient(180deg,#f4f7fb 0%,#eaf0f6 62%,#e4e9f0 100%);overflow:hidden;-webkit-font-smoothing:antialiased;letter-spacing:.02em}
+a{color:inherit;text-decoration:none}
+canvas.gl{position:fixed;inset:0;width:100%;height:100%;display:block}
+.veil{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(246,248,251,.92) 0%,rgba(246,248,251,.7) 30%,rgba(246,248,251,0) 52%)}
+
+/* header */
+.hdr{position:fixed;left:0;right:0;top:0;z-index:10;display:flex;align-items:center;gap:28px;height:76px;padding:0 var(--gut)}
+.hdr img{height:22px;width:auto}
+.hdr nav{margin-left:auto;display:flex;gap:28px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.hdr .ct{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:2px;background:var(--ink);color:#fff;font-size:13px;font-weight:500}
+
+/* hero */
+.hero{position:fixed;left:var(--gut);top:clamp(120px,19vh,190px);z-index:5;width:min(600px,92vw)}
+.kicker{display:flex;align-items:center;gap:12px;font-family:var(--en);font-size:12px;font-weight:500;letter-spacing:.18em;color:var(--ink-2)}
+.kicker .rd{width:34px;height:34px}
+h1{margin-top:26px;font-size:clamp(34px,3.7vw,56px);font-weight:700;line-height:1.32;letter-spacing:.04em}
+h1 .w{display:inline-block;white-space:nowrap}
+h1 .c{display:inline-block;transform-origin:50% 60%;backface-visibility:hidden;animation:flip .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.35s + var(--i) * 45ms)}
+@keyframes flip{0%{transform:perspective(400px) rotateX(-90deg);opacity:0}60%{opacity:1}100%{transform:none}}
+.lead{max-width:470px;margin-top:22px;font-size:15px;line-height:2;color:var(--ink-2)}
+.cta{display:flex;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:14px;height:50px;padding:0 24px;border-radius:2px;font-size:14px;font-weight:500;letter-spacing:.06em}
+.btn--ink{background:var(--ink);color:#fff}
+.btn--line{box-shadow:inset 0 0 0 1px #c9d0db;color:var(--ink)}
+.btn svg{width:16px;height:16px}
+
+/* split-flap departure line */
+.flap{display:flex;align-items:center;gap:22px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--en);font-size:11px;letter-spacing:.14em;color:var(--ink-3)}
+.flap dl{display:grid;gap:6px}
+.tiles{display:flex;gap:2px}
+.tiles b{position:relative;display:grid;place-items:center;min-width:22px;height:30px;padding:0 3px;border-radius:2px;background:#151b26;color:#fff;font-family:var(--en);font-size:15px;font-weight:500;letter-spacing:0;overflow:hidden}
+.tiles.jp b{font-family:var(--jp);font-size:14px;min-width:26px}
+.tiles b::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.65)}
+
+/* route strip */
+.route{position:fixed;left:var(--gut);right:var(--gut);bottom:28px;z-index:5;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:32px;padding:16px 24px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(17,24,39,.04),0 10px 30px -18px rgba(17,24,39,.35)}
+.route__tt{font-family:var(--en);font-size:11px;letter-spacing:.14em;color:var(--ink-3);line-height:1.7;white-space:nowrap}
+.route__tt b{display:block;font-family:var(--jp);font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--ink)}
+.stops{position:relative;display:grid;grid-template-columns:repeat(7,1fr)}
+.stops::before{content:"";position:absolute;left:calc(100%/14);right:calc(100%/14);top:17px;height:3px;background:linear-gradient(90deg,var(--cyan) 0 2%,#d6dce5 2%)}
+.stop{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-2);white-space:nowrap}
+.stop .rd{width:36px;height:36px}
+.stop.on{color:var(--ink);font-weight:700}
+.rd{display:block}
+
+.tag{position:fixed;right:var(--gut);top:92px;z-index:6;font-family:var(--en);font-size:10.5px;letter-spacing:.18em;color:var(--ink-3)}
+.loading{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--en);font-size:11px;letter-spacing:.2em;color:var(--ink-3);transition:opacity .6s}
+.ready .loading{opacity:0}
+@media(max-width:900px){.hdr nav{display:none}.veil{background:linear-gradient(180deg,rgba(246,248,251,.94) 0%,rgba(246,248,251,.8) 45%,rgba(246,248,251,0) 70%)}.hero{top:96px}.route{grid-template-columns:1fr;gap:10px;bottom:12px;left:12px;right:12px;padding:12px}.route__tt{display:none}.stop span{display:none}.stop.on span{display:block}.flap{display:none}.tag{display:none}}
+@media(prefers-reduced-motion:reduce){h1 .c{animation:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="rd" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#fff" stroke="#00a0e0" stroke-width="4.5"/></symbol>
+<symbol id="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+</defs></svg>
+
+<div class="loading">LOADING MODEL</div>
+<canvas class="gl" aria-hidden="true"></canvas>
+<div class="veil"></div>
+
+<header class="hdr">
+  <img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/%E9%80%8F%E6%98%8E2-1.png" alt="NEO SYSTEMS">
+  <nav><a>路線図・事業内容</a><a>採用情報</a><a>会社情報</a><a>お知らせ</a></nav>
+  <a class="ct">お問い合わせ</a>
+</header>
+<p class="tag">STYLE FRAME A — WHITE MODEL</p>
+
+<section class="hero">
+  <p class="kicker"><svg class="rd" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#fff" stroke="#00a0e0" stroke-width="4.5"/><text x="20" y="17.5" text-anchor="middle" font-family="Inter" font-size="7.5" font-weight="600" fill="#111827">NS</text><text x="20" y="28" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#111827">01</text></svg>NEO LINE ／ 日本橋 発</p>
+  <h1 data-flip>日本橋から、<br>あなたのビジネスへ。</h1>
+  <p class="lead">クラウド、DX支援、ITコンサルティング、SES、受託開発。5つの駅を経由して、お客様のビジネスまで、一本の路線でつなぎます。</p>
+  <div class="cta"><a class="btn btn--ink">乗車する<svg><use href="#ar"/></svg></a><a class="btn btn--line">路線図を見る</a></div>
+  <div class="flap" aria-label="発車案内：9時00分発、快速、あなたのビジネス行">
+    <dl><dt>DEPARTS</dt><dd class="tiles" data-to="09:00"></dd></dl>
+    <dl><dt>SERVICE</dt><dd class="tiles jp" data-to="快速"></dd></dl>
+    <dl><dt>FOR</dt><dd class="tiles jp" data-to="あなたのビジネス"></dd></dl>
+  </div>
+</section>
+
+<nav class="route" aria-label="路線図">
+  <p class="route__tt">TIMETABLE<b>日本橋 09:00 発 → 終点 あなたのビジネス</b>7 STATIONS · 快速</p>
+  <ol class="stops"></ol>
+</nav>
+
+<script>
+/* split-flap: each tile riffles through characters before settling */
+(function(){
+  var pool='アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789:';
+  document.querySelectorAll('.tiles').forEach(function(el,row){
+    var to=el.dataset.to;
+    to.split('').forEach(function(ch,i){
+      var b=document.createElement('b');b.textContent=pool[Math.floor(Math.random()*pool.length)];el.appendChild(b);
+      var n=8+i*2+row*4, k=0, t=setInterval(function(){
+        if(++k>=n){b.textContent=ch;clearInterval(t);return}
+        b.textContent=pool[Math.floor(Math.random()*pool.length)];
+      },60);
+    });
+  });
+  // headline flips in, character by character
+  var h=document.querySelector('[data-flip]'), i=0;
+  h.innerHTML=h.innerHTML.split('<br>').map(function(line){
+    return '<span class="w">'+line.split('').map(function(c){return '<span class="c" style="--i:'+(i++)+'">'+c+'</span>'}).join('')+'</span>';
+  }).join('<br>');
+  // route strip
+  var names=['日本橋','クラウド','DX支援','ITコンサル','SES','受託開発','あなたのビジネス'], ol=document.querySelector('.stops');
+  names.forEach(function(n,k){
+    ol.insertAdjacentHTML('beforeend','<li class="stop'+(k?'':' on')+'"><svg class="rd" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="'+(k?'#fff':'#00a0e0')+'" stroke="'+(k?'#c3cbd6':'#00a0e0')+'" stroke-width="4.5"/><text x="20" y="17.5" text-anchor="middle" font-family="Inter" font-size="7.5" font-weight="600" fill="'+(k?'#6b7280':'#fff')+'">NS</text><text x="20" y="28" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="'+(k?'#6b7280':'#fff')+'">0'+(k+1)+'</text></svg><span>'+n+'</span></li>');
+  });
+})();
+</script>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+const canvas=document.querySelector('canvas.gl');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+const scene=new THREE.Scene();
+scene.fog=new THREE.Fog(0xedf1f6,200,480);
+const camera=new THREE.PerspectiveCamera(22,1,1,1200);
+
+// lights: a low morning sun from the front left, soft sky fill
+scene.add(new THREE.HemisphereLight(0xffffff,0xc9d1dc,.8));
+const sun=new THREE.DirectionalLight(0xfff4e6,3.1);
+sun.position.set(-150,120,130);sun.castShadow=true;
+sun.shadow.mapSize.set(4096,4096);sun.shadow.bias=-.0003;sun.shadow.normalBias=.15;sun.shadow.radius=3;
+Object.assign(sun.shadow.camera,{left:-260,right:260,top:200,bottom:-200,near:10,far:700});sun.shadow.camera.updateProjectionMatrix();
+scene.add(sun);
+
+// materials: matte "clay" whites; colour only where it carries meaning
+const M=(c,r=.92,m=0)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+const clay=M(0xf4f4f2), clay2=M(0xeceeef), clay3=M(0xe2e5e9), ground=M(0xe8ebef);
+const glass=M(0x46546e,.2,.45), dark=M(0x3a404b,.7), steel=M(0xb8bec8,.4,.6);
+const navy=M(0x22348c,.55), cyan=new THREE.MeshStandardMaterial({color:0x00a0e0,emissive:0x00a0e0,emissiveIntensity:.35,roughness:.5});
+
+function box(w,h,d,mat,x,y,z,r=0){
+  const g=r?new RoundedBoxGeometry(w,h,d,2,r):new THREE.BoxGeometry(w,h,d);
+  const m=new THREE.Mesh(g,mat);m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;scene.add(m);return m;
+}
+// seeded random so the frame is the same every time
+let seed=7;const R=()=>(seed=(seed*16807)%2147483647)/2147483647;
+
+// ground
+const gp=new THREE.Mesh(new THREE.PlaneGeometry(1600,1600),ground);gp.rotation.x=-Math.PI/2;gp.receiveShadow=true;scene.add(gp);
+
+// city: white blocks behind, low blocks in front
+for(let x=-300;x<=300;x+=16)for(let z=-28;z>=-360;z-=18){
+  if(R()<.38)continue;
+  const far=z<-110, tall=far&&R()<.12, h=tall?70+R()*70:(far?14:6)+Math.pow(R(),1.8)*(far?44:20), w=8+R()*5, d=8+R()*6;
+  const b=box(w,h,d,[clay,clay2,clay3][Math.floor(R()*3)],x+R()*4,h/2,z+R()*4);
+  if(tall&&R()<.6)box(w*.6,4,d*.6,clay2,b.position.x,h+2,b.position.z);
+}
+for(let x=-300;x<=300;x+=14)for(let z=26;z<=140;z+=16){
+  if(R()<.55)continue;const h=1.2+R()*2.6;box(7+R()*3,h,6+R()*4,[clay,clay2][Math.floor(R()*2)],x+R()*3,h/2,z+R()*3,.3);
+}
+
+// viaduct: deck, piers, parapet with the cyan line identity
+const DY=8;
+box(400,1.4,11,clay,0,DY-.7,0);
+for(let x=-196;x<=196;x+=14)box(1.6,DY-1.4,7,clay2,x,(DY-1.4)/2,0);
+box(400,1.1,.45,clay,0,DY+.55,5.3);
+box(400,.18,.06,cyan,0,DY+.92,5.55);
+// track: ballast and rails
+box(400,.35,4.6,clay3,0,DY+.18,1.2);
+for(const z of [.45,1.95])box(400,.18,.12,steel,0,DY+.44,z);
+
+// station: platform, slender columns, a thin canopy slab
+box(96,1.1,5,clay,-10,DY+.55,-3.6);
+box(96,.12,.35,M(0xe8c34a,.6),-10,DY+1.12,-1.3);
+for(let x=-54;x<=34;x+=11)box(.35,6.2,.35,clay2,x,DY+4.2,-5);
+box(100,.32,8.4,clay,-10,DY+7.4,-2.6);
+box(100,.08,.12,cyan,-10,DY+7.2,1.6);
+
+// overhead line poles
+for(let x=-190;x<=190;x+=40){box(.3,7.5,.3,steel,x,DY+3.7,5);box(.18,.18,4.6,steel,x,DY+7,2.8)}
+box(400,.05,.05,dark,0,DY+6.4,1.2);
+
+// station sign (canvas texture so the type is crisp)
+await document.fonts.ready;
+function signTex(){
+  const c=document.createElement('canvas');c.width=1024;c.height=256;const x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,1024,256);
+  x.fillStyle='#22348c';x.fillRect(0,206,1024,50);x.fillStyle='#00a0e0';x.fillRect(0,200,1024,8);
+  x.lineWidth=14;x.strokeStyle='#00a0e0';x.beginPath();x.arc(120,100,62,0,7);x.stroke();
+  x.fillStyle='#111827';x.textAlign='center';x.font='600 30px Inter';x.fillText('NS',120,90);x.font='600 46px Inter';x.fillText('01',120,138);
+  x.font='700 96px "Noto Sans JP"';x.fillText('日本橋',560,130);
+  x.font='500 30px Inter';x.fillStyle='#4b5563';x.fillText('Nihombashi',560,180);
+  x.fillStyle='#fff';x.font='500 26px "Noto Sans JP"';x.textAlign='right';x.fillText('クラウド →',990,240);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t;
+}
+const sign=new THREE.Mesh(new THREE.PlaneGeometry(8,2),new THREE.MeshStandardMaterial({map:signTex(),roughness:.6}));
+sign.position.set(4,DY+5.2,-1.2);scene.add(sign);
+
+// the train: three cars, side profile extruded, a continuous glass band and the NEO LINE stripes
+const CAR=20, W=2.9, H=3.7;
+function carShape(nose){
+  const s=new THREE.Shape();
+  s.moveTo(.4,0);
+  if(nose){s.lineTo(CAR-4.5,0);s.bezierCurveTo(CAR-1.2,0,CAR,0.6,CAR,1.5);s.bezierCurveTo(CAR,2.6,CAR-1.6,H,CAR-4.8,H)}
+  else{s.lineTo(CAR-.4,0);s.quadraticCurveTo(CAR,0,CAR,.4);s.lineTo(CAR,H-.5);s.quadraticCurveTo(CAR,H,CAR-.5,H)}
+  s.lineTo(.5,H);s.quadraticCurveTo(0,H,0,H-.5);s.lineTo(0,.4);s.quadraticCurveTo(0,0,.4,0);
+  return s;
+}
+const train=new THREE.Group();scene.add(train);
+for(let i=0;i<3;i++){
+  const nose=i===2||i===0, g=new THREE.Group();
+  const geo=new THREE.ExtrudeGeometry(carShape(nose),{depth:W,bevelEnabled:true,bevelSize:.12,bevelThickness:.12,bevelSegments:4,curveSegments:24});
+  geo.translate(0,0,-W/2);
+  const body=new THREE.Mesh(geo,M(0xf7f7f5,.38,.05));body.castShadow=body.receiveShadow=true;g.add(body);
+  const len=nose?CAR-5.6:CAR-1.4, x0=nose?.7:.7;
+  // glass band + stripes on the camera side
+  const add=(w,h,y,mat,dz=.02,x=x0)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,.06),mat);m.position.set(x+w/2,y,W/2+.12+dz);g.add(m);return m};
+  add(len,.95,2.25,glass);
+  add(CAR-.8,.22,1.32,navy,.01,.4);
+  add(CAR-.8,.07,1.15,cyan,.01,.4);
+  if(nose){ // windscreen wrapping the nose
+    const ws=new THREE.Mesh(new THREE.BoxGeometry(2.2,1.0,W+.1),glass);ws.position.set(CAR-2.2,2.55,0);ws.rotation.z=-.62;g.add(ws);
+  }
+  // bogies
+  for(const bx of [3.4,CAR-3.4]){const b=new THREE.Mesh(new THREE.BoxGeometry(3.6,.7,2.4),dark);b.position.set(bx,-.25,0);b.castShadow=true;g.add(b)}
+  // roof equipment
+  const r=new THREE.Mesh(new RoundedBoxGeometry(5,.45,1.8,2,.15),clay2);r.position.set(CAR/2,H+.25,0);r.castShadow=true;g.add(r);
+  if(i===0){g.scale.x=-1;g.position.x=CAR;} // rear car faces backwards
+  const holder=new THREE.Group();holder.add(g);holder.position.set(-40+i*20.6,DY+1.25,1.2);train.add(holder);
+}
+
+// camera: telephoto, slightly above the viaduct, a slow cinematic drift
+const target=new THREE.Vector3(-6,DY+2,0);
+function resize(){
+  const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;
+  camera.fov=w/h<1?24:17;
+  // frame the train on the right, leaving the left for the copy
+  // landscape: train on the right of the copy; portrait: train below the copy
+  if(w/h>=1)camera.setViewOffset(w,h,-w*.16,0,w,h);else camera.setViewOffset(w,h,-w*.05,-h*.2,w,h);
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize',resize);resize();
+const clock=new THREE.Clock();
+function frame(){
+  const t=clock.getElapsedTime();
+  const k=matchMedia('(prefers-reduced-motion: reduce)').matches?0:1;
+  const tall=innerWidth<innerHeight;
+  camera.position.set((tall?30:44)+Math.sin(t*.1)*8*k,(tall?50:58)+Math.sin(t*.08)*2*k,tall?190:212);
+  camera.lookAt(target);
+  renderer.render(scene,camera);
+  requestAnimationFrame(frame);
+}
+frame();
+document.documentElement.classList.add('ready');
+</script>
+</body>
+</html>
