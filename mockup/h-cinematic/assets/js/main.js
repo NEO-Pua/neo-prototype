@@ -194,6 +194,152 @@
   }
   update();
 
+  /* ---------- autoplay: one scroll gesture plays the story on to the next stop ----------
+     A deliberate wheel turn, swipe or arrow key makes the page scroll itself to the next
+     stop. Small nudges do nothing, and extra nudges while it plays are ignored, so nothing
+     gets skipped by accident. Keep scrolling (or hold an arrow key) to fast-forward
+     through the stops; stop scrolling and it settles at the next one. The scenes still
+     read the real scroll position, so the scrollbar, links and back button keep working,
+     and grabbing the scrollbar stops the playback. Outside the story, and after the last
+     stop, scrolling is completely normal. */
+  function autoplay(o){
+    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
+    var g={last:0,d:0}, ty=null, tUsed=false;
+    var badge=document.createElement('div');
+    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
+    document.body.appendChild(badge);
+    function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+    function easeO(k){return 1-Math.pow(1-k,3)}
+    function zone(d){
+      var s=o.stops(), y=scrollY, a=s[0].y, b=s[s.length-1].y;
+      return d>0?y>=a-4&&y<b-4:y>a+4&&y<=b+4;
+    }
+    function nextStop(d,from){
+      var s=o.stops(), i;
+      for(i=d>0?0:s.length-1;i>=0&&i<s.length;i+=d)if(d>0?s[i].y>from+4:s[i].y<from-4)return s[i];
+      return null;
+    }
+    function dirOf(a){return a.y1>a.y0?1:-1}
+    function go(d){
+      var t;
+      if(anim){
+        if(dirOf(anim)===d)return;           // already heading that way: a nudge doesn't skip ahead
+        queue=0;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
+      }
+      if(performance.now()<restUntil)return;
+      t=nextStop(d,scrollY);if(t)start(t,false);
+    }
+    function more(d,ms){ // fast-forward for a moment (refreshed while the scrolling continues)
+      if(!anim||dirOf(anim)!==d)return;
+      ffUntil=Math.max(ffUntil,performance.now()+ms);
+    }
+    function start(t,chained){
+      var y0=scrollY, px=Math.abs(t.y-y0);
+      if(px<2)return false;
+      anim={y0:y0,y1:t.y,k:0,dur:!chained&&t.ms?t.ms:o.dur(px),ease:o.linear?null:chained?easeO:easeIO};
+      root.style.scrollBehavior='auto';lastSet=-1;
+      if(!raf){prevT=0;raf=requestAnimationFrame(step)}
+      return true;
+    }
+    function step(now){
+      raf=0;
+      if(!anim)return;
+      // the visitor grabbed the scrollbar (or something else scrolled): let them have it
+      if(lastSet>=0&&Math.abs(scrollY-lastSet)>3){halt();return}
+      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
+      prevT=now;
+      root.classList.toggle('ff-on',fast);
+      rate+=((fast?3.2:queue?2:1)-rate)*.12;
+      anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
+      var e=anim.ease?anim.ease(anim.k):anim.k;
+      lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
+      scrollTo(0,lastSet);
+      if(anim.k<1){raf=requestAnimationFrame(step);return}
+      if(fast||queue){ // keep going while the visitor keeps scrolling
+        if(queue)queue--;
+        var t=nextStop(dirOf(anim),anim.y1);
+        if(t&&start(t,true))return;
+      }
+      halt();restUntil=now+350;
+    }
+    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
+
+    addEventListener('wheel',function(e){
+      if(e.ctrlKey||!e.deltaY||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+      var d=e.deltaY>0?1:-1, now=performance.now(), px=Math.abs(e.deltaY)*(e.deltaMode===1?40:e.deltaMode===2?800:1);
+      if(now-g.last>180||d!==g.d)g={t0:now,last:now,d:d,acc:0,used:false,ev:[]}; // a pause = a new gesture
+      g.last=now;g.acc+=px;g.ev.push([now,px]);
+      if(o.hold&&o.hold()){e.preventDefault();g.used=true;return}
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      // how hard is the visitor scrolling right now, and is it fading (trackpad momentum) or not?
+      var a=0,b=0;
+      g.ev=g.ev.filter(function(v){return now-v[0]<500});
+      g.ev.forEach(function(v){if(now-v[0]<250)a+=v[1];else b+=v[1]});
+      var steady=a>=b*.7;
+      if(!g.used){if(g.acc>=40){g.used=true;go(d)}return}      // one deliberate gesture = one stop
+      if(anim&&now-g.t0>650&&a>=200&&steady){more(d,260);return} // still scrolling hard: fast-forward
+      if(!anim&&now>restUntil+250&&a>=80&&steady)go(d);           // still scrolling after a stop: carry on
+    },{passive:false});
+    addEventListener('touchstart',function(e){ty=e.touches.length===1?e.touches[0].clientY:null;tUsed=false},{passive:true});
+    addEventListener('touchmove',function(e){
+      if(ty===null||!e.cancelable||(o.hold&&o.hold()))return;
+      var dy=ty-e.touches[0].clientY, d=dy>0?1:-1;
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      if(tUsed||Math.abs(dy)<30)return;
+      tUsed=true;
+      if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1); // another swipe while playing: carry on to the next stop, faster
+      else go(d);
+    },{passive:false});
+    addEventListener('keydown',function(e){
+      if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey)return;
+      var t=e.target, k=e.key;
+      if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+      if(k===' '&&t&&t.closest&&t.closest('a,button'))return;
+      var d=k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey)?1:k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey)?-1:0;
+      if(!d||(o.hold&&o.hold()))return;
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      if(e.repeat)more(d,160);       // key held down: fast-forward
+      else if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1);
+      else go(d);
+    });
+    // "skip" button: shown inside the story (until the final leg), jumps straight past it
+    if(skip){
+      var on=null;
+      addEventListener('scroll',function(){
+        var s=o.stops(), y=scrollY, v=y>=s[0].y-4&&y<s[s.length-2].y+4;
+        if(v!==on){on=v;skip.classList.toggle('on',v)}
+      },{passive:true});
+      skip.addEventListener('click',function(){
+        var t=document.querySelector(o.skipTo);
+        halt();if(!t)return;
+        root.style.scrollBehavior='auto';
+        t.scrollIntoView({block:'start'});
+        setTimeout(function(){root.style.scrollBehavior=''},50);
+      });
+    }
+    return{to:function(y){queue=0;ffUntil=0;start({y:y},!!anim)},halt:halt};
+  }
+
+  if(!isStatic){
+    var sceneY=function(n,p){var el=$('[data-scene="'+n+'"]'),t=el.getBoundingClientRect().top+scrollY;return Math.round(t+p*(el.offsetHeight-innerHeight))};
+    autoplay({
+      // the beats of the story; ms = how long that leg plays
+      stops:function(){
+        var s=[{y:0},{y:sceneY('sys',.47),ms:4200}];                             // code types itself, the system assembles
+        [.613,.699,.785,.871,1].forEach(function(p){s.push({y:sceneY('sys',p),ms:2000})}); // the five services, one by one
+        s.push({y:sceneY('dep',.2),ms:3000},{y:sceneY('dep',.93),ms:4500},     // dawn, then the deploy runs
+               {y:sceneY('trust',.85),ms:4000},{y:sceneY('cred',1),ms:8000});  // checks pass, credits roll
+        return s;
+      },
+      dur:function(px){return clamp(1500*Math.sqrt(px/innerHeight),900,5000)},
+      hold:function(){return root.classList.contains('awaiting')}, // the opening film is still playing
+      skip:$('.skip'), skipTo:'#contact'
+    });
+  }
+
   /* ---------- MOTION switch (persists, then reloads at the same chapter) ---------- */
   $$('[data-motion]').forEach(function(b){
     b.setAttribute('aria-pressed',String(!isStatic));

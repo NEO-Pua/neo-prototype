@@ -26,8 +26,8 @@
   ];
   var SX=[0,3200,6600,10000,13400,16800,20400]; // where the train's nose stops (world units)
   var END=SX[6], TRAIN=1096, BR0=5250, BR1=6250, SEA=15300;
-  // share of the scroll: a dwell at 日本橋, then 6 legs of (travel + dwell)
-  var P0=.05, TRAVEL=.105, DWELL=.05, LEG=TRAVEL+DWELL, ACC=.3;
+  // share of the scroll: a short dwell at 日本橋, then 6 legs of (travel + dwell), then the terminal
+  var P0=.035, TRAVEL=.135, DWELL=.02, LEG=TRAVEL+DWELL, ACC=.3, ARR=P0+5*LEG+TRAVEL;
 
   // where along the line is the train at scroll progress p?
   function journey(p){
@@ -45,7 +45,8 @@
     o.state=t>.68?'soon':'next';
     return o;
   }
-  function stopAt(k){return k<=0?0:P0+(k-1)*LEG+TRAVEL+.02}
+  // the resting point at each station: the end of its dwell, just before departure
+  function stopAt(k){return k<=0?0:k>=6?1:P0+k*LEG-.002}
 
   /* ---------- colour ---------- */
   function hx(h){var n=parseInt(h.slice(1),16);return[n>>16,n>>8&255,n&255]}
@@ -666,7 +667,7 @@
     var rb=V.W>1100||hf>.9;if(rb!==U.rb){U.rb=rb;rbar.classList.toggle('on',rb)}
     var on=J.state==='dep'?0:J.k;
     if(on!==U.on){U.on=on;rItems.forEach(function(li,i){li.classList.toggle('on',i===on);li.classList.toggle('done',i<on)})}
-    var showL=hf>.6&&p<.935, showT=p>=.94;
+    var showL=hf>.6&&p<ARR-.004, showT=p>=ARR-.002;
     if(showL!==U.lcd){U.lcd=showL;lcd.classList.toggle('on',showL)}
     if(showT!==U.tk){U.tk=showT;ticket.classList.toggle('on',showT)}
     var k=J.k, st=J.state;
@@ -704,13 +705,150 @@
   ready=layout();
   update();
 
-  // station buttons: scroll (natively) to where the train stops there
+
+  /* ---------- autoplay: one scroll gesture plays the story on to the next stop ----------
+     A deliberate wheel turn, swipe or arrow key makes the page scroll itself to the next
+     stop. Small nudges do nothing, and extra nudges while it plays are ignored, so nothing
+     gets skipped by accident. Keep scrolling (or hold an arrow key) to fast-forward
+     through the stops; stop scrolling and it settles at the next one. The scenes still
+     read the real scroll position, so the scrollbar, links and back button keep working,
+     and grabbing the scrollbar stops the playback. Outside the story, and after the last
+     stop, scrolling is completely normal. */
+  function autoplay(o){
+    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
+    var g={last:0,d:0}, ty=null, tUsed=false;
+    var badge=document.createElement('div');
+    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
+    document.body.appendChild(badge);
+    function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+    function easeO(k){return 1-Math.pow(1-k,3)}
+    function zone(d){
+      var s=o.stops(), y=scrollY, a=s[0].y, b=s[s.length-1].y;
+      return d>0?y>=a-4&&y<b-4:y>a+4&&y<=b+4;
+    }
+    function nextStop(d,from){
+      var s=o.stops(), i;
+      for(i=d>0?0:s.length-1;i>=0&&i<s.length;i+=d)if(d>0?s[i].y>from+4:s[i].y<from-4)return s[i];
+      return null;
+    }
+    function dirOf(a){return a.y1>a.y0?1:-1}
+    function go(d){
+      var t;
+      if(anim){
+        if(dirOf(anim)===d)return;           // already heading that way: a nudge doesn't skip ahead
+        queue=0;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
+      }
+      if(performance.now()<restUntil)return;
+      t=nextStop(d,scrollY);if(t)start(t,false);
+    }
+    function more(d,ms){ // fast-forward for a moment (refreshed while the scrolling continues)
+      if(!anim||dirOf(anim)!==d)return;
+      ffUntil=Math.max(ffUntil,performance.now()+ms);
+    }
+    function start(t,chained){
+      var y0=scrollY, px=Math.abs(t.y-y0);
+      if(px<2)return false;
+      anim={y0:y0,y1:t.y,k:0,dur:!chained&&t.ms?t.ms:o.dur(px),ease:o.linear?null:chained?easeO:easeIO};
+      root.style.scrollBehavior='auto';lastSet=-1;
+      if(!raf){prevT=0;raf=requestAnimationFrame(step)}
+      return true;
+    }
+    function step(now){
+      raf=0;
+      if(!anim)return;
+      // the visitor grabbed the scrollbar (or something else scrolled): let them have it
+      if(lastSet>=0&&Math.abs(scrollY-lastSet)>3){halt();return}
+      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
+      prevT=now;
+      root.classList.toggle('ff-on',fast);
+      rate+=((fast?3.2:queue?2:1)-rate)*.12;
+      anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
+      var e=anim.ease?anim.ease(anim.k):anim.k;
+      lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
+      scrollTo(0,lastSet);
+      if(anim.k<1){raf=requestAnimationFrame(step);return}
+      if(fast||queue){ // keep going while the visitor keeps scrolling
+        if(queue)queue--;
+        var t=nextStop(dirOf(anim),anim.y1);
+        if(t&&start(t,true))return;
+      }
+      halt();restUntil=now+350;
+    }
+    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
+
+    addEventListener('wheel',function(e){
+      if(e.ctrlKey||!e.deltaY||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+      var d=e.deltaY>0?1:-1, now=performance.now(), px=Math.abs(e.deltaY)*(e.deltaMode===1?40:e.deltaMode===2?800:1);
+      if(now-g.last>180||d!==g.d)g={t0:now,last:now,d:d,acc:0,used:false,ev:[]}; // a pause = a new gesture
+      g.last=now;g.acc+=px;g.ev.push([now,px]);
+      if(o.hold&&o.hold()){e.preventDefault();g.used=true;return}
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      // how hard is the visitor scrolling right now, and is it fading (trackpad momentum) or not?
+      var a=0,b=0;
+      g.ev=g.ev.filter(function(v){return now-v[0]<500});
+      g.ev.forEach(function(v){if(now-v[0]<250)a+=v[1];else b+=v[1]});
+      var steady=a>=b*.7;
+      if(!g.used){if(g.acc>=40){g.used=true;go(d)}return}      // one deliberate gesture = one stop
+      if(anim&&now-g.t0>650&&a>=200&&steady){more(d,260);return} // still scrolling hard: fast-forward
+      if(!anim&&now>restUntil+250&&a>=80&&steady)go(d);           // still scrolling after a stop: carry on
+    },{passive:false});
+    addEventListener('touchstart',function(e){ty=e.touches.length===1?e.touches[0].clientY:null;tUsed=false},{passive:true});
+    addEventListener('touchmove',function(e){
+      if(ty===null||!e.cancelable||(o.hold&&o.hold()))return;
+      var dy=ty-e.touches[0].clientY, d=dy>0?1:-1;
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      if(tUsed||Math.abs(dy)<30)return;
+      tUsed=true;
+      if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1); // another swipe while playing: carry on to the next stop, faster
+      else go(d);
+    },{passive:false});
+    addEventListener('keydown',function(e){
+      if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey)return;
+      var t=e.target, k=e.key;
+      if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+      if(k===' '&&t&&t.closest&&t.closest('a,button'))return;
+      var d=k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey)?1:k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey)?-1:0;
+      if(!d||(o.hold&&o.hold()))return;
+      if(!anim&&!zone(d))return;
+      e.preventDefault();
+      if(e.repeat)more(d,160);       // key held down: fast-forward
+      else if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1);
+      else go(d);
+    });
+    // "skip" button: shown inside the story (until the final leg), jumps straight past it
+    if(skip){
+      var on=null;
+      addEventListener('scroll',function(){
+        var s=o.stops(), y=scrollY, v=y>=s[0].y-4&&y<s[s.length-2].y+4;
+        if(v!==on){on=v;skip.classList.toggle('on',v)}
+      },{passive:true});
+      skip.addEventListener('click',function(){
+        var t=document.querySelector(o.skipTo);
+        halt();if(!t)return;
+        root.style.scrollBehavior='auto';
+        t.scrollIntoView({block:'start'});
+        setTimeout(function(){root.style.scrollBehavior=''},50);
+      });
+    }
+    return{to:function(y){queue=0;ffUntil=0;start({y:y},!!anim)},halt:halt};
+  }
+
+  function rideStops(){var t=ride.getBoundingClientRect().top+scrollY, d=ride.offsetHeight-innerHeight;return SX.map(function(_,k){return{y:Math.round(t+stopAt(k)*d)}})}
+  var ap=isStatic?null:autoplay({
+    stops:rideStops,
+    dur:function(px){return clamp(3400*Math.sqrt(px/(LEG*(ride.offsetHeight-innerHeight))),500,9000)}, // ~3.4s a station
+    linear:true, // the train brings its own acceleration and braking
+    skip:$('.skip'), skipTo:'#route'
+  });
+
+  // station buttons: the train rides there (several stations play faster)
   $$('[data-go]').forEach(function(b){
     b.addEventListener('click',function(){
       var k=+b.dataset.go;
       if(isStatic){var t=$('.rt__st[data-st="'+k+'"]');if(t)t.scrollIntoView({block:'start'});return}
-      var top=ride.getBoundingClientRect().top+scrollY, dist=ride.offsetHeight-innerHeight;
-      scrollTo({top:Math.round(top+stopAt(k)*dist),behavior:'smooth'});
+      ap.to(rideStops()[k].y);
     });
   });
 

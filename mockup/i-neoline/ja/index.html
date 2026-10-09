@@ -19,7 +19,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Overpass:wght@400;600;700;800&family=DotGothic16&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=3">
+<link rel="stylesheet" href="../assets/css/style.css?v=5">
 </head>
 <body>
 <a class="skiplink" href="#route">乗車をスキップして路線図（事業内容）へ</a>
@@ -67,6 +67,8 @@
     <button class="motion" type="button" data-motion aria-pressed="true"><span class="motion__sw" aria-hidden="true"></span>MOTION <span class="motion__st">ON</span></button>
   </div>
 </div>
+
+<button class="skip" type="button">スキップ<svg aria-hidden="true"><use href="#i-down"/></svg></button>
 
 <main>
 <!-- ============ the ride: one pinned stage, progressed by native scrolling ============ -->
@@ -257,7 +259,7 @@
         <li><span>動画・背景画像 <b>0</b>。空・街並み・川と鉄橋・田園・海を、<wbr>スクロールに<wbr>合わせて<wbr>Canvasに<wbr>毎フレーム<wbr>描画しています。</span></li>
         <li><span>車両は<wbr>SVG。<wbr>車輪は<wbr>走った<wbr>距離に<wbr>合わせて<wbr>回転し、<wbr>朝夕は<wbr>前照灯と<wbr>室内灯が<wbr>点きます。</span></li>
         <li><span>外部ライブラリ <b>なし</b>。JavaScript は <b data-js-size>約45KB</b>。</span></li>
-        <li><span>スクロールは<wbr>ブラウザ標準のまま。<wbr>路線図の<wbr>駅を<wbr>押すと、<wbr>その駅まで<wbr>移動します。</span></li>
+        <li><span>ひと回し・ひとスワイプで、<wbr>次の駅まで<wbr>自動で走ります。<wbr>ページの<wbr>スクロール位置と<wbr>連動しているので、<wbr>スクロールバーや<wbr>戻るボタンも<wbr>そのまま使えます。</span></li>
         <li><span>OSの<wbr>「視差効果を減らす」<wbr>設定に<wbr>対応。<wbr>ヘッダーの<wbr>MOTIONから<wbr>静止版にも<wbr>切り替えられます。</span></li>
       </ul>
     </aside>
@@ -281,6 +283,6 @@
     <div class="ftr__btm"><p>© 2026 Neo Systems Co., Ltd. ― 「NEO LINE」は本サイト内の架空の路線です。</p><div class="links"><a href="sitemap.html">サイトマップ</a><a href="../en/index.html" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a><a href="../zh/index.html" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a></div></div>
   </div>
 </footer>
-<script src="../assets/js/main.js?v=3"></script>
+<script src="../assets/js/main.js?v=5"></script>
 </body>
 </html>

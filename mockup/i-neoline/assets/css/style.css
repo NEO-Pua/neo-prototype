@@ -130,7 +130,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 @media(min-width:1021px){.menu{display:none}}
 
 /* ---------- the ride: one pinned stage ---------- */
-.ride{position:relative;height:1100vh;background:#1b2552}
+.ride{position:relative;height:700vh;background:#1b2552}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;color:#fff;background:linear-gradient(#1b2552 0%,#6a5f97 45%,#f2a98f 66%,#2c3360 66.2%,#262c4c 100%)}
 .cv{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
 .cv--bg{z-index:0}
@@ -207,6 +207,20 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .rbar li.done b{background:var(--cyan);box-shadow:inset 0 0 0 3px var(--cyan);color:#fff}
 .rbar li.on b{background:#fff;color:var(--navy);box-shadow:inset 0 0 0 3px var(--cyan),0 0 0 4px rgba(0,160,224,.4)}
 .rbar li.on span{color:#fff}
+
+/* fast-forward badge (while the visitor keeps scrolling) */
+.ffwd{position:fixed;left:50%;bottom:118px;z-index:91;display:flex;align-items:center;gap:2px;height:30px;padding:0 13px 0 11px;border-radius:6px;background:rgba(10,14,34,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;transform:translate(-50%,8px);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none}
+.ff-on .ffwd{opacity:1;transform:translate(-50%,0)}
+.ffwd i{width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--sky)}
+.ffwd i+i{margin-right:7px}
+@media(max-width:700px){.ffwd{bottom:100px}}
+
+/* skip the ride (shown only while inside it) */
+.skip{position:fixed;right:var(--gut);bottom:112px;z-index:90;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:6px;background:rgba(10,14,34,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s,background .2s}
+.skip.on{opacity:1;visibility:visible;transition:opacity .3s,background .2s}
+.skip:hover{background:rgba(10,14,34,.85)}
+.skip svg{width:14px;height:14px}
+.static .skip,.menu-open .skip{display:none}
 
 /* in-car display (車内LCD) */
 .lcd{position:absolute;left:var(--gut);top:calc(var(--hh) + 18px);z-index:6;width:min(560px,100% - var(--gut)*2);padding:7px;border-radius:12px;background:#1a1e29;box-shadow:inset 0 0 0 1px #3a4152,0 26px 50px -24px rgba(0,0,0,.75);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .4s var(--ease),transform .4s var(--ease),visibility 0s .4s}
@@ -391,6 +405,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .ticket__note{font-size:12.5px}
   .ticket__cta .btn{height:46px;font-size:13px}
   .ticket__tel{font-size:21px}
+  .skip{right:10px;bottom:98px;height:32px;padding:0 12px;font-size:11px}
   .rbar{left:10px;right:10px;bottom:10px;width:auto;transform:none;padding:9px 6px 7px}
   .rbar__line{top:12px}
   .rbar__train{top:14px;width:24px;height:24px;margin:-12px 0 0 -12px}
