@@ -56,12 +56,12 @@
   // time of day along the line: dawn at 日本橋 → day → golden hour → sunset at the terminal
   var KEYS=['top','mid','hor','sun','cloud','far','mid2','near','grd','trk','sea'];
   var TOD=[
-    [0,  '#1b2552','#6a5f97','#f2a98f','#ffcf9e','#e7a3a8','#5d5f8f','#3f4677','#2c3360','#262c4c','#3a3c52','#4a5d96',.85],
+    [0,  '#2c3d82','#7b72ae','#f4b19a','#ffd3a6','#eeb0b2','#6d70a0','#4f5789','#3b4476','#333b62','#4a4c66','#5568a6',.8],
     [.13,'#3a7bc8','#8ab8e6','#ffe0c2','#fff1d6','#fff4ea','#8ea4c4','#6681a8','#4a6286','#4c6b3e','#6e6a66','#4f89c4',.1],
     [.38,'#2f86de','#7cc0f2','#d9f0ff','#ffffff','#ffffff','#9fbad8','#7896bb','#57749a','#5b8048','#7d7974','#3f8fd0',0],
     [.62,'#3b7ccc','#8db8e0','#f4e6c8','#fff0c4','#fff6e6','#a2b0c8','#7a8eae','#59698c','#66793f','#807a70','#4a87c0',0],
     [.82,'#3e5aa6','#d79a86','#ffc98a','#ffd88a','#ffd0a0','#a48ea6','#7a6a90','#4f4a72','#555434','#6a5e58','#6a78b0',.22],
-    [1,  '#242c6c','#a95a86','#ff8f5e','#ffb46e','#ff9f80','#7b5d86','#533f6e','#372f56','#2c2a42','#3f3848','#5a4f8c',.7]
+    [1,  '#34418c','#b3668f','#ff9563','#ffb874','#ffa888','#87699a','#62507e','#4a3f68','#3a3756','#4d4558','#6a5e9c',.65]
   ].map(function(r){var o={t:r[0],dark:r[12]};KEYS.forEach(function(k,i){o[k]=hx(r[i+1])});return o});
   function palette(t){
     var i=0;while(i<TOD.length-2&&t>TOD[i+1].t)i++;
@@ -716,7 +716,7 @@
      stop, scrolling is completely normal. */
   function autoplay(o){
     var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
-    var g={last:0,d:0}, ty=null, tUsed=false;
+    var g={last:0,d:0,acc:0,used:false}, ty=null, tUsed=false;
     var badge=document.createElement('div');
     badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
     document.body.appendChild(badge);
@@ -761,7 +761,7 @@
       var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
       prevT=now;
       root.classList.toggle('ff-on',fast);
-      rate+=((fast?3.2:queue?2:1)-rate)*.12;
+      rate+=((fast?4:queue?2:1)-rate)*.14;
       anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
       var e=anim.ease?anim.ease(anim.k):anim.k;
       lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
@@ -772,26 +772,36 @@
         var t=nextStop(dirOf(anim),anim.y1);
         if(t&&start(t,true))return;
       }
-      halt();restUntil=now+350;
+      halt();restUntil=now+150;
     }
     function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
 
+    var run={t0:0,last:0,d:0,ev:[]}; // a run of scrolling one way (short pauses between wheel strokes allowed)
     addEventListener('wheel',function(e){
       if(e.ctrlKey||!e.deltaY||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
       var d=e.deltaY>0?1:-1, now=performance.now(), px=Math.abs(e.deltaY)*(e.deltaMode===1?40:e.deltaMode===2?800:1);
-      if(now-g.last>180||d!==g.d)g={t0:now,last:now,d:d,acc:0,used:false,ev:[]}; // a pause = a new gesture
-      g.last=now;g.acc+=px;g.ev.push([now,px]);
+      var rec=run.ev.slice(-3), avg=rec.length?rec.reduce(function(a,v){return a+v},0)/rec.length:0;
+      // a pause, or a sudden jump in speed (a fresh swipe over a dying trackpad momentum) = a new gesture
+      if(now-g.last>180||d!==g.d||(rec.length===3&&px>=12&&px>avg*3))g={last:now,d:d,acc:0,used:false};
+      g.last=now;g.acc+=px;
+      if(now-run.last>500||d!==run.d)run={t0:now,last:now,d:d,ev:[]};
+      run.last=now;run.ev.push(px);if(run.ev.length>8)run.ev.shift();
       if(o.hold&&o.hold()){e.preventDefault();g.used=true;return}
       if(!anim&&!zone(d))return;
       e.preventDefault();
-      // how hard is the visitor scrolling right now, and is it fading (trackpad momentum) or not?
-      var a=0,b=0;
-      g.ev=g.ev.filter(function(v){return now-v[0]<500});
-      g.ev.forEach(function(v){if(now-v[0]<250)a+=v[1];else b+=v[1]});
-      var steady=a>=b*.7;
-      if(!g.used){if(g.acc>=40){g.used=true;go(d)}return}      // one deliberate gesture = one stop
-      if(anim&&now-g.t0>650&&a>=200&&steady){more(d,260);return} // still scrolling hard: fast-forward
-      if(!anim&&now>restUntil+250&&a>=80&&steady)go(d);           // still scrolling after a stop: carry on
+      // trackpad momentum = a tail of ever-smaller (in the end, tiny) deltas; that is not the visitor scrolling
+      var ev=run.ev, sum=ev.reduce(function(a,v){return a+v},0);
+      var fading=ev.length>=6&&(sum/ev.length<6||ev[ev.length-1]<ev[0]*.8&&ev.every(function(v,i){return !i||v<=ev[i-1]}));
+      var keen=now-run.t0>450&&!fading; // has kept on scrolling for a while, on purpose
+      if(anim){
+        if(dirOf(anim)!==d){if(!g.used&&g.acc>=40){g.used=true;go(d)}return} // reverse
+        if(keen){more(d,450);return} // keep scrolling = fast-forward
+        // a fresh scroll near the end of a beat queues the next one; an extra nudge just after it started does nothing
+        if(!g.used&&g.acc>=20&&anim.k>.65){g.used=true;queue=Math.max(queue,1)}
+        return;
+      }
+      if(!g.used&&g.acc>=20){g.used=true;go(d);return} // one deliberate gesture = one stop
+      if(keen&&performance.now()>restUntil)go(d);       // still scrolling after a stop: carry on
     },{passive:false});
     addEventListener('touchstart',function(e){ty=e.touches.length===1?e.touches[0].clientY:null;tUsed=false},{passive:true});
     addEventListener('touchmove',function(e){
@@ -799,7 +809,7 @@
       var dy=ty-e.touches[0].clientY, d=dy>0?1:-1;
       if(!anim&&!zone(d))return;
       e.preventDefault();
-      if(tUsed||Math.abs(dy)<30)return;
+      if(tUsed||Math.abs(dy)<20)return;
       tUsed=true;
       if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1); // another swipe while playing: carry on to the next stop, faster
       else go(d);

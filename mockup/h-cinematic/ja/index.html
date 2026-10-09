@@ -22,7 +22,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;500;700;800&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=4">
+<link rel="stylesheet" href="../assets/css/style.css?v=9">
 </head>
 <body>
 <a class="skiplink" href="#info">ストーリーを飛ばしてインフォメーションへ</a>
@@ -306,38 +306,46 @@
   </div>
 </section>
 
-<!-- ============ 05 credits (pinned, rolling) ============ -->
+<!-- ============ 05 credits (pinned): title cards that hold still, one per beat ============ -->
 <section class="scene scene--cred" id="credits" data-scene="cred" data-theme="light" aria-labelledby="cred-h">
-  <span class="mark" id="recruit" style="top:56%"></span>
+  <span class="mark" id="recruit" style="top:35%"></span>
   <div class="stage">
     <p class="chap cred__chap">05 — CREDITS</p>
-    <div class="roll">
-      <h2 class="roll__title" id="cred-h">NEO SYSTEMS<small>株式会社ネオシステムズ</small></h2>
-      <dl>
-        <div><dt>PRESENTED BY<small>会社名</small></dt><dd>株式会社ネオシステムズ<br>Neo Systems Co., Ltd.</dd></div>
-        <div><dt>ESTABLISHED<small>設立</small></dt><dd>2023年4月</dd></div>
-        <div><dt>REPRESENTATIVE<small>代表者</small></dt><dd>代表取締役社長　藍 志根</dd></div>
-        <div><dt>LOCATION<small>所在地</small></dt><dd>東京都中央区日本橋本町4-9-2<br>本栄ビル6階</dd></div>
-        <div><dt>MEMBERS<small>従業員数</small></dt><dd>30名（契約社員・業務委託含む）</dd></div>
-        <div><dt>SERVICES<small>事業内容</small></dt><dd>クラウドソリューション<br>DX支援<br>ITコンサルティング<br>システムエンジニアリングサービス<br>受託開発</dd></div>
-        <div><dt>PRODUCTS<small>自社サービス</small></dt><dd>業務管理システム <span class="tbd">製品名 要確認</span><br>KokoMart（ココマート）</dd></div>
-        <div><dt>SECURITY<small>認証</small></dt><dd>ISO/IEC 27001（ISMS）<br>SECURITY ACTION 二つ星</dd></div>
-        <div><dt>MEMBERSHIP<small>加盟団体</small></dt><dd>東京商工会議所<br>公益社団法人 日本橋法人会</dd></div>
-      </dl>
-      <p class="roll__big">NOW CASTING</p>
-      <h3 class="roll__h">次の挑戦者を、<wbr>募集しています。</h3>
-      <dl>
-        <div><dt>ROLES<small>募集職種</small></dt><dd>プログラマ（PG）<br>システムエンジニア（SE）</dd></div>
-        <div><dt>REQUIREMENTS<small>応募資格</small></dt><dd>年齢・学歴・経験不問<br>ITの知識があれば実務未経験OK</dd></div>
-        <div><dt>SALARY<small>給与</small></dt><dd>月給25万円以上<br>（年齢・経験・スキルを考慮）</dd></div>
-        <div><dt>HOLIDAYS<small>休日</small></dt><dd>年間休日 約120日<br>完全週休2日制（土日）・祝日・年末年始</dd></div>
-        <div><dt>WORK STYLE<small>働き方</small></dt><dd>在宅勤務制度<br>フレックスタイム（応相談）</dd></div>
-        <div><dt>SUPPORT<small>制度</small></dt><dd>育児休暇制度<br>育児短時間勤務制度</dd></div>
-        <div><dt>LOCATION<small>勤務地</small></dt><dd>本社（日本橋）または顧客先<br>（東京・千葉・埼玉・神奈川）</dd></div>
-      </dl>
-      <p class="roll__star"><small>STARRING</small>あなた</p>
+    <div class="cards">
+      <div class="card card--co">
+        <h2 class="card__title" id="cred-h">NEO SYSTEMS<small>株式会社ネオシステムズ</small></h2>
+        <dl class="cgrid">
+          <div><dt>PRESENTED BY<small>会社名</small></dt><dd>株式会社ネオシステムズ<br>Neo Systems Co., Ltd.</dd></div>
+          <div><dt>ESTABLISHED<small>設立</small></dt><dd>2023年4月</dd></div>
+          <div><dt>REPRESENTATIVE<small>代表者</small></dt><dd>代表取締役社長　藍 志根</dd></div>
+          <div><dt>LOCATION<small>所在地</small></dt><dd>東京都中央区日本橋本町4-9-2<br>本栄ビル6階</dd></div>
+          <div><dt>MEMBERS<small>従業員数</small></dt><dd>30名（契約社員・業務委託含む）</dd></div>
+          <div><dt>SECURITY<small>認証</small></dt><dd>ISO/IEC 27001（ISMS）<br>SECURITY ACTION 二つ星</dd></div>
+          <div class="wide"><dt>SERVICES<small>事業内容</small></dt><dd>クラウドソリューション ／ DX支援 ／ ITコンサルティング ／ システムエンジニアリングサービス ／ 受託開発</dd></div>
+          <div><dt>PRODUCTS<small>自社サービス</small></dt><dd>業務管理システム <span class="tbd">製品名 要確認</span><br>KokoMart（ココマート）</dd></div>
+          <div><dt>MEMBERSHIP<small>加盟団体</small></dt><dd>東京商工会議所<br>公益社団法人 日本橋法人会</dd></div>
+        </dl>
+      </div>
+      <div class="card card--cast">
+        <p class="card__big">NOW CASTING</p>
+        <h3 class="card__h">次の挑戦者を、<wbr>募集しています。</h3>
+        <dl class="cgrid">
+          <div><dt>ROLES<small>募集職種</small></dt><dd>プログラマ（PG）<br>システムエンジニア（SE）</dd></div>
+          <div><dt>REQUIREMENTS<small>応募資格</small></dt><dd>年齢・学歴・経験不問<br>ITの知識があれば実務未経験OK</dd></div>
+          <div><dt>SALARY<small>給与</small></dt><dd>月給25万円以上<br>（年齢・経験・スキルを考慮）</dd></div>
+          <div><dt>HOLIDAYS<small>休日</small></dt><dd>年間休日 約120日<br>完全週休2日制（土日）・祝日・年末年始</dd></div>
+          <div><dt>WORK STYLE<small>働き方</small></dt><dd>在宅勤務制度<br>フレックスタイム（応相談）</dd></div>
+          <div><dt>SUPPORT<small>制度</small></dt><dd>育児休暇制度<br>育児短時間勤務制度</dd></div>
+          <div class="wide"><dt>LOCATION<small>勤務地</small></dt><dd>本社（日本橋）または顧客先（東京・千葉・埼玉・神奈川）</dd></div>
+        </dl>
+      </div>
+      <div class="card card--star">
+        <p class="star"><small>STARRING</small>あなた</p>
+        <p class="lead">次の<wbr>挑戦を、<wbr>一緒に<wbr>つくりませんか。</p>
+        <div class="card__cta"><a class="btn btn--ink" href="recruit.html#entry">エントリーする<svg aria-hidden="true"><use href="#i-ar"/></svg></a><a class="btn btn--line" href="recruit.html">募集要項を見る</a></div>
+      </div>
     </div>
-    <div class="cred__cta"><a class="btn btn--ink" href="recruit.html#entry">エントリーする<svg aria-hidden="true"><use href="#i-ar"/></svg></a><a class="btn btn--line" href="recruit.html">募集要項を見る</a></div>
+    <ol class="cdots" aria-hidden="true"><li></li><li></li><li></li></ol>
   </div>
 </section>
 
@@ -456,6 +464,6 @@
     <div class="ftr__btm"><p>© 2026 Neo Systems Co., Ltd.</p><div class="links"><a href="sitemap.html">サイトマップ</a><a href="../en/index.html" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a><a href="../zh/index.html" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a></div></div>
   </div>
 </footer>
-<script src="../assets/js/main.js?v=4"></script>
+<script src="../assets/js/main.js?v=9"></script>
 </body>
 </html>

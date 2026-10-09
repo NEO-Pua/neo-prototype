@@ -1,7 +1,7 @@
 /* NEO SYSTEMS — Direction H
-   Opening film + a story driven by native scrolling.
-   The page is never scroll-jacked: each pinned scene reads how far
-   the visitor has scrolled through it (0 → 1) and draws that frame. */
+   Opening film + a story driven by the scroll position: each pinned
+   scene reads how far the page has scrolled through it (0 → 1) and
+   draws that frame. One scroll gesture autoplays to the next beat. */
 (function(){
   var root=document.documentElement;
   var isStatic=root.classList.contains('static');
@@ -133,17 +133,16 @@
     };
   }
 
-  // 05 — credits roll
-  var crEl=$('[data-scene="cred"]'), roll, ccta, rollH=0;
+  // 05 — credits: one title card at a time, each holding still long enough to read
+  var crEl=$('[data-scene="cred"]'), cards=[], pips=[], lastCard=-2;
   if(crEl){
-    roll=$('.roll',crEl);ccta=$('.cred__cta',crEl);
+    cards=$$('.card',crEl);pips=$$('.cdots li',crEl);
     U.cred=function(p){
-      if(!rollH)rollH=roll.offsetHeight;
-      var vh=innerHeight, y0=vh*.6, y1=vh*.5-rollH;
-      var y=y0+(y1-y0)*seg(p,0,.9);
-      roll.style.transform='translate3d(0,'+y.toFixed(1)+'px,0)';
-      // show the buttons only once the last credit has rolled clear of them
-      ccta.classList.toggle('on',y+rollH<vh-ccta.offsetHeight-48);
+      var i=p<.36?0:p<.7?1:2;
+      if(i===lastCard)return;
+      lastCard=i;
+      cards.forEach(function(c,k){c.classList.toggle('on',k===i);c.classList.toggle('past',k<i)});
+      pips.forEach(function(d,k){d.classList.toggle('on',k<=i)});
     };
   }
 
@@ -182,15 +181,14 @@
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
   addEventListener('scroll',onScroll,{passive:true});
-  addEventListener('resize',function(){rollH=0;scenes.forEach(function(s){s.p=-1});onScroll()});
-  addEventListener('load',function(){rollH=0;scenes.forEach(function(s){s.p=-1});onScroll()});
+  addEventListener('resize',function(){scenes.forEach(function(s){s.p=-1});onScroll()});
+  addEventListener('load',function(){scenes.forEach(function(s){s.p=-1});onScroll()});
 
   if(isStatic){
     // calm version: show every scene in its final state
     if(U.sys)U.sys(1);
     if(U.dep)U.dep(1);
     if(U.trust)U.trust(1);
-    if(ccta)ccta.classList.add('on');
   }
   update();
 
@@ -204,7 +202,7 @@
      stop, scrolling is completely normal. */
   function autoplay(o){
     var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
-    var g={last:0,d:0}, ty=null, tUsed=false;
+    var g={last:0,d:0,acc:0,used:false}, ty=null, tUsed=false;
     var badge=document.createElement('div');
     badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
     document.body.appendChild(badge);
@@ -249,7 +247,7 @@
       var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
       prevT=now;
       root.classList.toggle('ff-on',fast);
-      rate+=((fast?3.2:queue?2:1)-rate)*.12;
+      rate+=((fast?4:queue?2:1)-rate)*.14;
       anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
       var e=anim.ease?anim.ease(anim.k):anim.k;
       lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
@@ -260,26 +258,36 @@
         var t=nextStop(dirOf(anim),anim.y1);
         if(t&&start(t,true))return;
       }
-      halt();restUntil=now+350;
+      halt();restUntil=now+150;
     }
     function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
 
+    var run={t0:0,last:0,d:0,ev:[]}; // a run of scrolling one way (short pauses between wheel strokes allowed)
     addEventListener('wheel',function(e){
       if(e.ctrlKey||!e.deltaY||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
       var d=e.deltaY>0?1:-1, now=performance.now(), px=Math.abs(e.deltaY)*(e.deltaMode===1?40:e.deltaMode===2?800:1);
-      if(now-g.last>180||d!==g.d)g={t0:now,last:now,d:d,acc:0,used:false,ev:[]}; // a pause = a new gesture
-      g.last=now;g.acc+=px;g.ev.push([now,px]);
+      var rec=run.ev.slice(-3), avg=rec.length?rec.reduce(function(a,v){return a+v},0)/rec.length:0;
+      // a pause, or a sudden jump in speed (a fresh swipe over a dying trackpad momentum) = a new gesture
+      if(now-g.last>180||d!==g.d||(rec.length===3&&px>=12&&px>avg*3))g={last:now,d:d,acc:0,used:false};
+      g.last=now;g.acc+=px;
+      if(now-run.last>500||d!==run.d)run={t0:now,last:now,d:d,ev:[]};
+      run.last=now;run.ev.push(px);if(run.ev.length>8)run.ev.shift();
       if(o.hold&&o.hold()){e.preventDefault();g.used=true;return}
       if(!anim&&!zone(d))return;
       e.preventDefault();
-      // how hard is the visitor scrolling right now, and is it fading (trackpad momentum) or not?
-      var a=0,b=0;
-      g.ev=g.ev.filter(function(v){return now-v[0]<500});
-      g.ev.forEach(function(v){if(now-v[0]<250)a+=v[1];else b+=v[1]});
-      var steady=a>=b*.7;
-      if(!g.used){if(g.acc>=40){g.used=true;go(d)}return}      // one deliberate gesture = one stop
-      if(anim&&now-g.t0>650&&a>=200&&steady){more(d,260);return} // still scrolling hard: fast-forward
-      if(!anim&&now>restUntil+250&&a>=80&&steady)go(d);           // still scrolling after a stop: carry on
+      // trackpad momentum = a tail of ever-smaller (in the end, tiny) deltas; that is not the visitor scrolling
+      var ev=run.ev, sum=ev.reduce(function(a,v){return a+v},0);
+      var fading=ev.length>=6&&(sum/ev.length<6||ev[ev.length-1]<ev[0]*.8&&ev.every(function(v,i){return !i||v<=ev[i-1]}));
+      var keen=now-run.t0>450&&!fading; // has kept on scrolling for a while, on purpose
+      if(anim){
+        if(dirOf(anim)!==d){if(!g.used&&g.acc>=40){g.used=true;go(d)}return} // reverse
+        if(keen){more(d,450);return} // keep scrolling = fast-forward
+        // a fresh scroll near the end of a beat queues the next one; an extra nudge just after it started does nothing
+        if(!g.used&&g.acc>=20&&anim.k>.65){g.used=true;queue=Math.max(queue,1)}
+        return;
+      }
+      if(!g.used&&g.acc>=20){g.used=true;go(d);return} // one deliberate gesture = one stop
+      if(keen&&performance.now()>restUntil)go(d);       // still scrolling after a stop: carry on
     },{passive:false});
     addEventListener('touchstart',function(e){ty=e.touches.length===1?e.touches[0].clientY:null;tUsed=false},{passive:true});
     addEventListener('touchmove',function(e){
@@ -287,7 +295,7 @@
       var dy=ty-e.touches[0].clientY, d=dy>0?1:-1;
       if(!anim&&!zone(d))return;
       e.preventDefault();
-      if(tUsed||Math.abs(dy)<30)return;
+      if(tUsed||Math.abs(dy)<20)return;
       tUsed=true;
       if(anim&&dirOf(anim)===d)queue=Math.min(2,queue+1); // another swipe while playing: carry on to the next stop, faster
       else go(d);
@@ -331,7 +339,8 @@
         var s=[{y:0},{y:sceneY('sys',.47),ms:4200}];                             // code types itself, the system assembles
         [.613,.699,.785,.871,1].forEach(function(p){s.push({y:sceneY('sys',p),ms:2000})}); // the five services, one by one
         s.push({y:sceneY('dep',.2),ms:3000},{y:sceneY('dep',.93),ms:4500},     // dawn, then the deploy runs
-               {y:sceneY('trust',.85),ms:4000},{y:sceneY('cred',1),ms:8000});  // checks pass, credits roll
+               {y:sceneY('trust',.85),ms:4000},                                // checks pass
+               {y:sceneY('cred',.18),ms:2600},{y:sceneY('cred',.53),ms:1800},{y:sceneY('cred',1),ms:2200}); // credits: company, now casting, starring
         return s;
       },
       dur:function(px){return clamp(1500*Math.sqrt(px/innerHeight),900,5000)},
