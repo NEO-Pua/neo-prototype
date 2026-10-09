@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neo Systems リニューアル デザイン案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#22348c;--acc:#0091d5;--ink:#2b2f38;--ink-2:#525866;--line:#dfe2e8;--gray:#f4f5f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--ink);background:var(--gray);line-height:1.8;letter-spacing:.04em}
+.wrap{width:min(960px,100% - 32px);margin:0 auto;padding:56px 0}
+.k{font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--acc)}
+h1{font-size:26px;font-weight:900;margin-top:4px}
+p.lead{color:var(--ink-2);font-size:14px;margin-top:8px}
+ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:28px}
+li a,li div{display:flex;flex-direction:column;gap:6px;height:100%;padding:20px;background:#fff;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:inherit;transition:.2s}
+li a:hover{border-color:var(--pri);box-shadow:0 8px 20px -12px rgba(34,52,140,.5)}
+li b{font-size:18px}
+li span{font-family:Montserrat,sans-serif;font-size:12px;font-weight:700;color:var(--pri)}
+li small{font-size:13px;color:var(--ink-2)}
+li div{opacity:.55;border-style:dashed}
+</style>
+</head>
+<body><div class="wrap">
+<p class="k">NEO SYSTEMS — SITE RENEWAL</p>
+<h1>デザイン方向性 モックアップ</h1>
+<p class="lead">トップページのデザイン案です。JP をメインに、EN・中文版は方向性が決まり次第作成します。（WordPress 実装前提）</p>
+<ul>
+<li><a href="a-standard/ja/index.html"><span>DIRECTION A</span><b>王道・日本のコーポレート</b><small>情報量の多い高密度レイアウト。電話番号・お問い合わせ導線を常時表示、カルーセル型バナー、月桂樹バッジ。ブランドのネイビー×シアン、オレンジのCTA。</small></a></li>
+<li><a href="b-modern/ja/index.html"><span>DIRECTION B</span><b>モダン・テックブランド</b><small>大きなタイポグラフィと余白。ダークなヒーロー、リスト型の事業紹介、ベントーカード、スクロールアニメーション。ネイビー→シアンのグラデーションをアクセントに。</small></a></li>
+<li><div><span>DIRECTION C</span><b>準備中</b><small>—</small></div></li>
+</ul>
+</div></body></html>
