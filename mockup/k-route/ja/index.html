@@ -19,7 +19,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=1">
+<link rel="stylesheet" href="../assets/css/style.css?v=2">
 </head>
 <body>
 <a class="skiplink" href="#route">乗車をスキップして路線図（事業内容）へ</a>
@@ -147,98 +147,164 @@
   </div>
 </section>
 
-<!-- ============ route map: the five businesses (always readable, also the static version) ============ -->
-<section class="route" id="route" aria-labelledby="route-h">
+<!-- ============ 01 station guide: the five businesses (also the static version) ============ -->
+<section class="guide" id="route" aria-labelledby="route-h">
   <div class="wrap">
-    <div class="sec__hd">
-      <p class="chap">ROUTE MAP</p>
-      <h2 id="route-h">路線図 ― <wbr>5つの事業</h2>
-      <p>日本橋の<wbr>本社を<wbr>起点に、<wbr>5つの<wbr>事業を<wbr>経由して、<wbr>お客様の<wbr>ビジネスへ。<wbr>計画から<wbr>運用・保守まで、<wbr>一本の<wbr>路線で<wbr>つなぎます。</p>
-    </div>
-    <ol class="rt">
-      <li class="rt__st" data-st="0">
-        <span class="rt__no">NS<br>01</span>
-        <div class="rt__body"><h3>日本橋<small>Nihombashi ― 始発・本社</small></h3><p class="d">東京都中央区日本橋本町4-9-2 本栄ビル6階。<wbr>JR「新日本橋」駅・<wbr>東京メトロ「小伝馬町」駅から<wbr>徒歩約3分。</p></div>
-      </li>
-      <li class="rt__st" data-st="1">
-        <span class="rt__no">NS<br>02</span>
-        <div class="rt__body"><h3>クラウド<wbr>ソリューション<small>Cloud Solution</small></h3><p class="d">クラウド移行支援から<wbr>インフラ構築、<wbr>アプリケーション開発、<wbr>セキュリティと<wbr>監視、<wbr>運用サポートまで。<wbr>最適な<wbr>クラウド環境を<wbr>ご提供します。</p><ul class="tags"><li>クラウド移行支援</li><li>インフラ構築</li><li>セキュリティ・監視</li><li>運用サポート</li></ul><a class="more" href="business.html#cloud">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
-      <li class="rt__st" data-st="2">
-        <span class="rt__no">NS<br>03</span>
-        <div class="rt__body"><h3>DX支援<small>DX Support</small></h3><p class="d">ビジネスニーズに<wbr>合わせた<wbr>戦略的な<wbr>アプローチと<wbr>最新の<wbr>テクノロジーで、<wbr>業務プロセスの<wbr>最適化・効率化を<wbr>実現します。</p><ul class="tags"><li>業務プロセス改善</li><li>業務効率化</li><li>最新テクノロジーの活用</li></ul><a class="more" href="business.html#dx">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
-      <li class="rt__st" data-st="3">
-        <span class="rt__no">NS<br>04</span>
-        <div class="rt__body"><h3>ITコンサルティング<small>IT Consulting</small></h3><p class="d">お客様の<wbr>立場に<wbr>立った<wbr>ニーズ分析・<wbr>現状分析から、<wbr>計画・設計・開発・<wbr>テスト・導入まで<wbr>一貫して<wbr>サポートします。</p><ul class="tags"><li>ニーズ分析</li><li>現状分析</li><li>計画・設計</li><li>導入支援</li></ul><a class="more" href="business.html#consulting">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
-      <li class="rt__st" data-st="4">
-        <span class="rt__no">NS<br>05</span>
-        <div class="rt__body"><h3>システム<wbr>エンジニアリング<wbr>サービス<small>SES ― System Engineering Service</small></h3><p class="d">システム開発、<wbr>インフラの<wbr>設計・構築・運用・監視、<wbr>DB設計・構築、<wbr>BIツール導入まで。<wbr>スキルを<wbr>持った<wbr>エンジニアが<wbr>プロジェクトを<wbr>支えます。</p><ul class="tags"><li>システム開発</li><li>インフラ</li><li>DB設計・構築</li><li>BIツール</li></ul><a class="more" href="business.html#ses">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
-      <li class="rt__st" data-st="5">
-        <span class="rt__no">NS<br>06</span>
-        <div class="rt__body"><h3>受託開発<small>Custom Development</small></h3><p class="d">お客様の<wbr>課題を<wbr>伺い、<wbr>最適な<wbr>システムを<wbr>オーダーメイドで。<wbr>要件定義から<wbr>単体／結合／総合テスト、<wbr>運用・保守まで<wbr>承ります。</p><ul class="tags"><li>要件定義</li><li>設計・開発</li><li>テスト</li><li>運用・保守</li></ul><a class="more" href="business.html#contracted">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
-      <li class="rt__st rt__st--end" data-st="6">
-        <span class="rt__no">NS<br>07</span>
-        <div class="rt__body"><h3>あなたのビジネス<small>Your Business ― 終点</small></h3><p class="d">ここから先は、<wbr>お客様と<wbr>ともに。<wbr>システム開発・ITに<wbr>関する<wbr>ご相談、<wbr>お見積りの<wbr>ご依頼を<wbr>承ります。</p><a class="more" href="contact.html">お問い合わせ<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      </li>
+    <header class="kh">
+      <p class="kh__no" aria-hidden="true">01</p>
+      <div><p class="chap">STATION GUIDE</p><h2 id="route-h">停車駅と、<wbr>5つの事業</h2></div>
+      <p class="kh__lead">日本橋の<wbr>本社を<wbr>起点に、<wbr>5つの<wbr>事業を<wbr>経由して、<wbr>お客様の<wbr>ビジネスへ。<wbr>計画から<wbr>運用・保守まで、<wbr>一本の<wbr>路線で<wbr>つなぎます。</p>
+    </header>
+
+    <!-- the line, as printed above the train doors -->
+    <ol class="strip" aria-label="NEO LINE 路線図">
+      <li><a href="#st-0"><span class="rd"><i>NS</i><b>01</b></span><b class="strip__nm">日本橋</b><small>09:00 発</small></a></li>
+      <li><a href="#st-1"><span class="rd"><i>NS</i><b>02</b></span><b class="strip__nm">クラウド</b><small>09:04 ・ 0.5 km</small></a></li>
+      <li><a href="#st-2"><span class="rd"><i>NS</i><b>03</b></span><b class="strip__nm">DX支援</b><small>09:08 ・ 1.0 km</small></a></li>
+      <li><a href="#st-3"><span class="rd"><i>NS</i><b>04</b></span><b class="strip__nm">ITコンサル</b><small>09:12 ・ 1.7 km</small></a></li>
+      <li><a href="#st-4"><span class="rd"><i>NS</i><b>05</b></span><b class="strip__nm">SES</b><small>09:16 ・ 2.2 km</small></a></li>
+      <li><a href="#st-5"><span class="rd"><i>NS</i><b>06</b></span><b class="strip__nm">受託開発</b><small>09:20 ・ 2.7 km</small></a></li>
+      <li><a href="#st-6"><span class="rd"><i>NS</i><b>07</b></span><b class="strip__nm">あなたのビジネス</b><small>09:24 着 ・ 終点</small></a></li>
     </ol>
+
+    <div class="gd">
+      <article class="gd__st gd__st--hq" id="st-0" data-st="0">
+        <div class="gd__tile" data-tile="0" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>01</b></span><h3>日本橋<small>Nihombashi ― 始発・本社</small></h3></div>
+          <p class="gd__meta"><span>09:00 発</span><span>起点</span></p>
+          <div class="gd__body"><p class="d">東京都中央区日本橋本町4-9-2 本栄ビル6階。<wbr>JR「新日本橋」駅・<wbr>東京メトロ「小伝馬町」駅から<wbr>徒歩約3分。</p><a class="more" href="#company">本社・アクセス<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st" id="st-1" data-st="1">
+        <div class="gd__tile" data-tile="1" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>02</b></span><h3>クラウド<wbr>ソリューション<small>Cloud Solution</small></h3></div>
+          <p class="gd__meta"><span>09:04 着</span><span>日本橋から 0.5 km</span></p>
+          <div class="gd__body"><p class="d">クラウド移行支援から<wbr>インフラ構築、<wbr>アプリケーション開発、<wbr>セキュリティと<wbr>監視、<wbr>運用サポートまで。<wbr>最適な<wbr>クラウド環境を<wbr>ご提供します。</p><ul class="tags"><li>クラウド移行支援</li><li>インフラ構築</li><li>セキュリティ・監視</li><li>運用サポート</li></ul><a class="more" href="business.html#cloud">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st" id="st-2" data-st="2">
+        <div class="gd__tile" data-tile="2" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>03</b></span><h3>DX支援<small>DX Support</small></h3></div>
+          <p class="gd__meta"><span>09:08 着</span><span>日本橋から 1.0 km</span></p>
+          <div class="gd__body"><p class="d">ビジネスニーズに<wbr>合わせた<wbr>戦略的な<wbr>アプローチと<wbr>最新の<wbr>テクノロジーで、<wbr>業務プロセスの<wbr>最適化・効率化を<wbr>実現します。</p><ul class="tags"><li>業務プロセス改善</li><li>業務効率化</li><li>最新テクノロジーの活用</li></ul><a class="more" href="business.html#dx">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st" id="st-3" data-st="3">
+        <div class="gd__tile" data-tile="3" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>04</b></span><h3>ITコンサルティング<small>IT Consulting</small></h3></div>
+          <p class="gd__meta"><span>09:12 着</span><span>日本橋から 1.7 km</span></p>
+          <div class="gd__body"><p class="d">お客様の<wbr>立場に<wbr>立った<wbr>ニーズ分析・<wbr>現状分析から、<wbr>計画・設計・開発・<wbr>テスト・導入まで<wbr>一貫して<wbr>サポートします。</p><ul class="tags"><li>ニーズ分析</li><li>現状分析</li><li>計画・設計</li><li>導入支援</li></ul><a class="more" href="business.html#consulting">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st" id="st-4" data-st="4">
+        <div class="gd__tile" data-tile="4" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>05</b></span><h3>システム<wbr>エンジニアリング<wbr>サービス<small>SES ― System Engineering Service</small></h3></div>
+          <p class="gd__meta"><span>09:16 着</span><span>日本橋から 2.2 km</span></p>
+          <div class="gd__body"><p class="d">システム開発、<wbr>インフラの<wbr>設計・構築・運用・監視、<wbr>DB設計・構築、<wbr>BIツール導入まで。<wbr>スキルを<wbr>持った<wbr>エンジニアが<wbr>プロジェクトを<wbr>支えます。</p><ul class="tags"><li>システム開発</li><li>インフラ</li><li>DB設計・構築</li><li>BIツール</li></ul><a class="more" href="business.html#ses">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st" id="st-5" data-st="5">
+        <div class="gd__tile" data-tile="5" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>06</b></span><h3>受託開発<small>Custom Development</small></h3></div>
+          <p class="gd__meta"><span>09:20 着</span><span>日本橋から 2.7 km</span></p>
+          <div class="gd__body"><p class="d">お客様の<wbr>課題を<wbr>伺い、<wbr>最適な<wbr>システムを<wbr>オーダーメイドで。<wbr>要件定義から<wbr>単体／結合／総合テスト、<wbr>運用・保守まで<wbr>承ります。</p><ul class="tags"><li>要件定義</li><li>設計・開発</li><li>テスト</li><li>運用・保守</li></ul><a class="more" href="business.html#contracted">詳しく見る<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+        </div>
+      </article>
+      <article class="gd__st gd__st--end" id="st-6" data-st="6">
+        <div class="gd__tile" data-tile="6" aria-hidden="true"></div>
+        <div class="gd__in">
+          <div class="gd__hd"><span class="rd"><i>NS</i><b>07</b></span><h3>あなたのビジネス<small>Your Business ― 終点</small></h3></div>
+          <p class="gd__meta"><span>09:24 着</span><span>日本橋から 3.1 km</span></p>
+          <div class="gd__body"><p class="d">ここから先は、<wbr>お客様と<wbr>ともに。<wbr>システム開発・ITに<wbr>関する<wbr>ご相談、<wbr>お見積りの<wbr>ご依頼を<wbr>承ります。</p><a class="more" href="contact.html">お問い合わせ<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
+          <a class="gd__tel" href="tel:+81356455678"><small>お電話 ・ 平日 9:00〜18:00</small>03-5645-5678</a>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
-<!-- ============ crew wanted (recruit) ============ -->
+<!-- ============ 02 recruit, set like a printed timetable ============ -->
 <section class="crew" id="crew" aria-labelledby="crew-h">
-  <div class="wrap crew__in">
-    <div class="crew__l">
-      <p class="chap">CREW WANTED ― 採用情報</p>
-      <h2 id="crew-h">この路線の、<br>乗務員を募集しています。</h2>
-      <p>エンジニアは、<wbr>お客様の<wbr>ビジネスを<wbr>動かす<wbr>乗務員。<wbr>年齢・学歴・経験は<wbr>問いません。<wbr>ITの<wbr>知識が<wbr>あれば、<wbr>実務未経験でも<wbr>応募いただけます。</p>
-      <div class="crew__cta"><a class="btn btn--ink" href="recruit.html#entry">エントリーする<svg aria-hidden="true"><use href="#i-ar"/></svg></a><a class="btn btn--line" href="recruit.html">募集要項を見る</a></div>
+  <div class="wrap">
+    <header class="kh">
+      <p class="kh__no" aria-hidden="true">02</p>
+      <div><p class="chap">CREW WANTED</p><h2 id="crew-h">この路線の、<wbr>乗務員を<wbr>募集しています。</h2></div>
+      <p class="kh__lead">エンジニアは、<wbr>お客様の<wbr>ビジネスを<wbr>動かす<wbr>乗務員。<wbr>年齢・学歴・経験は<wbr>問いません。<wbr>ITの<wbr>知識が<wbr>あれば、<wbr>実務未経験でも<wbr>応募いただけます。</p>
+    </header>
+    <div class="ttb" role="table" aria-label="募集要項（抜粋）">
+      <div class="ttb__cap" aria-hidden="true"><b>募集要項</b><span>RECRUITMENT ― PG / SE</span></div>
+      <div class="ttb__hd" role="row"><span role="columnheader">No.</span><span role="columnheader">項目</span><span role="columnheader">内容</span></div>
+      <div role="row"><span role="cell">01</span><span role="cell">募集職種</span><span role="cell">プログラマ（PG）／システムエンジニア（SE）</span></div>
+      <div role="row"><span role="cell">02</span><span role="cell">応募資格</span><span role="cell">年齢・学歴・経験不問。ITの知識があれば実務未経験OK</span></div>
+      <div role="row"><span role="cell">03</span><span role="cell">給与</span><span role="cell">月給25万円以上（年齢・経験・スキルを考慮）</span></div>
+      <div role="row"><span role="cell">04</span><span role="cell">勤務時間</span><span role="cell">9:00〜18:00（フレックス応相談）</span></div>
+      <div role="row"><span role="cell">05</span><span role="cell">休日</span><span role="cell">完全週休2日制（土日）・祝日・年末年始／年間休日 約120日</span></div>
+      <div role="row"><span role="cell">06</span><span role="cell">勤務地</span><span role="cell">本社（日本橋）または顧客先（東京・千葉・埼玉・神奈川）</span></div>
+      <div role="row"><span role="cell">07</span><span role="cell">制度</span><span role="cell">在宅勤務制度・育児休暇制度・育児短時間勤務制度</span></div>
     </div>
-    <div class="tt" role="table" aria-label="募集要項（抜粋）">
-      <p class="tt__hd" role="row"><span role="columnheader">項目</span><span role="columnheader">内容</span></p>
-      <p role="row"><span role="cell">募集職種</span><span role="cell">プログラマ（PG）／システムエンジニア（SE）</span></p>
-      <p role="row"><span role="cell">応募資格</span><span role="cell">年齢・学歴・経験不問。ITの知識があれば実務未経験OK</span></p>
-      <p role="row"><span role="cell">給与</span><span role="cell">月給25万円以上（年齢・経験・スキルを考慮）</span></p>
-      <p role="row"><span role="cell">勤務時間</span><span role="cell">9:00〜18:00（フレックス応相談）</span></p>
-      <p role="row"><span role="cell">休日</span><span role="cell">完全週休2日制（土日）・祝日・年末年始／年間休日 約120日</span></p>
-      <p role="row"><span role="cell">勤務地</span><span role="cell">本社（日本橋）または顧客先（東京・千葉・埼玉・神奈川）</span></p>
-      <p role="row"><span role="cell">制度</span><span role="cell">在宅勤務制度・育児休暇制度・育児短時間勤務制度</span></p>
+    <div class="crew__cta"><a class="btn btn--ink" href="recruit.html#entry">エントリーする<svg aria-hidden="true"><use href="#i-ar"/></svg></a><a class="btn btn--line" href="recruit.html">募集要項を見る</a></div>
+  </div>
+</section>
+
+<!-- ============ 03 news, as an operations board ============ -->
+<section class="ops" id="news" aria-labelledby="news-h">
+  <div class="wrap">
+    <header class="kh">
+      <p class="kh__no" aria-hidden="true">03</p>
+      <div><p class="chap">OPERATION INFO</p><h2 id="news-h">運行情報 ―<wbr> お知らせ</h2></div>
+      <p class="kh__lead"><a class="more" href="news.html">お知らせ一覧<svg aria-hidden="true"><use href="#i-ar"/></svg></a></p>
+    </header>
+    <ul class="ops__list">
+      <li><a href="news.html"><time datetime="2026-10-01">2026.10.01</time><span class="ops__cat" data-c="r">採用</span><span class="t">2027年度 エンジニア（PG・SE）採用の<wbr>エントリー受付を<wbr>開始しました <span class="tbd">仮テキスト</span></span><svg aria-hidden="true"><use href="#i-ar"/></svg></a></li>
+      <li><a href="news.html"><time datetime="2026-09-26">2026.09.26</time><span class="ops__cat" data-c="s">サービス</span><span class="t">中華食材・アジア食品の<wbr>オンラインストア<wbr>「KokoMart」を<wbr>正式オープン、<wbr>尾久店も<wbr>同時開業しました <span class="tbd">仮テキスト</span></span><svg aria-hidden="true"><use href="#i-ar"/></svg></a></li>
+      <li><a href="news.html"><time datetime="2026-06-17">2026.06.17</time><span class="ops__cat" data-c="a">取り組み</span><span class="t">仕事と介護の<wbr>両立を<wbr>支援する<wbr>「トモニン」に<wbr>登録しました</span><svg aria-hidden="true"><use href="#i-ar"/></svg></a></li>
+      <li><a href="news.html"><time datetime="2025-04-14">2025.04.14</time><span class="ops__cat" data-c="c">認証</span><span class="t">情報セキュリティ<wbr>マネジメントシステム<wbr>（ISO 27001）の<wbr>認証を<wbr>取得しました</span><svg aria-hidden="true"><use href="#i-ar"/></svg></a></li>
+      <li><a href="news.html"><time datetime="2024-11-01">2024.11.01</time><span class="ops__cat" data-c="n">お知らせ</span><span class="t">「テレワーク東京ルール」<wbr>実践企業として<wbr>東京都より<wbr>認定されました</span><svg aria-hidden="true"><use href="#i-ar"/></svg></a></li>
+    </ul>
+    <p class="note">※ 「仮テキスト」の2件は、モックアップ用の仮テキストです。</p>
+  </div>
+</section>
+
+<!-- ============ 04 own services, as transfer signs ============ -->
+<section class="xfer" id="products" aria-labelledby="xfer-h">
+  <div class="wrap">
+    <header class="kh">
+      <p class="kh__no" aria-hidden="true">04</p>
+      <div><p class="chap">TRANSFER</p><h2 id="xfer-h">のりかえ ―<wbr> 自社サービス</h2></div>
+      <p class="kh__lead">受託・SESだけでなく、<wbr>自社の<wbr>サービスと<wbr>製品も<wbr>運営しています。</p>
+    </header>
+    <div class="xfer__g">
+      <a class="xc" href="https://kokomart.jp/ja" target="_blank" rel="noopener">
+        <span class="xc__sign"><span class="xc__k">のりかえ<small>TRANSFER</small></span><b>KokoMart</b><svg aria-hidden="true"><use href="#i-ext"/></svg></span>
+        <span class="xc__img"><img src="https://img.kokomart.jp/product/2026/10/a011db4e6d8479c08c74b8c6e0899f0d.png" alt="KokoMart 9月26日 正式オープン 尾久店同時開業" width="820" height="460" loading="lazy"></span>
+        <span class="xc__b"><span class="xc__t">KokoMart（ココマート） ― ONLINE STORE &amp; SHOP</span><span class="xc__d">中華食材・<wbr>アジア食品の<wbr>オンラインストア。<wbr>2026年9月26日に<wbr>正式オープンし、<wbr>実店舗<wbr>「尾久店」も<wbr>同時開業。<wbr>4,980円以上<wbr>送料無料。</span></span>
+      </a>
+      <a class="xc xc--sys" href="products.html">
+        <span class="xc__sign"><span class="xc__k">のりかえ<small>TRANSFER</small></span><b>業務管理システム</b><svg aria-hidden="true"><use href="#i-ar"/></svg></span>
+        <span class="xc__img"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/10/cropped-Mac-1.png" alt="業務管理システムの画面イメージ" loading="lazy"></span>
+        <span class="xc__b"><span class="xc__t">自社製品 ― PRODUCT <span class="tbd">製品名 要確認</span></span><span class="xc__d">勤怠管理と、<wbr>SESに<wbr>特化した<wbr>契約・仕入・請求管理を<wbr>ひとつに。<wbr>中小企業の<wbr>社内管理を<wbr>ペーパーレス化します。</span></span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ information ============ -->
-<section class="info" id="info" aria-labelledby="news-h">
+<!-- ============ 05 head office and access, as a station-area guide ============ -->
+<section class="office" id="company" aria-labelledby="office-h">
   <div class="wrap">
-    <div class="news" id="news">
-      <div class="news__hd"><h2 id="news-h"><span class="led">運行情報</span>お知らせ</h2><a class="more" href="news.html">お知らせ一覧<svg aria-hidden="true"><use href="#i-ar"/></svg></a></div>
-      <ul>
-        <li><a href="news.html"><time datetime="2026-10-01">2026.10.01</time><span class="cat">採用</span><span class="t">2027年度 エンジニア（PG・SE）採用の<wbr>エントリー受付を<wbr>開始しました <span class="tbd">仮テキスト</span></span></a></li>
-        <li><a href="news.html"><time datetime="2026-09-26">2026.09.26</time><span class="cat">サービス</span><span class="t">中華食材・アジア食品の<wbr>オンラインストア<wbr>「KokoMart」を<wbr>正式オープン、<wbr>尾久店も<wbr>同時開業しました <span class="tbd">仮テキスト</span></span></a></li>
-        <li><a href="news.html"><time datetime="2026-06-17">2026.06.17</time><span class="cat">取り組み</span><span class="t">仕事と介護の<wbr>両立を<wbr>支援する<wbr>「トモニン」に<wbr>登録しました</span></a></li>
-        <li><a href="news.html"><time datetime="2025-04-14">2025.04.14</time><span class="cat">認証</span><span class="t">情報セキュリティ<wbr>マネジメントシステム<wbr>（ISO 27001）の<wbr>認証を<wbr>取得しました</span></a></li>
-        <li><a href="news.html"><time datetime="2024-11-01">2024.11.01</time><span class="cat">お知らせ</span><span class="t">「テレワーク東京ルール」<wbr>実践企業として<wbr>東京都より<wbr>認定されました</span></a></li>
-      </ul>
-      <p class="note">※ 「仮テキスト」の2件は、モックアップ用の仮テキストです。</p>
-    </div>
-
-    <div class="prods" id="products">
-      <a class="pc" href="https://kokomart.jp/ja" target="_blank" rel="noopener">
-        <span class="pc__img"><img src="https://img.kokomart.jp/product/2026/10/a011db4e6d8479c08c74b8c6e0899f0d.png" alt="KokoMart 9月26日 正式オープン 尾久店同時開業" loading="lazy"></span>
-        <span class="pc__b"><span class="pc__k">自社サービス ― ONLINE STORE &amp; SHOP</span><b class="pc__t">KokoMart（ココマート）</b><span class="pc__d">中華食材・<wbr>アジア食品の<wbr>オンラインストア。<wbr>2026年9月26日に<wbr>正式オープンし、<wbr>実店舗<wbr>「尾久店」も<wbr>同時開業。<wbr>4,980円以上<wbr>送料無料。</span><span class="more">KokoMartを見る<svg aria-hidden="true"><use href="#i-ext"/></svg></span></span>
-      </a>
-      <a class="pc pc--sys" href="products.html">
-        <span class="pc__img"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/10/cropped-Mac-1.png" alt="業務管理システムの画面イメージ" loading="lazy"></span>
-        <span class="pc__b"><span class="pc__k">自社製品 ― PRODUCT</span><b class="pc__t">業務管理システム <span class="tbd">製品名 要確認</span></b><span class="pc__d">勤怠管理と、<wbr>SESに<wbr>特化した<wbr>契約・仕入・請求管理を<wbr>ひとつに。<wbr>中小企業の<wbr>社内管理を<wbr>ペーパーレス化します。</span><span class="more">製品について<svg aria-hidden="true"><use href="#i-ar"/></svg></span></span>
-      </a>
-    </div>
-
-    <div class="co" id="company">
-      <div>
-        <h2 class="h2s">会社概要</h2>
+    <header class="kh">
+      <p class="kh__no" aria-hidden="true">05</p>
+      <div><p class="chap">STATION AREA</p><h2 id="office-h">本社と、<wbr>アクセス</h2></div>
+      <p class="kh__lead">日本橋の<wbr>本社は、<wbr>4つの<wbr>駅から<wbr>歩いて<wbr>来られます。</p>
+    </header>
+    <div class="office__g">
+      <div class="plate">
+        <p class="plate__hd"><span class="rd rd--sm rd--end"><i>NS</i><b>01</b></span>会社概要<small>COMPANY PROFILE</small></p>
         <table class="ctbl">
           <tr><th>会社名</th><td>株式会社ネオシステムズ（Neo Systems Co., Ltd.）</td></tr>
           <tr><th>設立</th><td>2023年4月</td></tr>
@@ -250,31 +316,31 @@
           <tr><th>認証</th><td>ISO/IEC 27001（ISMS）／SECURITY ACTION 二つ星</td></tr>
         </table>
       </div>
-      <div>
-        <h2 class="h2s">アクセス ― 本社（日本橋）</h2>
-        <ul class="stn">
-          <li><span class="ln ln--jr">JR</span><span>総武本線「新日本橋」駅 8番出口</span><em>徒歩約3分</em></li>
-          <li><span class="ln ln--h">H</span><span>東京メトロ日比谷線「小伝馬町」駅 3番出口</span><em>徒歩約3分</em></li>
-          <li><span class="ln ln--g">G</span><span>東京メトロ銀座線「三越前」駅 A10出口</span><em>徒歩約6分</em></li>
-          <li><span class="ln ln--jr">JR</span><span>山手線・京浜東北線・中央線「神田」駅 東口</span><em>徒歩7分</em></li>
+      <div class="plate">
+        <p class="plate__hd">出口案内<small>ACCESS ― 本社（日本橋）</small></p>
+        <ul class="exl">
+          <li><span class="ex">8</span><span class="exl__t"><span class="ln ln--jr">JR</span>総武本線「新日本橋」駅<small>8番出口</small></span><em>徒歩約3分</em></li>
+          <li><span class="ex">3</span><span class="exl__t"><span class="ln ln--h">H</span>東京メトロ日比谷線「小伝馬町」駅<small>3番出口</small></span><em>徒歩約3分</em></li>
+          <li><span class="ex ex--s">A10</span><span class="exl__t"><span class="ln ln--g">G</span>東京メトロ銀座線「三越前」駅<small>A10出口</small></span><em>徒歩約6分</em></li>
+          <li><span class="ex ex--s">東口</span><span class="exl__t"><span class="ln ln--jr">JR</span>山手線・京浜東北線・中央線「神田」駅<small>東口</small></span><em>徒歩7分</em></li>
         </ul>
         <div class="map"><iframe title="本社所在地の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E4%B8%AD%E5%A4%AE%E5%8C%BA%E6%97%A5%E6%9C%AC%E6%A9%8B%E6%9C%AC%E7%94%BA4-9-2&z=16&output=embed"></iframe></div>
       </div>
     </div>
 
-    <aside class="tech" aria-labelledby="tech-h">
+    <!-- legend: how this page is made -->
+    <aside class="legend" aria-labelledby="tech-h">
       <div>
-        <p class="chap">BEHIND THE SCENES</p>
+        <p class="chap">LEGEND ― 凡例</p>
         <h2 id="tech-h">このサイトの技術</h2>
         <p>路線図は、<wbr>データから<wbr>その場で<wbr>描いた<wbr>ベクター（SVG）。<wbr>拡大・縮小しても、<wbr>線や<wbr>文字が<wbr>にじみません。</p>
         <p class="tech__note">※ 本モックアップの実装内容です。本番では表示速度などの計測値も掲載予定。</p>
       </div>
-      <ul>
-        <li><span>街区・<wbr>住宅地・<wbr>田畑・<wbr>海岸線は、<wbr>コードで<wbr>生成した<wbr><b data-count>数百</b>個の<wbr>図形。<wbr>画像は<wbr>各駅の<wbr>写真だけです。</span></li>
-        <li><span>電車は<wbr>路線の<wbr>距離に<wbr>沿って<wbr>走り、<wbr>時刻・<wbr>縮尺・<wbr>通過区間が<wbr>リアルタイムに<wbr>変わります。</span></li>
-        <li><span>ひと回し・<wbr>ひとスワイプで、<wbr>次の駅まで<wbr>自動で<wbr>走ります。<wbr>スクロール位置と<wbr>連動しているので、<wbr>スクロールバーや<wbr>戻るボタンも<wbr>そのまま<wbr>使えます。</span></li>
-        <li><span>外部ライブラリ <b>なし</b>。<wbr>JavaScriptは <b data-js-size>約23KB</b>。</span></li>
-        <li><span>OSの<wbr>「視差効果を減らす」<wbr>設定に<wbr>対応。<wbr>ヘッダーの<wbr>MOTIONから<wbr>静止版にも<wbr>切り替えられます。</span></li>
+      <ul class="lg">
+        <li><i class="lg__sym lg__sym--line" aria-hidden="true"></i><span>NEO LINE。<wbr>電車は<wbr>路線の<wbr>距離に<wbr>沿って<wbr>走り、<wbr>通過した<wbr>区間が<wbr>塗られていきます。</span></li>
+        <li><i class="lg__sym lg__sym--blk" aria-hidden="true"></i><span>街区・<wbr>住宅地・<wbr>田畑・<wbr>海岸線は、<wbr>コードで<wbr>生成した<wbr><b data-count>数百</b>個の<wbr>図形。<wbr>画像は<wbr>各駅の<wbr>写真だけです。</span></li>
+        <li><i class="lg__sym lg__sym--tm" aria-hidden="true"></i><span>時刻・<wbr>縮尺・<wbr>通過区間が<wbr>リアルタイムに<wbr>変わります。<wbr>ひと回し・<wbr>ひとスワイプで<wbr>次の駅へ。</span></li>
+        <li><i class="lg__sym lg__sym--rd" aria-hidden="true"></i><span>外部ライブラリ <b>なし</b>。<wbr>JavaScriptは <b data-js-size>約23KB</b>。<wbr>OSの<wbr>「視差効果を減らす」<wbr>設定と、<wbr>ヘッダーの<wbr>MOTION（静止版）に<wbr>対応。</span></li>
       </ul>
     </aside>
   </div>
@@ -283,8 +349,9 @@
 
 <footer class="ftr">
   <div class="wrap">
+    <ol class="ftr__line" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
     <div class="ftr__g">
-      <div class="ftr__co"><a href="index.html"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/%E6%B7%B1%E8%89%B2%E8%83%8C%E6%99%AF%E7%94%A8%E9%80%8F%E6%98%8E2-2.png" alt="NEO SYSTEMS" width="120" height="24"></a>
+      <div class="ftr__co"><a href="index.html"><img src="https://www.neo-systems.co.jp/wp-content/uploads/2023/03/%E9%80%8F%E6%98%8E2-1.png" alt="NEO SYSTEMS" width="110" height="22"></a>
         <p><b>株式会社ネオシステムズ</b><br>〒103-0023 東京都中央区日本橋本町4-9-2 本栄ビル6階<br>TEL 03-5645-5678　FAX 03-5645-5677</p></div>
       <div><h3>SERVICES</h3><ul><li><a href="business.html#cloud">クラウドソリューション</a></li><li><a href="business.html#dx">DX支援</a></li><li><a href="business.html#consulting">ITコンサルティング</a></li><li><a href="business.html#ses">SES</a></li><li><a href="business.html#contracted">受託開発</a></li><li><a href="products.html">製品・サービス</a></li></ul></div>
       <div><h3>COMPANY</h3><ul><li><a href="company.html#profile">会社概要</a></li><li><a href="company.html#message">代表メッセージ</a></li><li><a href="company.html#philosophy">企業理念・経営理念</a></li><li><a href="company.html#access">アクセス</a></li><li><a href="sdgs.html">SDGsへの取り組み</a></li><li><a href="security.html">品質方針</a></li></ul></div>
@@ -294,9 +361,9 @@
       <button class="motion" type="button" data-motion aria-pressed="true"><span class="motion__sw" aria-hidden="true"></span>MOTION <span class="motion__st">ON</span></button>
       <p class="ftr__certs">ISO/IEC 27001（ISMS）認証取得 ／ SECURITY ACTION 二つ星 ／ テレワーク東京ルール 実践企業 ／ トモニン 登録 ／ 東京商工会議所・日本橋法人会 会員</p>
     </div>
-    <div class="ftr__btm"><p>© 2026 Neo Systems Co., Ltd. ― 「NEO LINE」は本サイト内の架空の路線です。</p><div class="links"><a href="sitemap.html">サイトマップ</a><a href="../en/index.html" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a><a href="../zh/index.html" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a></div></div>
+    <div class="ftr__btm"><p>© 2026 Neo Systems Co., Ltd. ― 「NEO LINE」と路線図は本サイト内の架空のものです。</p><div class="links"><a href="sitemap.html">サイトマップ</a><a href="../en/index.html" data-soon="English版は、デザインの方向性が決まり次第作成します。">English</a><a href="../zh/index.html" data-soon="中文版は、デザインの方向性が決まり次第作成します。">中文</a></div></div>
   </div>
 </footer>
-<script src="../assets/js/main.js?v=1"></script>
+<script src="../assets/js/main.js?v=2"></script>
 </body>
 </html>

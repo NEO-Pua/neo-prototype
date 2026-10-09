@@ -102,6 +102,14 @@
     var d='M'+P.map(function(q){return q[0]+' '+q[1]}).join('L');
     $('.ln--case',map).setAttribute('d',d);$('.ln--base',map).setAttribute('d',d);
   })();
+  // each station card below gets a tile cut from this map, centred on its station
+  $$('[data-tile]').forEach(function(t){
+    var k=+t.dataset.tile, v=P[SV[k]], c=map.cloneNode(true), dn=c.querySelector('.ln--done');
+    c.setAttribute('class','tile');c.setAttribute('viewBox',(v[0]-300)+' '+(v[1]-300)+' 600 600');c.setAttribute('preserveAspectRatio','xMidYMid slice');
+    if(dn)dn.parentNode.removeChild(dn);
+    el('circle',{cx:v[0],cy:v[1],r:30,'class':'tile__st'},c);
+    t.appendChild(c);
+  });
   var lnCase=$('.ln--case',map), lnBase=$('.ln--base',map), lnDone=$('.ln--done',map);
   function partial(L){ // the line from 日本橋 up to distance L
     var s='M'+P[0][0]+' '+P[0][1];
@@ -173,7 +181,7 @@
   var panel=$('.panel'), pSt=$('.pn--st'), pImg=$('.pn__ph img'), pCap=$('.pn__cap'), pState=$('.pn__state'), pNo=$('.pn__name .rd b'),
       pJp=$('.pn__jp'), pEn=$('.pn__en'), pTime=$('.pn__time'), pKm=$('.pn__km'), pBody=$('.pn__body');
   var pgNow=$('.pager__now'), pgItems=$$('.pager li');
-  var bodies=SV.map(function(_,k){var b=$('.rt__st[data-st="'+k+'"] .rt__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
+  var bodies=SV.map(function(_,k){var b=$('[data-st="'+k+'"] .gd__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
   PHOTO.forEach(function(u){if(u){var im=new Image();im.src=u}});
   pImg.addEventListener('load',function(){pImg.classList.remove('ld')});
   var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま'}, U={mode:'hero',k:-1,st:'',dep:null,on:-1};
@@ -376,7 +384,7 @@
   document.addEventListener('click',function(e){
     var b=e.target.closest&&e.target.closest('[data-go]');if(!b)return;
     var k=+b.dataset.go;
-    if(isStatic){var t=$('.rt__st[data-st="'+k+'"]');if(t)t.scrollIntoView({block:'start'});return}
+    if(isStatic){var t=$('[data-st="'+k+'"]');if(t)t.scrollIntoView({block:'start'});return}
     ap.to(rideStops()[k].y);
   });
 
