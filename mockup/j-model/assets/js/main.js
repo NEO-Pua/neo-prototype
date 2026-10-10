@@ -99,12 +99,17 @@
   /* ---------- the UI around the ride ---------- */
   var stage=$('.stage'), ride=$('.ride');
   var sp=$('.sp'), spState=$('.sp__state',sp), spNo=$('.sp__name .rd b',sp), spJp=$('.sp__jp',sp), spEn=$('.sp__en',sp),
-      spTime=$('.sp__time',sp), spKm=$('.sp__km',sp), spBody=$('.sp__body',sp);
+      spTime=$('.sp__time',sp), spKm=$('.sp__km',sp), spBody=$('.sp__body',sp), spImg=$('.sp__ph img',sp);
+  var IMG='https://www.neo-systems.co.jp/wp-content/uploads/';
+  var PHOTO=[null,IMG+'2023/03/advantages-and-disadvantages-of-cloud-service.jpg',IMG+'2023/06/cropped-dx-3.jpg',IMG+'2023/03/B004.jpg',
+             IMG+'2023/10/cropped-cropped-pixta_69012043_M-1200x675-1.jpg',IMG+'2021/11/cropped-Rectangle-602-1.jpg',null];
+  PHOTO.forEach(function(u){if(u){var im=new Image();im.src=u}});
+  spImg.addEventListener('load',function(){spImg.classList.remove('ld')});
   var arrive=$('.arrive'), rstrip=$('.rstrip'), rItems=$$('.rstrip li');
   // the station panel reads each station's text from the route map below
   var bodies=SX.map(function(_,k){var b=$('.rt__st[data-st="'+k+'"] .rt__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
   var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま',pass:'通過'};
-  var U={hf:-1,k:-1,st:'',sp:null,ar:null,rb:null,on:-1,mv:null};
+  var U={hf:-1,k:-1,st:'',sp:null,ar:null,rb:null,on:-1,mv:null,full:null,read:null};
   function ui(p,J){
     var hf=seg(p,.004,.03);
     if(hf!==U.hf){U.hf=hf;stage.style.setProperty('--hf',hf.toFixed(3));stage.classList.toggle('departed',hf>=1)}
@@ -122,9 +127,15 @@
       spNo.textContent='0'+(k+1);flip(spJp,ST[k].jp);spEn.textContent=ST[k].en;
       spTime.textContent=arrTime(k)+' 着';spKm.textContent='日本橋から '+(SX[k]/1000).toFixed(1)+' km';
       spBody.innerHTML=k<6?bodies[k]:'';
+      sp.classList.toggle('no-ph',!PHOTO[k]);
+      if(PHOTO[k]&&spImg.src!==PHOTO[k]){spImg.classList.add('ld');spImg.src=PHOTO[k]}
       sp.classList.remove('swap');void sp.offsetWidth;sp.classList.add('swap');
     }
     if(st!==U.st){U.st=st;spState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];spState.classList.toggle('soon',st==='soon');spState.classList.toggle('pass',st==='pass')}
+    // travel to watch, arrive to read: the card opens and the scene steps back while the train stands at a station
+    var full=st==='stop', read=full||showA;
+    if(full!==U.full){U.full=full;sp.classList.toggle('full',full)}
+    if(read!==U.read){U.read=read;stage.classList.toggle('reading',read);S.read=read;S.dirty=true}
     sp.style.setProperty('--lt',(J.state==='stop'?1:J.state==='dep'?0:J.tt).toFixed(3));
   }
 

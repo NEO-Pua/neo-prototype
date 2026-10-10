@@ -146,6 +146,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .st.done .rd{box-shadow:inset 0 0 0 4.5px var(--cyan);color:var(--ink)}
 .st.on .rd{background:var(--cyan);box-shadow:inset 0 0 0 4.5px var(--cyan);color:#fff}
 .st--end .rd{background:var(--navy);box-shadow:inset 0 0 0 4.5px var(--cyan);color:#fff}
+.reading .st.here .rd::after{animation:none;opacity:0}
 .st.here .rd::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px var(--cyan);animation:ping 2.2s ease-out infinite}
 @keyframes ping{from{transform:scale(1);opacity:.75}to{transform:scale(2.3);opacity:0}}
 .st:hover .rd{box-shadow:inset 0 0 0 4.5px var(--cyan)}
@@ -163,6 +164,10 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .tm i::after{left:24px;border-left-color:#8fdcff}
 .tm b{position:absolute;left:0;top:-44px;transform:translateX(-50%);padding:2px 8px;border-radius:2px;background:var(--ink);color:#fff;font-family:var(--en);font-size:11px;font-weight:600;letter-spacing:.06em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tm b::after{content:"";position:absolute;left:50%;bottom:-4px;margin-left:-4px;border-style:solid;border-width:4px 4px 0;border-color:var(--ink) transparent transparent}
+
+/* while a station is being read, the scene steps back a little */
+.stage::after{content:"";position:absolute;inset:0;z-index:4;background:rgba(247,248,250,0);transition:background .7s var(--ease);pointer-events:none}
+.stage.reading::after{background:rgba(247,248,250,.34)}
 
 /* map conventions: north and a live scale bar */
 .maptools{position:absolute;right:var(--gut);top:calc(var(--hh) + 22px);z-index:4;display:flex;align-items:flex-end;gap:18px;font-family:var(--en);font-size:10px;font-weight:500;letter-spacing:.12em;color:var(--ink-3);pointer-events:none}
@@ -192,13 +197,12 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .cue i::after{content:"";position:absolute;inset:0;background:var(--cyan);transform:translateX(-100%);animation:cue 2s var(--ease) infinite}
 @keyframes cue{60%,100%{transform:translateX(100%)}}
 
-.pn__ph{position:relative;margin:0;aspect-ratio:2/1;overflow:hidden;background:#e7ebf0}
+.pn__ph{position:relative;margin:16px 0 0;aspect-ratio:2/1;overflow:hidden;background:#e7ebf0}
 .pn__ph img{width:100%;height:100%;object-fit:cover;transition:opacity .5s var(--ease)}
 .pn__ph img.ld{opacity:0}
 .pn__cap{position:absolute;left:0;bottom:0;padding:5px 12px;background:rgba(17,24,39,.8);color:#fff;font-family:var(--en);font-size:10px;font-weight:500;letter-spacing:.18em}
 .no-ph .pn__ph{display:none}
-.pn__top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;font-size:11.5px;letter-spacing:.06em;color:var(--ink-3)}
-.no-ph .pn__top{margin-top:0}
+.pn__top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:0;font-size:11.5px;letter-spacing:.06em;color:var(--ink-3)}
 .pn__state{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.16em;color:var(--cyan-d)}
 .pn__state::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
 .pn__state.soon{color:var(--navy)}
@@ -214,12 +218,20 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .pn__en{display:block;margin-top:3px;font-family:var(--en);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
 .pn__tt{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-family:var(--en);font-size:12px;letter-spacing:.04em;color:var(--ink-2)}
 .pn__tt span+span{padding-left:16px;box-shadow:inset 1px 0 0 var(--line-2)}
+.pn__bar{display:block;height:2px;margin-top:10px;background:var(--line)}
+.pn__bar i{display:block;height:100%;background:var(--cyan);transform-origin:left;transform:scaleX(var(--lt,0))}
+/* moving: a slim header. Stopped: the full card opens (after the motion settles) */
+.pn__more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.pn--st.full .pn__more{grid-template-rows:1fr;transition:grid-template-rows .6s var(--ease) .2s}
+.pn__in{min-height:0;overflow:hidden}
+.pn__in>*{opacity:0;transition:opacity .3s}
+.pn--st.full .pn__in>*{opacity:1;transition:opacity .5s .45s}
 .pn__body{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 .pn__body:empty{display:none}
 .pn__body .d{font-size:14px;line-height:1.95;color:var(--ink-2)}
 .pn__body .tags{margin-top:12px}
 .pn__body .more{margin-top:12px}
-.swap .pn__name p,.swap .pn__tt,.swap .pn__body{animation:fadeUp .55s var(--ease) both}
+.swap .pn__name p,.swap .pn__tt{animation:fadeUp .55s var(--ease) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
 .pn--end{padding-top:clamp(8px,4vh,56px)}
 .end__h{margin-top:18px;font-size:clamp(30px,3.2vw,46px);font-weight:700;line-height:1.3;letter-spacing:.04em}
@@ -454,7 +466,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 /* ---------- responsive ---------- */
 @media(max-width:1180px){.pager__hint{display:none}}
 @media(max-height:820px) and (min-width:901px){.pn__ph{aspect-ratio:16/6}.facts{display:none}}
-@media(max-height:700px) and (min-width:901px){.pn__ph{display:none}.pn__top{margin-top:0}.lead{display:none}}
+@media(max-height:700px) and (min-width:901px){.pn__ph{display:none}.lead{display:none}}
 @media(max-width:900px){
   /* the ride stacks: panel on top, map below */
   .veil{background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 44%,rgba(247,248,250,.85) 50%,rgba(247,248,250,0) 58%)}
@@ -465,8 +477,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .cta{gap:8px;margin-top:16px}
   .cta .btn{height:46px;padding:0 18px;font-size:13px}
   .facts,.cue{display:none}
-  .pn__ph{display:none}
-  .pn__top{margin-top:0}
+  .pn__ph{margin-top:10px;aspect-ratio:16/7}
   .pn__svc{display:none}
   .pn__name{gap:12px;margin-top:8px}
   .pn__name .rd{width:46px;height:46px;box-shadow:inset 0 0 0 4px var(--cyan)}

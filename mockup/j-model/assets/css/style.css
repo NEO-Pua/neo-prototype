@@ -165,13 +165,27 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .sp__tt span+span{padding-left:16px;box-shadow:inset 1px 0 0 var(--line-2)}
 .sp__bar{display:block;height:2px;margin-top:10px;background:var(--line)}
 .sp__bar i{display:block;height:100%;background:var(--cyan);transform-origin:left;transform:scaleX(var(--lt,0))}
+/* moving: a slim header. Stopped: the full card opens (after the motion settles) */
+.sp__more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.sp.full .sp__more{grid-template-rows:1fr;transition:grid-template-rows .6s var(--ease) .2s}
+.sp__in{min-height:0;overflow:hidden}
+.sp__in>*{opacity:0;transition:opacity .3s}
+.sp.full .sp__in>*{opacity:1;transition:opacity .5s .45s}
+.sp__ph{margin:16px 0 0;aspect-ratio:2/1;overflow:hidden;background:#e7ebf0}
+.sp__ph img{width:100%;height:100%;object-fit:cover;transition:opacity .5s var(--ease)}
+.sp__ph img.ld{opacity:0}
+.no-ph .sp__ph{display:none}
 .sp__body{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 .sp__body:empty{display:none}
 .sp__body .d{font-size:13.5px;line-height:1.9;color:var(--ink-2)}
 .sp__body .tags{margin-top:12px}
 .sp__body .more{margin-top:12px}
-.sp.swap .sp__body,.sp.swap .sp__en,.sp.swap .sp__tt{animation:fadeUp .55s var(--ease) both}
+.sp.swap .sp__en,.sp.swap .sp__tt{animation:fadeUp .55s var(--ease) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
+
+/* while a station is being read, the scene steps back a little */
+.stage::after{content:"";position:absolute;inset:0;z-index:4;background:rgba(247,248,250,0);transition:background .7s var(--ease);pointer-events:none}
+.stage.reading::after{background:rgba(247,248,250,.34)}
 
 /* terminal: arrival card with the contact */
 .arrive{position:absolute;left:var(--gut);top:calc(var(--hh) + 26px);z-index:7;width:min(520px,100% - var(--gut)*2);padding:26px 28px 22px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(17,24,39,.04),0 30px 60px -34px rgba(17,24,39,.55);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s .6s}
@@ -345,6 +359,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .sp__en{font-size:10px}
   .sp__svc{display:none}
   .sp__tt{margin-top:10px;font-size:11px}
+  .sp__ph{margin-top:10px;aspect-ratio:16/7}
   .sp__body{margin-top:10px;padding-top:10px}
   .sp__body .d{font-size:12.5px;line-height:1.75}
   .sp__body .tags{display:none}
@@ -376,7 +391,8 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .tt p span{padding:12px 12px;font-size:13px}
 }
 @media(max-width:520px){.ftr__g{grid-template-columns:1fr}}
-@media(max-height:620px) and (min-width:701px){.lead,.flap{display:none}.hero h1{font-size:34px}}
+@media(max-height:760px) and (min-width:701px){.sp__ph{aspect-ratio:16/6}}
+@media(max-height:620px) and (min-width:701px){.sp__ph{display:none}.lead,.flap{display:none}.hero h1{font-size:34px}}
 
 /* ---------- static version (reduced motion · MOTION: OFF · no JS) ---------- */
 .static .ride{height:auto}
