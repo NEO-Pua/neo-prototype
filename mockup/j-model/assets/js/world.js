@@ -388,6 +388,7 @@ async function main(){
     requestAnimationFrame(loop);
     if(!first&&!S.visible)return;
     if(S.static&&!S.dirty&&!first)return;
+    if(!first&&S.read&&!S.dirty)return; // standing at a station: nothing moves, nothing to redraw
     const idle=!S.dirty&&!(S.v>0);
     if(!first&&idle&&(++n&1))return; // a gentle drift needs no more than 30 fps
     S.dirty=false;
