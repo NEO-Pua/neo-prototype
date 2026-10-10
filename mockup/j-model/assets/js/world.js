@@ -369,7 +369,12 @@ async function main(){
   function update(now){
     const i=Math.max(0,Math.min(5,S.i|0)), tt=Math.max(0,Math.min(1,S.tt||0)), x=S.x||0;
     placeTrain(x);
-    const sh=shot(i,tt), cx=centre(i)+(centre(i+1)-centre(i))*smoother(tt), cy=deckY(cx), tc=x-TRAIN/2, ty=deckY(tc);
+    const xp=S.xp||0, tc=x-TRAIN/2, ty=deckY(tc);
+    // express: no settling into each station's shot; drift between the moving shots instead
+    let sh=shot(i,tt);
+    if(xp>0)sh=mixv(sh,mixv(MID[i],MID[Math.min(5,i+1)],smooth(tt)),xp);
+    let cx=centre(i)+(centre(i+1)-centre(i))*smoother(tt);cx+=(tc-cx)*xp;
+    const cy=deckY(cx);
     const k=portrait?1.3:1, still=S.static?0:1-(S.v||0), t=now*.001;
     camera.position.set(cx+sh[0]*k+Math.sin(t*.11)*6*still, cy+sh[1]*k+Math.sin(t*.08)*1.8*still, sh[2]*k);
     camera.lookAt(tc+sh[3],ty+sh[4],sh[5]);

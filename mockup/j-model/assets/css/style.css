@@ -151,6 +151,8 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .sp__state{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.16em;color:var(--cyan-d)}
 .sp__state::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
 .sp__state.soon{color:var(--navy)}
+.sp__state.pass{color:var(--ink-3)}
+.sp__state.pass::before{border-radius:0;width:12px;height:2px}
 .sp__state.soon::before{animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .sp__name{display:flex;align-items:center;gap:16px;margin-top:14px}
@@ -210,6 +212,10 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .ff-on .ffwd{opacity:1;transform:translate(-50%,0)}
 .ffwd i{width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--cyan)}
 .ffwd i+i{margin-right:7px}
+.ffwd b{font-weight:inherit}
+.ffwd b+b,.ffwd.rev b{display:none}
+.ffwd.rev b+b{display:inline}
+.ffwd.rev i{transform:scaleX(-1)}
 
 /* ---------- route map (the five businesses) ---------- */
 .route{padding:clamp(88px,10vw,140px) 0;background:#fff}

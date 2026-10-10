@@ -201,10 +201,10 @@
      and grabbing the scrollbar stops the playback. Outside the story, and after the last
      stop, scrolling is completely normal. */
   function autoplay(o){
-    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
+    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, xp=0, jumpEdge=null, jdir=0, skip=o.skip; // xp: 0 → 1 into express mode
     var g={last:0,d:0,acc:0,used:false}, ty=null, tUsed=false;
     var badge=document.createElement('div');
-    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
+    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i><b>早送り</b><b>巻き戻し</b>';
     document.body.appendChild(badge);
     function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
     function easeO(k){return 1-Math.pow(1-k,3)}
@@ -222,7 +222,7 @@
       var t;
       if(anim){
         if(dirOf(anim)===d)return;           // already heading that way: a nudge doesn't skip ahead
-        queue=0;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
+        queue=0;jumpEdge=null;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
       }
       if(performance.now()<restUntil)return;
       t=nextStop(d,scrollY);if(t)start(t,false);
@@ -234,7 +234,8 @@
     function start(t,chained){
       var y0=scrollY, px=Math.abs(t.y-y0);
       if(px<2)return false;
-      anim={y0:y0,y1:t.y,k:0,dur:!chained&&t.ms?t.ms:o.dur(px),ease:o.linear?null:chained?easeO:easeIO};
+      var lin=o.linear||(chained&&performance.now()<ffUntil); // express: constant speed straight through the beats
+      anim={y0:y0,y1:t.y,k:0,dur:!chained&&t.ms?t.ms:o.dur(px),ease:lin?null:chained?easeO:easeIO,lin:lin&&!o.linear};
       root.style.scrollBehavior='auto';lastSet=-1;
       if(!raf){prevT=0;raf=requestAnimationFrame(step)}
       return true;
@@ -244,10 +245,15 @@
       if(!anim)return;
       // the visitor grabbed the scrollbar (or something else scrolled): let them have it
       if(lastSet>=0&&Math.abs(scrollY-lastSet)>3){halt();return}
-      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
+      // a jump from the station buttons runs express until the stop before its destination
+      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil||(jumpEdge!==null&&(jdir>0?scrollY<jumpEdge-4:scrollY>jumpEdge+4));
       prevT=now;
-      root.classList.toggle('ff-on',fast);
-      rate+=((fast?4:queue?2:1)-rate)*.14;
+      root.classList.toggle('ff-on',fast);badge.classList.toggle('rev',fast&&dirOf(anim)<0);
+      rate+=((fast?5:queue?2:1)-rate)*.14;
+      xp+=((fast?1:0)-xp)*.1;
+      // entering express mid-beat: carry on at constant speed; leaving it: ease into the next beat
+      if(fast&&anim.ease&&!anim.lin)retarget(null,true);
+      else if(!fast&&anim.lin&&anim.k<.98)retarget(easeO,false);
       anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
       var e=anim.ease?anim.ease(anim.k):anim.k;
       lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
@@ -260,7 +266,10 @@
       }
       halt();restUntil=now+150;
     }
-    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
+    function retarget(e,lin){ // same target, from where we are now, with a new easing (no second loop)
+      var y0=scrollY;anim={y0:y0,y1:anim.y1,k:0,dur:o.dur(Math.max(2,Math.abs(anim.y1-y0))),ease:e,lin:lin};
+    }
+    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;xp=0;jumpEdge=null;root.classList.remove('ff-on');root.style.scrollBehavior=''}
 
     var run={t0:0,last:0,d:0,ev:[]}; // a run of scrolling one way (short pauses between wheel strokes allowed)
     addEventListener('wheel',function(e){
@@ -328,12 +337,19 @@
         setTimeout(function(){root.style.scrollBehavior=''},50);
       });
     }
-    return{to:function(y){queue=0;ffUntil=0;start({y:y},!!anim)},halt:halt};
+    function jump(y){ // straight to a stop: express past the ones in between, then brake onto it
+      queue=0;ffUntil=0;jumpEdge=null;
+      var s=o.stops(), y0=scrollY, d=y>y0?1:-1;
+      var mid=s.filter(function(t){return d>0?t.y>y0+4&&t.y<y-4:t.y<y0-4&&t.y>y+4});
+      if(mid.length){jumpEdge=mid[d>0?mid.length-1:0].y;jdir=d}
+      start({y:y},!!anim);
+    }
+    return{to:jump,halt:halt,xp:function(){return xp}};
   }
 
   if(!isStatic){
     var sceneY=function(n,p){var el=$('[data-scene="'+n+'"]'),t=el.getBoundingClientRect().top+scrollY;return Math.round(t+p*(el.offsetHeight-innerHeight))};
-    autoplay({
+    var hap=autoplay({
       // the beats of the story; ms = how long that leg plays
       stops:function(){
         var s=[{y:0},{y:sceneY('sys',.47),ms:4200}];                             // code types itself, the system assembles
@@ -348,6 +364,14 @@
       skip:$('.skip'), skipTo:'#contact'
     });
   }
+
+  // the chapter rail (and the phone menu's chapters) jump through the story instead of a plain smooth scroll
+  if(!isStatic)document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.rail a[href^="#"],.menu__chap a[href^="#"]');if(!a||!hap)return;
+    var t=document.getElementById(a.getAttribute('href').slice(1));if(!t)return;
+    e.preventDefault();
+    hap.to(Math.round(t.getBoundingClientRect().top+scrollY));
+  });
 
   /* ---------- MOTION switch (persists, then reloads at the same chapter) ---------- */
   $$('[data-motion]').forEach(function(b){

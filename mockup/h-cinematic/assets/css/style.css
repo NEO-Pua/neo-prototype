@@ -133,6 +133,10 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="ja"] h4,html
 .ff-on .ffwd{opacity:1;transform:translate(-50%,0)}
 .ffwd i{width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--glow)}
 .ffwd i+i{margin-right:7px}
+.ffwd b{font-weight:inherit}
+.ffwd b+b,.ffwd.rev b{display:none}
+.ffwd.rev b+b{display:inline}
+.ffwd.rev i{transform:scaleX(-1)}
 @media(max-width:600px){.ffwd{bottom:56px}}
 
 /* skip the story (shown only while inside it) */

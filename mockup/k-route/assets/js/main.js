@@ -55,6 +55,31 @@
     return o;
   }
   function stopAt(k){return k<=0?0:k>=6?1:P0+k*LEG-.002}
+  // express (while fast-forwarding): constant speed straight through the stations.
+  // It meets the normal stop-and-go journey exactly at every station stop, so the two blend seamlessly.
+  function express(p){
+    var i=0;while(i<5&&p>stopAt(i+1))i++;
+    var u=seg(p,stopAt(i),stopAt(i+1));
+    return{L:SL[i]+(SL[i+1]-SL[i])*u,v:1,i:i,k:i+1,tt:u,state:'pass'};
+  }
+  var lastPos=null, backward=false; // rewinding: the next station is the one behind us
+  function runAt(p,xp){
+    var J=blend(p,xp);
+    if(lastPos!==null){if(J.L<lastPos-.5)backward=true;else if(J.L>lastPos+.5)backward=false}
+    lastPos=J.L;
+    if(backward&&J.state!=='stop'&&J.state!=='dep'){J.k=J.i;if(J.state!=='pass')J.state=J.tt<.32?'soon':'next'}
+    return J;
+  }
+  function blend(p,xp){
+    var J=journey(p);
+    if(xp<.002)return J;
+    var E=express(p);
+    J.L+=(E.L-J.L)*xp;J.v+=(1-J.v)*xp;
+    if(E.i===J.i)J.tt+=(E.tt-J.tt)*xp;else if(xp>.5){J.i=E.i;J.tt=E.tt}
+    if(xp>.5){J.state='pass';J.k=E.k}
+    J.xp=xp;return J;
+  }
+  function minutesAt(L){for(var k=0;k<6;k++)if(L<=SL[k+1])return 4*(k+(L-SL[k])/(SL[k+1]-SL[k]));return 24}
   function hm(min){min=Math.round(min);return '09:'+(min<10?'0':'')+min}
 
   /* ---------- drawing the map ---------- */
@@ -149,15 +174,16 @@
     V.zs=V.vw/(V.phone?560:860);                                 // zoom at a station
   }
   function camera(p,J){
-    var moving=J.state==='next'||J.state==='soon';
+    var moving=J.state==='next'||J.state==='soon'||J.state==='pass';
     var ahead=at(J.L+(moving?70*J.v:0));
-    var z=V.zs*(1-.34*Math.sin(Math.PI*clamp(J.tt,0,1))*(moving?1:0)); // pull back mid-leg
+    var z=V.zs*(1-.34*Math.max(Math.sin(Math.PI*clamp(J.tt,0,1))*(moving?1:0),J.xp||0)); // pull back mid-leg (and all through an express run)
     var w0=p<P0?1:J.i===0&&J.state!=='stop'?1-smooth(seg(J.tt,0,.45)):0; // leaving the overview
     var w1=smooth(seg(p,ARR+.004,1));                                       // back to it at the terminus
     var w=Math.max(w0,w1), ox=(BB[0]+BB[2])/2, oy=(BB[1]+BB[3])/2;
     return{x:ahead[0]+(ox-ahead[0])*w, y:ahead[1]+(oy-ahead[1])*w, z:Math.exp(Math.log(z)+(Math.log(V.zo)-Math.log(z))*w)};
   }
   var sc=$('.scale'), scB=$('.scale b'), lastScale='', lastClock='', lastFar=null, lastOn=-1, lastHere=null;
+  var lastL=0, heading=1; // which way the train is moving along the line (+1 towards the terminus)
   function draw(p,J){
     var C=camera(p,J), z=C.z, vx=C.x-V.fx/z, vy=C.y-V.fy/z;
     map.setAttribute('viewBox',vx.toFixed(2)+' '+vy.toFixed(2)+' '+(V.W/z).toFixed(2)+' '+(V.H/z).toFixed(2));
@@ -165,9 +191,12 @@
     stations.forEach(function(s){put(s.el,s.x,s.y)});
     areas.forEach(function(a){put(a.el,a.x,a.y)});
     dists.forEach(function(d){put(d.el,d.x,d.y,-Math.sin(d.a)*24,Math.cos(d.a)*24)});
-    var q=at(J.L);put(tm,q[0],q[1]);tmBody.style.transform='rotate('+ang(J.L).toFixed(3)+'rad)';
+    // the marker faces the way it is travelling (and keeps facing that way when it stops)
+    if(J.L<lastL-.5)heading=-1;else if(J.L>lastL+.5)heading=1;
+    lastL=J.L;
+    var q=at(J.L);put(tm,q[0],q[1]);tmBody.style.transform='rotate('+(ang(J.L)+(heading<0?Math.PI:0)).toFixed(3)+'rad)';
     lnDone.setAttribute('d',partial(J.L));
-    var ck=hm((J.i+(J.state==='dep'?0:J.f))*4);if(ck!==lastClock){lastClock=ck;tmClock.textContent=ck}
+    var ck=hm(minutesAt(J.L));if(ck!==lastClock){lastClock=ck;tmClock.textContent=ck}
     var far=z<V.zs*.62;if(far!==lastFar){lastFar=far;marks.classList.toggle('far',far)}
     // live scale bar
     var steps=[50,100,200,500,1000],n=steps[0];for(var i=0;i<steps.length;i++)if(steps[i]*z<=150)n=steps[i];
@@ -184,7 +213,7 @@
   var bodies=SV.map(function(_,k){var b=$('[data-st="'+k+'"] .gd__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
   PHOTO.forEach(function(u){if(u){var im=new Image();im.src=u}});
   pImg.addEventListener('load',function(){pImg.classList.remove('ld')});
-  var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま'}, U={mode:'hero',k:-1,st:'',dep:null,on:-1};
+  var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま',pass:'通過'}, U={mode:'hero',k:-1,st:'',dep:null,on:-1};
   function ui(p,J){
     var hf=seg(p,.004,.03), dep=hf>=.6;
     if(dep!==U.dep){U.dep=dep;stage.classList.toggle('departed',dep)}
@@ -203,11 +232,11 @@
       pBody.innerHTML=k<6?bodies[k]:'';
       pSt.classList.remove('swap');void pSt.offsetWidth;pSt.classList.add('swap');
     }
-    if(st!==U.st){U.st=st;pState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];pState.classList.toggle('soon',st==='soon')}
+    if(st!==U.st){U.st=st;pState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];pState.classList.toggle('soon',st==='soon');pState.classList.toggle('pass',st==='pass')}
   }
 
   /* ---------- engine ---------- */
-  var ticking=false, lastP=-1, dirty=true;
+  var ticking=false, lastP=-1, dirty=true, ap=null;
   function update(){
     ticking=false;
     var r=ride.getBoundingClientRect(), vh=innerHeight, dist=r.height-vh;
@@ -215,7 +244,7 @@
     var p=isStatic?0:(dist>0?clamp(-r.top/dist,0,1):0);
     if(p===lastP&&!dirty)return;
     lastP=p;dirty=false;
-    var J=journey(p);
+    var J=runAt(p,ap?ap.xp():0);
     draw(p,J);
     if(!isStatic)ui(p,J);
   }
@@ -242,10 +271,10 @@
      and grabbing the scrollbar stops the playback. Outside the story, and after the last
      stop, scrolling is completely normal. */
   function autoplay(o){
-    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
+    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, xp=0, jumpEdge=null, jdir=0, skip=o.skip; // xp: 0 → 1 into express mode
     var g={last:0,d:0,acc:0,used:false}, ty=null, tUsed=false;
     var badge=document.createElement('div');
-    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
+    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i><b>早送り</b><b>巻き戻し</b>';
     document.body.appendChild(badge);
     function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
     function easeO(k){return 1-Math.pow(1-k,3)}
@@ -263,7 +292,7 @@
       var t;
       if(anim){
         if(dirOf(anim)===d)return;           // already heading that way: a nudge doesn't skip ahead
-        queue=0;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
+        queue=0;jumpEdge=null;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
       }
       if(performance.now()<restUntil)return;
       t=nextStop(d,scrollY);if(t)start(t,false);
@@ -285,10 +314,12 @@
       if(!anim)return;
       // the visitor grabbed the scrollbar (or something else scrolled): let them have it
       if(lastSet>=0&&Math.abs(scrollY-lastSet)>3){halt();return}
-      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
+      // a jump from the station buttons runs express until the stop before its destination
+      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil||(jumpEdge!==null&&(jdir>0?scrollY<jumpEdge-4:scrollY>jumpEdge+4));
       prevT=now;
-      root.classList.toggle('ff-on',fast);
-      rate+=((fast?4:queue?2:1)-rate)*.14;
+      root.classList.toggle('ff-on',fast);badge.classList.toggle('rev',fast&&dirOf(anim)<0);
+      rate+=((fast?5:queue?2:1)-rate)*.14;
+      xp+=((fast?1:0)-xp)*.1; // express: the train runs through the stations while the scrolling goes on
       anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
       var e=anim.ease?anim.ease(anim.k):anim.k;
       lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
@@ -301,7 +332,7 @@
       }
       halt();restUntil=now+150;
     }
-    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
+    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;xp=0;jumpEdge=null;root.classList.remove('ff-on');root.style.scrollBehavior=''}
 
     var run={t0:0,last:0,d:0,ev:[]}; // a run of scrolling one way (short pauses between wheel strokes allowed)
     addEventListener('wheel',function(e){
@@ -369,11 +400,18 @@
         setTimeout(function(){root.style.scrollBehavior=''},50);
       });
     }
-    return{to:function(y){queue=0;ffUntil=0;start({y:y},!!anim)},halt:halt};
+    function jump(y){ // straight to a stop: express past the ones in between, then brake onto it
+      queue=0;ffUntil=0;jumpEdge=null;
+      var s=o.stops(), y0=scrollY, d=y>y0?1:-1;
+      var mid=s.filter(function(t){return d>0?t.y>y0+4&&t.y<y-4:t.y<y0-4&&t.y>y+4});
+      if(mid.length){jumpEdge=mid[d>0?mid.length-1:0].y;jdir=d}
+      start({y:y},!!anim);
+    }
+    return{to:jump,halt:halt,xp:function(){return xp}};
   }
 
   function rideStops(){var t=ride.getBoundingClientRect().top+scrollY, d=ride.offsetHeight-innerHeight;return SV.map(function(_,k){return{y:Math.round(t+stopAt(k)*d)}})}
-  var ap=isStatic?null:autoplay({
+  ap=isStatic?null:autoplay({
     stops:rideStops,
     dur:function(px){return clamp(3400*Math.sqrt(px/(LEG*(ride.offsetHeight-innerHeight))),500,9000)}, // ~3.4s a station
     linear:true, // the train brings its own acceleration and braking

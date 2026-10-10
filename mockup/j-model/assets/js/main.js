@@ -43,9 +43,34 @@
   }
   // the resting point at each station: the end of its dwell, just before departure
   function stopAt(k){return k<=0?0:k>=6?1:P0+k*LEG-.002}
+  // express (while fast-forwarding): constant speed straight through the stations.
+  // It meets the normal stop-and-go journey exactly at every station stop, so the two blend seamlessly.
+  function express(p){
+    var i=0;while(i<5&&p>stopAt(i+1))i++;
+    var u=seg(p,stopAt(i),stopAt(i+1));
+    return{x:SX[i]+(SX[i+1]-SX[i])*u,v:1,i:i,k:i+1,tt:u,state:'pass',rf:(i+u)/6};
+  }
+  var lastPos=null, backward=false; // rewinding: the next station is the one behind us
+  function runAt(p,xp){
+    var J=blend(p,xp);
+    if(lastPos!==null){if(J.x<lastPos-.5)backward=true;else if(J.x>lastPos+.5)backward=false}
+    lastPos=J.x;
+    if(backward&&J.state!=='stop'&&J.state!=='dep'){J.k=J.i;if(J.state!=='pass')J.state=J.tt<.32?'soon':'next'}
+    return J;
+  }
+  function blend(p,xp){
+    var J=journey(p);
+    if(xp<.002)return J;
+    var E=express(p);
+    J.x+=(E.x-J.x)*xp;J.v+=(1-J.v)*xp;J.rf+=(E.rf-J.rf)*xp;
+    if(E.i===J.i)J.tt+=(E.tt-J.tt)*xp;else if(xp>.5){J.i=E.i;J.tt=E.tt}
+    if(xp>.5){J.state='pass';J.k=E.k}
+    J.xp=xp;return J;
+  }
 
   // shared with the 3D world (world.js)
-  var S=window.NEOLINE={x:0,v:0,i:0,tt:0,p:0,dirty:true,visible:true,static:isStatic};
+  var S=window.NEOLINE={x:0,v:0,i:0,tt:0,xp:0,p:0,dirty:true,visible:true,static:isStatic};
+  var ap=null;
 
   /* ---------- split-flap departure board and the headline ---------- */
   (function(){
@@ -78,14 +103,14 @@
   var arrive=$('.arrive'), rstrip=$('.rstrip'), rItems=$$('.rstrip li');
   // the station panel reads each station's text from the route map below
   var bodies=SX.map(function(_,k){var b=$('.rt__st[data-st="'+k+'"] .rt__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
-  var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま'};
+  var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま',pass:'通過'};
   var U={hf:-1,k:-1,st:'',sp:null,ar:null,rb:null,on:-1,mv:null};
   function ui(p,J){
     var hf=seg(p,.004,.03);
     if(hf!==U.hf){U.hf=hf;stage.style.setProperty('--hf',hf.toFixed(3));stage.classList.toggle('departed',hf>=1)}
     stage.style.setProperty('--rf',J.rf.toFixed(4));
     var rb=innerWidth>1100||hf>.9;if(rb!==U.rb){U.rb=rb;rstrip.classList.toggle('on',rb)}
-    var mv=J.state==='next'||J.state==='soon';if(mv!==U.mv){U.mv=mv;rstrip.classList.toggle('moving',mv)}
+    var mv=J.state==='next'||J.state==='soon'||J.state==='pass';if(mv!==U.mv){U.mv=mv;rstrip.classList.toggle('moving',mv)}
     var on=J.state==='dep'?0:J.k;
     if(on!==U.on){U.on=on;rItems.forEach(function(li,i){li.classList.toggle('on',i===on);li.classList.toggle('done',i<on)})}
     var showP=hf>.6&&p<ARR-.004, showA=p>=ARR-.002;
@@ -99,7 +124,7 @@
       spBody.innerHTML=k<6?bodies[k]:'';
       sp.classList.remove('swap');void sp.offsetWidth;sp.classList.add('swap');
     }
-    if(st!==U.st){U.st=st;spState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];spState.classList.toggle('soon',st==='soon')}
+    if(st!==U.st){U.st=st;spState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];spState.classList.toggle('soon',st==='soon');spState.classList.toggle('pass',st==='pass')}
     sp.style.setProperty('--lt',(J.state==='stop'?1:J.state==='dep'?0:J.tt).toFixed(3));
   }
 
@@ -113,8 +138,8 @@
     var p=dist>0?clamp(-r.top/dist,0,1):0;
     if(p===lastP)return;
     lastP=p;
-    var J=journey(p);
-    S.x=J.x;S.v=J.v;S.i=J.i;S.tt=J.tt;S.p=p;S.dirty=true;
+    var xp=ap?ap.xp():0, J=runAt(p,xp);
+    S.x=J.x;S.v=J.v;S.i=J.i;S.tt=J.tt;S.xp=xp;S.p=p;S.dirty=true;
     ui(p,J);
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
@@ -133,10 +158,10 @@
      and grabbing the scrollbar stops the playback. Outside the story, and after the last
      stop, scrolling is completely normal. */
   function autoplay(o){
-    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, skip=o.skip;
+    var anim=null, raf=0, lastSet=-1, prevT=0, rate=1, ffUntil=0, queue=0, restUntil=0, xp=0, jumpEdge=null, jdir=0, skip=o.skip; // xp: 0 → 1 into express mode
     var g={last:0,d:0,acc:0,used:false}, ty=null, tUsed=false;
     var badge=document.createElement('div');
-    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i>早送り';
+    badge.className='ffwd';badge.setAttribute('aria-hidden','true');badge.innerHTML='<i></i><i></i><b>早送り</b><b>巻き戻し</b>';
     document.body.appendChild(badge);
     function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
     function easeO(k){return 1-Math.pow(1-k,3)}
@@ -154,7 +179,7 @@
       var t;
       if(anim){
         if(dirOf(anim)===d)return;           // already heading that way: a nudge doesn't skip ahead
-        queue=0;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
+        queue=0;jumpEdge=null;t=nextStop(d,scrollY);if(t)start(t,true);return; // reverse
       }
       if(performance.now()<restUntil)return;
       t=nextStop(d,scrollY);if(t)start(t,false);
@@ -176,10 +201,12 @@
       if(!anim)return;
       // the visitor grabbed the scrollbar (or something else scrolled): let them have it
       if(lastSet>=0&&Math.abs(scrollY-lastSet)>3){halt();return}
-      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil;
+      // a jump from the station buttons runs express until the stop before its destination
+      var dt=prevT?Math.min(50,now-prevT):16, fast=now<ffUntil||(jumpEdge!==null&&(jdir>0?scrollY<jumpEdge-4:scrollY>jumpEdge+4));
       prevT=now;
-      root.classList.toggle('ff-on',fast);
-      rate+=((fast?4:queue?2:1)-rate)*.14;
+      root.classList.toggle('ff-on',fast);badge.classList.toggle('rev',fast&&dirOf(anim)<0);
+      rate+=((fast?5:queue?2:1)-rate)*.14;
+      xp+=((fast?1:0)-xp)*.1; // express: the train runs through the stations while the scrolling goes on
       anim.k=Math.min(1,anim.k+dt*rate/anim.dur);
       var e=anim.ease?anim.ease(anim.k):anim.k;
       lastSet=Math.round(anim.y0+(anim.y1-anim.y0)*e);
@@ -192,7 +219,7 @@
       }
       halt();restUntil=now+150;
     }
-    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;root.classList.remove('ff-on');root.style.scrollBehavior=''}
+    function halt(){anim=null;lastSet=-1;rate=1;ffUntil=0;queue=0;xp=0;jumpEdge=null;root.classList.remove('ff-on');root.style.scrollBehavior=''}
 
     var run={t0:0,last:0,d:0,ev:[]}; // a run of scrolling one way (short pauses between wheel strokes allowed)
     addEventListener('wheel',function(e){
@@ -260,11 +287,18 @@
         setTimeout(function(){root.style.scrollBehavior=''},50);
       });
     }
-    return{to:function(y){queue=0;ffUntil=0;start({y:y},!!anim)},halt:halt};
+    function jump(y){ // straight to a stop: express past the ones in between, then brake onto it
+      queue=0;ffUntil=0;jumpEdge=null;
+      var s=o.stops(), y0=scrollY, d=y>y0?1:-1;
+      var mid=s.filter(function(t){return d>0?t.y>y0+4&&t.y<y-4:t.y<y0-4&&t.y>y+4});
+      if(mid.length){jumpEdge=mid[d>0?mid.length-1:0].y;jdir=d}
+      start({y:y},!!anim);
+    }
+    return{to:jump,halt:halt,xp:function(){return xp}};
   }
 
   function rideStops(){var t=ride.getBoundingClientRect().top+scrollY, d=ride.offsetHeight-innerHeight;return SX.map(function(_,k){return{y:Math.round(t+stopAt(k)*d)}})}
-  var ap=isStatic?null:autoplay({
+  ap=isStatic?null:autoplay({
     stops:rideStops,
     dur:function(px){return clamp(3600*Math.sqrt(px/(LEG*(ride.offsetHeight-innerHeight))),500,9000)}, // ~3.6s a station
     linear:true, // the train brings its own acceleration and braking
