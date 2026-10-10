@@ -132,10 +132,11 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="ja"] p{word-
   .blk{width:64px;font-family:var(--en);font-size:10px;letter-spacing:.1em;gap:4px}
   .blk svg{width:20px;height:20px}
   .blk--tel,.blk--menu{display:flex}
-  .logo{padding-left:16px}
+  .logo{padding-left:16px;margin-right:auto}
   .logo img{height:24px}
   .pc{display:none}.sp{display:inline}
 }
+@media(max-width:360px){.logo{padding-right:12px}.blk{width:56px;letter-spacing:.06em}}
 
 /* phone drawer */
 .drw{position:fixed;left:0;right:0;top:var(--hh);bottom:0;z-index:80;background:var(--navy-dd);color:#fff;overflow-y:auto;overscroll-behavior:contain;padding:8px var(--gut) 40px;opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
@@ -314,6 +315,7 @@ html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="ja"] p{word-
 .nums p{font-size:12px;color:rgba(255,255,255,.68);margin-top:2px;line-height:1.6}
 .num__note{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:14px;text-align:right}
 @media(max-width:900px){.nums{grid-template-columns:1fr 1fr}.nums li{padding:22px 18px}}
+@media(max-width:380px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}.nums li{padding:20px 12px}.nums b{font-size:38px}.nums b.s{font-size:24px}.nums b u{font-size:14px}}
 
 /* ---------- own services ---------- */
 .svb{display:grid;grid-template-columns:1fr 1fr;gap:24px}
