@@ -171,7 +171,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .sp__in{min-height:0;overflow:hidden}
 .sp__in>*{opacity:0;transition:opacity .3s}
 .sp.full .sp__in>*{opacity:1;transition:opacity .5s .45s}
-.sp__ph{margin:16px 0 0;aspect-ratio:2/1;overflow:hidden;background:#e7ebf0}
+.sp__ph{width:100%;margin:16px 0 0;aspect-ratio:2/1;max-height:clamp(0px,100svh - 580px,260px);overflow:hidden;background:#e7ebf0}
 .sp__ph img{width:100%;height:100%;object-fit:cover;transition:opacity .5s var(--ease)}
 .sp__ph img.ld{opacity:0}
 .no-ph .sp__ph{display:none}
@@ -366,7 +366,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .sp__en{font-size:10px}
   .sp__svc{display:none}
   .sp__tt{margin-top:10px;font-size:11px}
-  .sp__ph{margin-top:10px;aspect-ratio:16/7}
+  .sp__ph{margin-top:10px;aspect-ratio:16/7;max-height:clamp(0px,100svh - 480px,200px)}
   .sp__body{margin-top:10px;padding-top:10px}
   .sp__body .d{font-size:12.5px;line-height:1.75}
   .sp__body .tags{display:none}
@@ -398,7 +398,9 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .tt p span{padding:12px 12px;font-size:13px}
 }
 @media(max-width:520px){.ftr__g{grid-template-columns:1fr}}
-@media(max-height:760px) and (min-width:701px){.sp__ph{aspect-ratio:16/6}}
+/* short screens (foldables, landscape tablets): keep the full card clear of the route strip */
+@media(max-height:880px) and (min-width:701px){.sp__body .tags{display:none}}
+@media(max-height:700px) and (min-width:701px){.sp__ph{display:none}}
 @media(max-height:620px) and (min-width:701px){.sp__ph{display:none}.lead,.flap{display:none}.hero h1{font-size:34px}}
 
 /* ---------- static version (reduced motion · MOTION: OFF · no JS) ---------- */

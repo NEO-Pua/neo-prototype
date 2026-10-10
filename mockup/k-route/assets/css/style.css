@@ -483,7 +483,11 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .cta{gap:8px;margin-top:16px}
   .cta .btn{height:46px;padding:0 18px;font-size:13px}
   .facts,.cue{display:none}
-  .pn__ph{margin-top:10px;aspect-ratio:16/7}
+  .pn__ph{width:100%;margin-top:10px;aspect-ratio:16/7;max-height:clamp(0px,75svh - 400px,300px)}
+  /* the open card lays a sheet of paper over the map, so its text never sits on the line */
+  .pn--st::after{content:"";position:absolute;z-index:-1;left:-12px;right:-12px;top:-14px;bottom:-34px;pointer-events:none;
+    background:linear-gradient(180deg,var(--paper) calc(100% - 34px),rgba(247,248,250,0));opacity:0;transition:opacity .4s var(--ease)}
+  .pn--st.full::after{opacity:1;transition:opacity .5s var(--ease) .2s}
   .pn__svc{display:none}
   .pn__name{gap:12px;margin-top:8px}
   .pn__name .rd{width:46px;height:46px;box-shadow:inset 0 0 0 4px var(--cyan)}
@@ -519,6 +523,7 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
   .area span{font-size:9px}
 }
 @media(max-width:520px){.pager__now{display:none}}
+@media(max-width:900px) and (max-height:640px){.pn__ph{display:none}}
 
 /* ---------- static version (reduced motion · MOTION: OFF · no JS) ---------- */
 .static .ride{height:auto}
