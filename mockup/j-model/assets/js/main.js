@@ -109,7 +109,7 @@
   // the station panel reads each station's text from the route map below
   var bodies=SX.map(function(_,k){var b=$('.rt__st[data-st="'+k+'"] .rt__body');if(!b)return'';b=b.cloneNode(true);var h=$('h3',b);if(h)h.parentNode.removeChild(h);return b.innerHTML});
   var LBL={dep:'次は',next:'次は',soon:'まもなく',stop:'ただいま',pass:'通過'};
-  var U={hf:-1,k:-1,st:'',sp:null,ar:null,rb:null,on:-1,mv:null,full:null,read:null};
+  var U={hf:-1,k:-1,st:'',sp:null,ar:null,rb:null,on:-1,mv:null};
   function ui(p,J){
     var hf=seg(p,.004,.03);
     if(hf!==U.hf){U.hf=hf;stage.style.setProperty('--hf',hf.toFixed(3));stage.classList.toggle('departed',hf>=1)}
@@ -131,11 +131,10 @@
       if(PHOTO[k]&&spImg.src!==PHOTO[k]){spImg.classList.add('ld');spImg.src=PHOTO[k]}
       sp.classList.remove('swap');void sp.offsetWidth;sp.classList.add('swap');
     }
+    // standing at a station: the card steps forward
+    // travel to watch, arrive to read: standing at a station the full card opens and steps forward
+    if((st==='stop')!==U.strong){U.strong=st==='stop';sp.classList.toggle('strong',U.strong);sp.classList.toggle('full',U.strong)}
     if(st!==U.st){U.st=st;spState.textContent=st==='soon'&&k===6?'まもなく 終点':LBL[st];spState.classList.toggle('soon',st==='soon');spState.classList.toggle('pass',st==='pass')}
-    // travel to watch, arrive to read: the card opens and the scene steps back while the train stands at a station
-    var full=st==='stop', read=full||showA;
-    if(full!==U.full){U.full=full;sp.classList.toggle('full',full)}
-    if(read!==U.read){U.read=read;stage.classList.toggle('reading',read);S.read=read;S.dirty=true}
     sp.style.setProperty('--lt',(J.state==='stop'?1:J.state==='dep'?0:J.tt).toFixed(3));
   }
 

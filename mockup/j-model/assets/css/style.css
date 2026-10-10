@@ -183,21 +183,16 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .sp.swap .sp__en,.sp.swap .sp__tt{animation:fadeUp .55s var(--ease) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
 
-/* while a station is being read, the scene steps back a little */
-.stage::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(90deg,rgba(247,248,250,.8) 0%,rgba(247,248,250,.55) 34%,rgba(247,248,250,.14) 62%,rgba(247,248,250,.06) 100%);opacity:0;transition:opacity .8s var(--ease);pointer-events:none}
-.stage.reading::after{opacity:1}
 @media(min-width:901px){
-  /* rack focus: the scene slips out of focus while the card is read, and sharpens when the train leaves */
-  .gl{transition:opacity 1.4s var(--ease),filter .9s var(--ease),transform .9s var(--ease)}
-  .stage.reading .gl{filter:blur(3px) saturate(.82);transform:scale(1.02)}
+  /* standing at a station the card steps forward: wider, a larger name, a deeper shadow and a cyan edge */
   .sp{transition:opacity .5s var(--ease),transform .5s var(--ease),visibility 0s .5s,width .55s var(--ease),box-shadow .55s var(--ease)}
   .sp.on{transition:opacity .5s var(--ease),transform .5s var(--ease),width .55s var(--ease),box-shadow .55s var(--ease)}
-  .sp.full{width:min(520px,40vw);box-shadow:0 1px 0 rgba(17,24,39,.04),0 44px 90px -38px rgba(17,24,39,.6)}
+  .sp.strong{width:min(520px,40vw);box-shadow:0 1px 0 rgba(17,24,39,.04),0 44px 90px -38px rgba(17,24,39,.6)}
   .sp::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan);transform:scaleY(0);transform-origin:top;transition:transform .6s var(--ease)}
-  .sp.full::before{transform:none;transition:transform .7s var(--ease) .2s}
-  .sp.full .sp__jp{font-size:34px}
+  .sp.strong::before{transform:none;transition:transform .7s var(--ease) .2s}
+  .sp__jp{transition:font-size .45s var(--ease)}
+  .sp.strong .sp__jp{font-size:34px}
 }
-@media(max-width:900px){.stage::after{background:rgba(247,248,250,.34)}}
 
 /* terminal: arrival card with the contact */
 .arrive{position:absolute;left:var(--gut);top:calc(var(--hh) + 26px);z-index:7;width:min(520px,100% - var(--gut)*2);padding:26px 28px 22px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(17,24,39,.04),0 30px 60px -34px rgba(17,24,39,.55);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s .6s}

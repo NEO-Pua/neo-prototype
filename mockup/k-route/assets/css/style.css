@@ -146,7 +146,6 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .st.done .rd{box-shadow:inset 0 0 0 4.5px var(--cyan);color:var(--ink)}
 .st.on .rd{background:var(--cyan);box-shadow:inset 0 0 0 4.5px var(--cyan);color:#fff}
 .st--end .rd{background:var(--navy);box-shadow:inset 0 0 0 4.5px var(--cyan);color:#fff}
-.reading .st.here .rd::after{animation:none;opacity:0}
 .st.here .rd::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px var(--cyan);animation:ping 2.2s ease-out infinite}
 @keyframes ping{from{transform:scale(1);opacity:.75}to{transform:scale(2.3);opacity:0}}
 .st:hover .rd{box-shadow:inset 0 0 0 4.5px var(--cyan)}
@@ -165,9 +164,16 @@ html[lang="ja"] :is(h1,h2,h3,p,td,small,.t,.pc__d){word-break:keep-all;overflow-
 .tm b{position:absolute;left:0;top:-44px;transform:translateX(-50%);padding:2px 8px;border-radius:2px;background:var(--ink);color:#fff;font-family:var(--en);font-size:11px;font-weight:600;letter-spacing:.06em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tm b::after{content:"";position:absolute;left:50%;bottom:-4px;margin-left:-4px;border-style:solid;border-width:4px 4px 0;border-color:var(--ink) transparent transparent}
 
-/* while a station is being read, the scene steps back a little */
-.stage::after{content:"";position:absolute;inset:0;z-index:4;background:rgba(247,248,250,0);transition:background .7s var(--ease);pointer-events:none}
-.stage.reading::after{background:rgba(247,248,250,.34)}
+@media(min-width:901px){
+  /* standing at a station the details step forward as a card: wider, a larger name, a deeper shadow and a cyan edge */
+  .pn--st{margin:-20px -24px;padding:20px 24px 24px;transition:opacity .45s var(--ease),transform .45s var(--ease),visibility 0s .45s,background .5s var(--ease),box-shadow .55s var(--ease),right .55s var(--ease)}
+  .mode-st .pn--st{transition:opacity .6s var(--ease) .12s,transform .6s var(--ease) .12s,background .5s var(--ease),box-shadow .55s var(--ease),right .55s var(--ease)}
+  .pn--st.strong{right:-48px;background:#fff;box-shadow:0 1px 0 rgba(17,24,39,.04),0 44px 90px -38px rgba(17,24,39,.55)}
+  .pn--st::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cyan);transform:scaleY(0);transform-origin:top;transition:transform .6s var(--ease)}
+  .pn--st.strong::before{transform:none;transition:transform .7s var(--ease) .2s}
+  .pn__jp{transition:font-size .45s var(--ease)}
+  .pn--st.strong .pn__jp{font-size:34px}
+}
 
 /* map conventions: north and a live scale bar */
 .maptools{position:absolute;right:var(--gut);top:calc(var(--hh) + 22px);z-index:4;display:flex;align-items:flex-end;gap:18px;font-family:var(--en);font-size:10px;font-weight:500;letter-spacing:.12em;color:var(--ink-3);pointer-events:none}
